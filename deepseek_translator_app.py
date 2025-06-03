@@ -4,9 +4,12 @@ import streamlit as st
 from dotenv import load_dotenv
 
 # --- Setup ---
-load_dotenv()
+load_dotenv()  # Load .env file for local development
 API_KEY = os.getenv('DEEPSEEK_API_KEY')
-assert API_KEY, "DEEPSEEK_API_KEY not found in environment!"
+
+if not API_KEY:
+    st.error("⚠️ DEEPSEEK_API_KEY not found! Please add it to your environment variables or Streamlit secrets.")
+    st.stop()
 
 # Language codes (Google Translate style, but you can adjust as needed)
 LANGUAGES = {

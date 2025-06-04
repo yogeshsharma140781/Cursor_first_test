@@ -184,6 +184,26 @@ st.markdown("""
     .dropdown select::-webkit-input-placeholder { color: #888; }
     .dropdown select:-ms-input-placeholder { color: #888; }
     .dropdown select::placeholder { color: #888; }
+    .sticky-translate-btn {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100vw;
+        z-index: 2000;
+        background: #fff;
+        box-shadow: 0 -2px 8px rgba(30,144,255,0.07);
+        padding: 1rem 0.5rem 1.2rem 0.5rem;
+        text-align: center;
+        display: none !important;
+    }
+    @media (max-width: 600px) {
+        .sticky-translate-btn {
+            display: block !important;
+        }
+        .desktop-translate-btn {
+            display: none !important;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -230,7 +250,7 @@ with col1:
     st.markdown(source_lang_js, unsafe_allow_html=True)
     input_text = st.text_area(
         "Input Text",
-        height=400,
+        height=200,
         placeholder="Type or paste your text here...",
         label_visibility="collapsed",
         key="input_text_area"
@@ -270,60 +290,120 @@ with col2:
     st.text_area(
         "Output Text",
         value=st.session_state.translated_text,
-        height=400,
+        height=200,
         disabled=True,
         label_visibility="collapsed",
         key="output_text"
     )
 
 # --- Translate button ---
-st.markdown("<div style='text-align: center; margin: 24px 0 2rem 0;'>", unsafe_allow_html=True)
-if st.button("Translate", type="primary", use_container_width=False):
-    if input_text.strip():
-        try:
-            with st.spinner("Translating..."):
-                # Get language codes
-                source_code = source_languages[st.session_state['source_lang']]
-                target_code = target_languages[st.session_state['target_lang']]
-
-                # Compose prompt for DeepSeek
-                if source_code == "auto":
-                    prompt = (
-                        f"Detect the language of the following text and translate it to {target_code}. "
-                        "Only provide the translation, no explanations or additional text:\n\n"
-                        f"{input_text}\n\nTranslation:"
-                    )
-                else:
-                    prompt = (
-                        f"Translate the following text from {source_code} to {target_code}. "
-                        "Only provide the translation, no explanations or additional text:\n\n"
-                        f"{input_text}\n\nTranslation:"
-                    )
-
-                url = "https://api.deepseek.com/v1/chat/completions"
-                headers = {
-                    "Authorization": f"Bearer {API_KEY}",
-                    "Content-Type": "application/json"
-                }
-                data = {
-                    "model": "deepseek-reasoner",
-                    "messages": [
-                        {"role": "user", "content": prompt}
-                    ],
-                    "temperature": 0.3,
-                    "max_tokens": 1024
-                }
-                response = requests.post(url, headers=headers, json=data, timeout=60)
-                response.raise_for_status()
-                result = response.json()
-                translation = result["choices"][0]["message"]["content"].strip()
-                st.session_state.translated_text = translation
-                st.rerun()
-        except Exception as e:
-            st.error(f"Translation failed: {str(e)}")
-    else:
-        st.warning("Please enter some text to translate.")
-st.markdown("</div>", unsafe_allow_html=True)
+show_desktop_btn = True
+show_mobile_btn = False
+import streamlit as st
+if 'is_mobile' not in st.session_state:
+    st.session_state['is_mobile'] = False
+st.markdown("""
+<script>
+(function() {
+  var isMobile = window.innerWidth <= 600;
+  window.parent.postMessage({type: 'streamlit:setComponentValue', key: 'is_mobile', value: isMobile}, '*');
+})();
+</script>
+""", unsafe_allow_html=True)
+if st.session_state.get('is_mobile', False):
+    show_desktop_btn = False
+    show_mobile_btn = True
+else:
+    show_desktop_btn = True
+    show_mobile_btn = False
+if show_desktop_btn:
+    st.markdown("<div class='desktop-translate-btn' style='text-align: center; margin: 24px 0 2rem 0;'>", unsafe_allow_html=True)
+    if st.button("Translate", type="primary", use_container_width=False, key="desktop_translate_btn"):
+        if input_text.strip():
+            try:
+                with st.spinner("Translating..."):
+                    source_code = source_languages[st.session_state['source_lang']]
+                    target_code = target_languages[st.session_state['target_lang']]
+                    if source_code == "auto":
+                        prompt = (
+                            f"Detect the language of the following text and translate it to {target_code}. "
+                            "Only provide the translation, no explanations or additional text:\n\n"
+                            f"{input_text}\n\nTranslation:"
+                        )
+                    else:
+                        prompt = (
+                            f"Translate the following text from {source_code} to {target_code}. "
+                            "Only provide the translation, no explanations or additional text:\n\n"
+                            f"{input_text}\n\nTranslation:"
+                        )
+                    url = "https://api.deepseek.com/v1/chat/completions"
+                    headers = {
+                        "Authorization": f"Bearer {API_KEY}",
+                        "Content-Type": "application/json"
+                    }
+                    data = {
+                        "model": "deepseek-reasoner",
+                        "messages": [
+                            {"role": "user", "content": prompt}
+                        ],
+                        "temperature": 0.3,
+                        "max_tokens": 1024
+                    }
+                    response = requests.post(url, headers=headers, json=data, timeout=60)
+                    response.raise_for_status()
+                    result = response.json()
+                    translation = result["choices"][0]["message"]["content"].strip()
+                    st.session_state.translated_text = translation
+                    st.rerun()
+            except Exception as e:
+                st.error(f"Translation failed: {str(e)}")
+        else:
+            st.warning("Please enter some text to translate.")
+    st.markdown("</div>", unsafe_allow_html=True)
+if show_mobile_btn:
+    st.markdown("<div class='sticky-translate-btn'>", unsafe_allow_html=True)
+    if st.button("Translate", type="primary", use_container_width=True, key="mobile_translate_btn"):
+        if input_text.strip():
+            try:
+                with st.spinner("Translating..."):
+                    source_code = source_languages[st.session_state['source_lang']]
+                    target_code = target_languages[st.session_state['target_lang']]
+                    if source_code == "auto":
+                        prompt = (
+                            f"Detect the language of the following text and translate it to {target_code}. "
+                            "Only provide the translation, no explanations or additional text:\n\n"
+                            f"{input_text}\n\nTranslation:"
+                        )
+                    else:
+                        prompt = (
+                            f"Translate the following text from {source_code} to {target_code}. "
+                            "Only provide the translation, no explanations or additional text:\n\n"
+                            f"{input_text}\n\nTranslation:"
+                        )
+                    url = "https://api.deepseek.com/v1/chat/completions"
+                    headers = {
+                        "Authorization": f"Bearer {API_KEY}",
+                        "Content-Type": "application/json"
+                    }
+                    data = {
+                        "model": "deepseek-reasoner",
+                        "messages": [
+                            {"role": "user", "content": prompt}
+                        ],
+                        "temperature": 0.3,
+                        "max_tokens": 1024
+                    }
+                    response = requests.post(url, headers=headers, json=data, timeout=60)
+                    response.raise_for_status()
+                    result = response.json()
+                    translation = result["choices"][0]["message"]["content"].strip()
+                    st.session_state.translated_text = translation
+                    st.rerun()
+            except Exception as e:
+                st.error(f"Translation failed: {str(e)}")
+        else:
+            st.warning("Please enter some text to translate.")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # --- Additional features ---
 # (Removed metrics row for words and characters)

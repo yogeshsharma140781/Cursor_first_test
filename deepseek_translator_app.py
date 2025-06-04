@@ -36,8 +36,8 @@ LANGUAGES_REVERSE = {v: k for k, v in LANGUAGES.items()}
 
 # --- UI Styling ---
 st.set_page_config(
-    page_title="Translatica AI",
-    page_icon="🔤",
+    page_title="Translator AI",
+    page_icon="SmallLogo.svg",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -314,10 +314,3 @@ st.markdown("</div>", unsafe_allow_html=True)
 
 # --- Additional features ---
 # (Removed metrics row for words and characters)
-
-# --- Footer ---
-st.markdown("""
-<div style='text-align:center; color:#888; font-size:14px; margin-top:32px;'>
-Transtaor AI doesn't store your data but uses AI models to process them.
-</div>
-""", unsafe_allow_html=True)

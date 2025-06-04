@@ -44,6 +44,16 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+    .fixed-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        z-index: 1000;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(30,144,255,0.07);
+        padding: 0.5rem 0;
+    }
     .main-header {
         display: flex;
         align-items: center;
@@ -64,6 +74,9 @@ st.markdown("""
         max-width: 1000px;
         margin: 0 auto;
         padding: 0.5rem 0 0 0;
+    }
+    .stApp {
+        padding-top: 80px !important;
     }
     .text-area-container {
         margin: 1rem 0;
@@ -174,8 +187,8 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- Header with SVG Logo ---
-st.markdown('<div class="translation-container">', unsafe_allow_html=True)
+# --- Fixed Header with SVG Logo ---
+st.markdown('<div class="fixed-header"><div class="translation-container">', unsafe_allow_html=True)
 with open("Logo-full.svg", "r") as f:
     svg_logo = f.read()
 st.markdown(
@@ -183,7 +196,7 @@ st.markdown(
     <div class="main-header">
         <div style="height:60px; width:auto; display:flex; align-items:center;">{svg_logo}</div>
     </div>
-    ''',
+    </div></div>''',
     unsafe_allow_html=True
 )
 

@@ -2,6 +2,7 @@ import os
 import requests
 import streamlit as st
 from dotenv import load_dotenv
+import httpx
 
 # --- Setup ---
 load_dotenv()  # Load .env file for local development
@@ -207,7 +208,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- Fixed Header with SVG Logo ---
+# --- Fixed Header with SVG Logo and App Name ---
 st.markdown('<div class="fixed-header"><div class="translation-container">', unsafe_allow_html=True)
 with open("Logo-full.svg", "r") as f:
     svg_logo = f.read()
@@ -220,190 +221,118 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- Language selection row and text areas ---
-col1, col2 = st.columns(2)
+# --- Single Column Layout ---
+source_languages = {"Detect Language": "auto"}
+source_languages.update({v: k for k, v in LANGUAGES.items()})
+source_lang_options = list(source_languages.keys())
+if 'source_lang' not in st.session_state:
+    st.session_state['source_lang'] = source_lang_options[0]
+source_lang = st.selectbox(
+    "Source language",
+    source_lang_options,
+    key="source_lang",
+    label_visibility="collapsed"
+)
+input_text = st.text_area(
+    "Input Text",
+    height=200,
+    placeholder="Type or paste your text here...",
+    label_visibility="collapsed",
+    key="input_text_area"
+)
+# Calculate words and characters
+words = len(input_text.split()) if input_text.strip() else 0
+chars = len(input_text)
+st.markdown(f"<div style='margin-top:4px; margin-bottom:8px; text-align:left; color:#444; font-size:15px;'>{words} words, {chars} characters</div>", unsafe_allow_html=True)
 
-with col1:
-    source_languages = {"Detect Language": "auto"}
-    source_languages.update({v: k for k, v in LANGUAGES.items()})
-    source_lang_options = list(source_languages.keys())
-    if 'source_lang' not in st.session_state:
-        st.session_state['source_lang'] = source_lang_options[0]
-    source_lang_html = f'''<div class="dropdown"><form id="source_lang_form" autocomplete="off">
-    <select id="source_lang_select" name="source_lang_select">
-    {''.join([f'<option value="{opt}"'+(' selected' if st.session_state['source_lang']==opt else '')+f'>{opt}</option>' for opt in source_lang_options])}
-    </select>
-    <input type="submit" style="display:none;"/>
-    </form></div>'''
-    st.markdown(source_lang_html, unsafe_allow_html=True)
-    source_lang_js = '''<script>
-    const form = window.parent.document.querySelector('#source_lang_form');
-    if(form){
-      form.onsubmit = function(e){
-        e.preventDefault();
-        const val = form.querySelector('select').value;
-        window.parent.postMessage({type:'streamlit:setComponentValue', key:'source_lang', value:val}, '*');
-      }
-      form.querySelector('select').onchange = function(){form.requestSubmit();}
-    }
-    </script>'''
-    st.markdown(source_lang_js, unsafe_allow_html=True)
-    input_text = st.text_area(
-        "Input Text",
-        height=200,
-        placeholder="Type or paste your text here...",
-        label_visibility="collapsed",
-        key="input_text_area"
-    )
-    # Calculate words and characters
-    words = len(input_text.split()) if input_text.strip() else 0
-    chars = len(input_text)
-    st.markdown(f"<div style='margin-top:4px; margin-bottom:8px; text-align:left; color:#444; font-size:15px;'>{words} words, {chars} characters</div>", unsafe_allow_html=True)
+target_languages = [v for k, v in LANGUAGES.items()]
+default_target = "English"
+if 'target_lang' not in st.session_state:
+    st.session_state['target_lang'] = default_target
+target_lang = st.selectbox(
+    "Target language",
+    target_languages,
+    key="target_lang",
+    label_visibility="collapsed"
+)
 
-with col2:
-    target_languages = {v: k for k, v in LANGUAGES.items()}
-    target_lang_options = list(target_languages.keys())
-    default_target = "English"
-    if 'target_lang' not in st.session_state:
-        st.session_state['target_lang'] = default_target
-    target_lang_html = f'''<div class="dropdown"><form id="target_lang_form" autocomplete="off">
-    <select id="target_lang_select" name="target_lang_select">
-    {''.join([f'<option value="{opt}"'+(' selected' if st.session_state['target_lang']==opt else '')+f'>{opt}</option>' for opt in target_lang_options])}
-    </select>
-    <input type="submit" style="display:none;"/>
-    </form></div>'''
-    st.markdown(target_lang_html, unsafe_allow_html=True)
-    target_lang_js = '''<script>
-    const form = window.parent.document.querySelector('#target_lang_form');
-    if(form){
-      form.onsubmit = function(e){
-        e.preventDefault();
-        const val = form.querySelector('select').value;
-        window.parent.postMessage({type:'streamlit:setComponentValue', key:'target_lang', value:val}, '*');
-      }
-      form.querySelector('select').onchange = function(){form.requestSubmit();}
-    }
-    </script>'''
-    st.markdown(target_lang_js, unsafe_allow_html=True)
-    if 'translated_text' not in st.session_state:
-        st.session_state.translated_text = ""
+translate_clicked = st.button("Translate", key="main_translate_btn")
+streamed = False
+if translate_clicked:
+    if input_text.strip():
+        try:
+            with st.spinner("Translating... (streaming output)"):
+                source_code = LANGUAGES_REVERSE.get(st.session_state['source_lang'], "auto")
+                target_code = LANGUAGES_REVERSE.get(st.session_state['target_lang'], "en")
+                if source_code == "auto":
+                    prompt = (
+                        f"Detect the language of the following text and translate it to {target_code}. "
+                        "Only provide the translation, no explanations or additional text:\n\n"
+                        f"{input_text}\n\nTranslation:"
+                    )
+                else:
+                    prompt = (
+                        f"Translate the following text from {source_code} to {target_code}. "
+                        "Only provide the translation, no explanations or additional text:\n\n"
+                        f"{input_text}\n\nTranslation:"
+                    )
+                url = "https://api.deepseek.com/v1/chat/completions"
+                headers = {
+                    "Authorization": f"Bearer {API_KEY}",
+                    "Content-Type": "application/json"
+                }
+                data = {
+                    "model": "deepseek-reasoner",
+                    "messages": [
+                        {"role": "user", "content": prompt}
+                    ],
+                    "temperature": 0.3,
+                    "max_tokens": 1024,
+                    "stream": True
+                }
+                output_placeholder = st.empty()
+                output = ""
+                i = 0  # Counter for unique Streamlit keys
+                with httpx.stream("POST", url, headers=headers, json=data, timeout=60) as response:
+                    for line in response.iter_lines():
+                        if line:
+                            # Decode bytes to str if needed
+                            if isinstance(line, bytes):
+                                line = line.decode("utf-8")
+                            if line.startswith("data: "):
+                                content = line[6:]
+                                if content == "[DONE]":
+                                    break
+                                chunk = httpx.Response(200, content=content).json()
+                                delta = chunk["choices"][0]["delta"].get("content", "")
+                                if delta is None:
+                                    delta = ""
+                                output += delta
+                                output_placeholder.text_area(
+                                    "Output Text",
+                                    value=output,
+                                    height=400,
+                                    disabled=True,
+                                    label_visibility="collapsed",
+                                    key=f"output_text_streaming_{i}"
+                                )
+                                i += 1
+                st.session_state.translated_text = output
+                streamed = True
+        except Exception as e:
+            st.error(f"Translation failed: {str(e)}")
+    else:
+        st.warning("Please enter some text to translate.")
+
+# --- Translated text area below ---
+if 'translated_text' not in st.session_state:
+    st.session_state.translated_text = ""
+if not streamed:
     st.text_area(
         "Output Text",
         value=st.session_state.translated_text,
-        height=200,
+        height=400,
         disabled=True,
         label_visibility="collapsed",
         key="output_text"
     )
-
-# --- Translate button ---
-show_desktop_btn = True
-show_mobile_btn = False
-import streamlit as st
-if 'is_mobile' not in st.session_state:
-    st.session_state['is_mobile'] = False
-st.markdown("""
-<script>
-(function() {
-  var isMobile = window.innerWidth <= 600;
-  window.parent.postMessage({type: 'streamlit:setComponentValue', key: 'is_mobile', value: isMobile}, '*');
-})();
-</script>
-""", unsafe_allow_html=True)
-if st.session_state.get('is_mobile', False):
-    show_desktop_btn = False
-    show_mobile_btn = True
-else:
-    show_desktop_btn = True
-    show_mobile_btn = False
-if show_desktop_btn:
-    st.markdown("<div class='desktop-translate-btn' style='text-align: center; margin: 24px 0 2rem 0;'>", unsafe_allow_html=True)
-    if st.button("Translate", type="primary", use_container_width=False, key="desktop_translate_btn"):
-        if input_text.strip():
-            try:
-                with st.spinner("Translating..."):
-                    source_code = source_languages[st.session_state['source_lang']]
-                    target_code = target_languages[st.session_state['target_lang']]
-                    if source_code == "auto":
-                        prompt = (
-                            f"Detect the language of the following text and translate it to {target_code}. "
-                            "Only provide the translation, no explanations or additional text:\n\n"
-                            f"{input_text}\n\nTranslation:"
-                        )
-                    else:
-                        prompt = (
-                            f"Translate the following text from {source_code} to {target_code}. "
-                            "Only provide the translation, no explanations or additional text:\n\n"
-                            f"{input_text}\n\nTranslation:"
-                        )
-                    url = "https://api.deepseek.com/v1/chat/completions"
-                    headers = {
-                        "Authorization": f"Bearer {API_KEY}",
-                        "Content-Type": "application/json"
-                    }
-                    data = {
-                        "model": "deepseek-reasoner",
-                        "messages": [
-                            {"role": "user", "content": prompt}
-                        ],
-                        "temperature": 0.3,
-                        "max_tokens": 1024
-                    }
-                    response = requests.post(url, headers=headers, json=data, timeout=60)
-                    response.raise_for_status()
-                    result = response.json()
-                    translation = result["choices"][0]["message"]["content"].strip()
-                    st.session_state.translated_text = translation
-                    st.rerun()
-            except Exception as e:
-                st.error(f"Translation failed: {str(e)}")
-        else:
-            st.warning("Please enter some text to translate.")
-    st.markdown("</div>", unsafe_allow_html=True)
-if show_mobile_btn:
-    st.markdown("<div class='sticky-translate-btn'>", unsafe_allow_html=True)
-    if st.button("Translate", type="primary", use_container_width=True, key="mobile_translate_btn"):
-        if input_text.strip():
-            try:
-                with st.spinner("Translating..."):
-                    source_code = source_languages[st.session_state['source_lang']]
-                    target_code = target_languages[st.session_state['target_lang']]
-                    if source_code == "auto":
-                        prompt = (
-                            f"Detect the language of the following text and translate it to {target_code}. "
-                            "Only provide the translation, no explanations or additional text:\n\n"
-                            f"{input_text}\n\nTranslation:"
-                        )
-                    else:
-                        prompt = (
-                            f"Translate the following text from {source_code} to {target_code}. "
-                            "Only provide the translation, no explanations or additional text:\n\n"
-                            f"{input_text}\n\nTranslation:"
-                        )
-                    url = "https://api.deepseek.com/v1/chat/completions"
-                    headers = {
-                        "Authorization": f"Bearer {API_KEY}",
-                        "Content-Type": "application/json"
-                    }
-                    data = {
-                        "model": "deepseek-reasoner",
-                        "messages": [
-                            {"role": "user", "content": prompt}
-                        ],
-                        "temperature": 0.3,
-                        "max_tokens": 1024
-                    }
-                    response = requests.post(url, headers=headers, json=data, timeout=60)
-                    response.raise_for_status()
-                    result = response.json()
-                    translation = result["choices"][0]["message"]["content"].strip()
-                    st.session_state.translated_text = translation
-                    st.rerun()
-            except Exception as e:
-                st.error(f"Translation failed: {str(e)}")
-        else:
-            st.warning("Please enter some text to translate.")
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# --- Additional features ---
-# (Removed metrics row for words and characters)

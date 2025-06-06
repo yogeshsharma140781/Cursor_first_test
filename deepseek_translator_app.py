@@ -3,37 +3,82 @@ import requests
 import streamlit as st
 from dotenv import load_dotenv
 import httpx
+import time
 
 # --- Setup ---
 load_dotenv()  # Load .env file for local development
-API_KEY = os.getenv('DEEPSEEK_API_KEY')
+API_KEY = os.getenv('OPENAI_API_KEY')
 
 if not API_KEY:
-    st.error("⚠️ DEEPSEEK_API_KEY not found! Please add it to your environment variables or Streamlit secrets.")
+    st.error("⚠️ OPENAI_API_KEY not found! Please add it to your environment variables or Streamlit secrets.")
     st.stop()
 
-# Language codes (Google Translate style, but you can adjust as needed)
+# Language codes (OpenAI GPT-4 supported)
 LANGUAGES = {
-    'af': 'Afrikaans', 'sq': 'Albanian', 'am': 'Amharic', 'ar': 'Arabic', 'hy': 'Armenian', 'az': 'Azerbaijani',
-    'eu': 'Basque', 'be': 'Belarusian', 'bn': 'Bengali', 'bs': 'Bosnian', 'bg': 'Bulgarian', 'ca': 'Catalan',
-    'ceb': 'Cebuano', 'ny': 'Chichewa', 'zh-cn': 'Chinese (Simplified)', 'zh-tw': 'Chinese (Traditional)',
-    'co': 'Corsican', 'hr': 'Croatian', 'cs': 'Czech', 'da': 'Danish', 'nl': 'Dutch', 'en': 'English',
-    'eo': 'Esperanto', 'et': 'Estonian', 'tl': 'Filipino', 'fi': 'Finnish', 'fr': 'French', 'fy': 'Frisian',
-    'gl': 'Galician', 'ka': 'Georgian', 'de': 'German', 'el': 'Greek', 'gu': 'Gujarati', 'ht': 'Haitian Creole',
-    'ha': 'Hausa', 'haw': 'Hawaiian', 'iw': 'Hebrew', 'he': 'Hebrew', 'hi': 'Hindi', 'hmn': 'Hmong', 'hu': 'Hungarian',
-    'is': 'Icelandic', 'ig': 'Igbo', 'id': 'Indonesian', 'ga': 'Irish', 'it': 'Italian', 'ja': 'Japanese',
-    'jw': 'Javanese', 'kn': 'Kannada', 'kk': 'Kazakh', 'km': 'Khmer', 'ko': 'Korean', 'ku': 'Kurdish (Kurmanji)',
-    'ky': 'Kyrgyz', 'lo': 'Lao', 'la': 'Latin', 'lv': 'Latvian', 'lt': 'Lithuanian', 'lb': 'Luxembourgish',
-    'mk': 'Macedonian', 'mg': 'Malagasy', 'ms': 'Malay', 'ml': 'Malayalam', 'mt': 'Maltese', 'mi': 'Maori',
-    'mr': 'Marathi', 'mn': 'Mongolian', 'my': 'Myanmar (Burmese)', 'ne': 'Nepali', 'no': 'Norwegian', 'or': 'Odia',
-    'ps': 'Pashto', 'fa': 'Persian', 'pl': 'Polish', 'pt': 'Portuguese', 'pa': 'Punjabi', 'ro': 'Romanian',
-    'ru': 'Russian', 'sm': 'Samoan', 'gd': 'Scots Gaelic', 'sr': 'Serbian', 'st': 'Sesotho', 'sn': 'Shona',
-    'sd': 'Sindhi', 'si': 'Sinhala', 'sk': 'Slovak', 'sl': 'Slovenian', 'so': 'Somali', 'es': 'Spanish',
-    'su': 'Sundanese', 'sw': 'Swahili', 'sv': 'Swedish', 'tg': 'Tajik', 'ta': 'Tamil', 'te': 'Telugu',
-    'th': 'Thai', 'tr': 'Turkish', 'uk': 'Ukrainian', 'ur': 'Urdu', 'ug': 'Uyghur', 'uz': 'Uzbek',
-    'vi': 'Vietnamese', 'cy': 'Welsh', 'xh': 'Xhosa', 'yi': 'Yiddish', 'yo': 'Yoruba', 'zu': 'Zulu'
+    'en': 'English',
+    'ar': 'Arabic',
+    'zh-cn': 'Chinese (Simplified)',
+    'zh-tw': 'Chinese (Traditional)',
+    'nl': 'Dutch',
+    'fr': 'French',
+    'de': 'German',
+    'hi': 'Hindi',
+    'it': 'Italian',
+    'ja': 'Japanese',
+    'ko': 'Korean',
+    'pl': 'Polish',
+    'pt': 'Portuguese',
+    'ru': 'Russian',
+    'es': 'Spanish',
+    'tr': 'Turkish',
+    'uk': 'Ukrainian',
+    'vi': 'Vietnamese',
 }
 LANGUAGES_REVERSE = {v: k for k, v in LANGUAGES.items()}
+
+# Add domain options
+DOMAINS = [
+    "General",
+    "Education",
+    "Legal",
+    "Medical",
+    "Technical",
+    "Finance",
+    "Business",
+    "Marketing",
+    "Literature",
+    "News",
+    "Social Media",
+    "Government",
+    "Science",
+    "Technology",
+    "Entertainment",
+    "Sports",
+    "Travel",
+    "Food",
+    "Art",
+    "Religion"
+]
+
+# Initialize domain in session state if not present
+if 'detected_domain' not in st.session_state:
+    st.session_state.detected_domain = "General"
+if 'domain_context' not in st.session_state:
+    st.session_state.domain_context = ""
+
+# Initialize context in session state if not present
+if 'translation_context' not in st.session_state:
+    st.session_state.translation_context = ""
+
+# --- Debounced translate-as-you-type logic ---
+if 'last_input' not in st.session_state:
+    st.session_state.last_input = ''
+if 'last_input_time' not in st.session_state:
+    st.session_state.last_input_time = 0.0
+if 'last_translation' not in st.session_state:
+    st.session_state.last_translation = ''
+if 'auto_translate' not in st.session_state:
+    st.session_state.auto_translate = False
 
 # --- UI Styling ---
 st.set_page_config(
@@ -208,14 +253,16 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- Fixed Header with SVG Logo and App Name ---
+# --- Fixed Header with SVG Logo (removed "Translator AI" text) ---
 st.markdown('<div class="fixed-header"><div class="translation-container">', unsafe_allow_html=True)
 with open("Logo-full.svg", "r") as f:
     svg_logo = f.read()
 st.markdown(
     f'''
     <div class="main-header">
-        <div style="height:60px; width:auto; display:flex; align-items:center;">{svg_logo}</div>
+        <div style="height:60px; width:auto; display:flex; align-items:center;">
+            {svg_logo}
+        </div>
     </div>
     </div></div>''',
     unsafe_allow_html=True
@@ -233,6 +280,7 @@ source_lang = st.selectbox(
     key="source_lang",
     label_visibility="collapsed"
 )
+
 input_text = st.text_area(
     "Input Text",
     height=200,
@@ -240,12 +288,13 @@ input_text = st.text_area(
     label_visibility="collapsed",
     key="input_text_area"
 )
+
 # Calculate words and characters
 words = len(input_text.split()) if input_text.strip() else 0
 chars = len(input_text)
 st.markdown(f"<div style='margin-top:4px; margin-bottom:8px; text-align:left; color:#444; font-size:15px;'>{words} words, {chars} characters</div>", unsafe_allow_html=True)
 
-target_languages = [v for k, v in LANGUAGES.items()]
+target_languages = ["English"] + [v for k, v in LANGUAGES.items() if v != "English"]
 default_target = "English"
 if 'target_lang' not in st.session_state:
     st.session_state['target_lang'] = default_target
@@ -256,33 +305,27 @@ target_lang = st.selectbox(
     label_visibility="collapsed"
 )
 
+# --- Translate button ---
 translate_clicked = st.button("Translate", key="main_translate_btn")
-streamed = False
 if translate_clicked:
     if input_text.strip():
         try:
-            with st.spinner("Translating... (streaming output)"):
+            with st.spinner("Translating... (please wait)"):
                 source_code = LANGUAGES_REVERSE.get(st.session_state['source_lang'], "auto")
                 target_code = LANGUAGES_REVERSE.get(st.session_state['target_lang'], "en")
-                if source_code == "auto":
-                    prompt = (
-                        f"Detect the language of the following text and translate it to {target_code}. "
-                        "Only provide the translation, no explanations or additional text:\n\n"
-                        f"{input_text}\n\nTranslation:"
-                    )
-                else:
-                    prompt = (
-                        f"Translate the following text from {source_code} to {target_code}. "
-                        "Only provide the translation, no explanations or additional text:\n\n"
-                        f"{input_text}\n\nTranslation:"
-                    )
-                url = "https://api.deepseek.com/v1/chat/completions"
+                prompt = (
+                    "Analyze the following text and identify its domain/context (e.g., Legal, Medical, Education, Finance, Technical, etc.). "
+                    f"Then translate it from {source_code} to {target_code}, taking into account that this is a General text. "
+                    "Output only the translation (do not prefix 'Domain:' or 'Translation:').\n\n"
+                    f"Text to analyze and translate:\n{input_text}"
+                )
+                url = "https://api.openai.com/v1/chat/completions"
                 headers = {
                     "Authorization": f"Bearer {API_KEY}",
                     "Content-Type": "application/json"
                 }
                 data = {
-                    "model": "deepseek-reasoner",
+                    "model": "gpt-4",
                     "messages": [
                         {"role": "user", "content": prompt}
                     ],
@@ -290,35 +333,26 @@ if translate_clicked:
                     "max_tokens": 1024,
                     "stream": True
                 }
-                output_placeholder = st.empty()
                 output = ""
-                i = 0  # Counter for unique Streamlit keys
                 with httpx.stream("POST", url, headers=headers, json=data, timeout=60) as response:
                     for line in response.iter_lines():
                         if line:
-                            # Decode bytes to str if needed
                             if isinstance(line, bytes):
                                 line = line.decode("utf-8")
                             if line.startswith("data: "):
                                 content = line[6:]
                                 if content == "[DONE]":
                                     break
-                                chunk = httpx.Response(200, content=content).json()
-                                delta = chunk["choices"][0]["delta"].get("content", "")
-                                if delta is None:
-                                    delta = ""
-                                output += delta
-                                output_placeholder.text_area(
-                                    "Output Text",
-                                    value=output,
-                                    height=400,
-                                    disabled=True,
-                                    label_visibility="collapsed",
-                                    key=f"output_text_streaming_{i}"
-                                )
-                                i += 1
+                                try:
+                                    chunk = httpx.Response(200, content=content).json()
+                                    delta = chunk["choices"][0]["delta"].get("content", "")
+                                    if delta is None:
+                                        delta = ""
+                                    output += delta
+                                except Exception as e:
+                                    st.error(f"Error processing response chunk: {str(e)}")
+                                    continue
                 st.session_state.translated_text = output
-                streamed = True
         except Exception as e:
             st.error(f"Translation failed: {str(e)}")
     else:
@@ -327,12 +361,11 @@ if translate_clicked:
 # --- Translated text area below ---
 if 'translated_text' not in st.session_state:
     st.session_state.translated_text = ""
-if not streamed:
-    st.text_area(
-        "Output Text",
-        value=st.session_state.translated_text,
-        height=400,
-        disabled=True,
-        label_visibility="collapsed",
-        key="output_text"
-    )
+st.text_area(
+    "Output Text",
+    value=st.session_state.translated_text,
+    height=400,
+    disabled=True,
+    label_visibility="collapsed",
+    key="output_text"
+)

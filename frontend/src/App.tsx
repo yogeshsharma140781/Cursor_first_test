@@ -140,7 +140,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ minHeight: "100vh", bgcolor: "#fff" }}>
-        <Container maxWidth="md" sx={{ py: 5 }}>
+        <Container maxWidth="sm" sx={{ py: { xs: 2, sm: 5 }, px: { xs: 1, sm: 3 } }}>
           {/* Header */}
           <Box display="flex" alignItems="center" justifyContent="center" mb={4}>
             <img src="/Logo-full.svg" alt="Logo" style={{ height: 60, width: "auto", display: "block" }} />

@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Streamlit
+# .streamlit/
+
+# Project specific
+*.pdf
+*.docx
+*.json
+*.txt
+*.tar
+*.png
+*.jpg
+*.jpeg
+*.gif
+data/
+Icons/
+Translate documents/
+new-app/
+
+# Logs
+*.log
+logs/
+debug_*.py
+debug_*.pdf
+debug_*.json
+
+# Keep only essential files
+!requirements.txt
+!README.md
+!deepseek_translator_app.py
+!streamlit.toml 

@@ -118,11 +118,15 @@ export default function App() {
             target_lang: targetLang,
           }),
         });
-        const data = await res.json();
-        if (data.translation && data.translation.startsWith("The text provided does not contain enough information")) {
-          setOutputText("");
-        } else {
-          setOutputText(data.translation || "");
+        if (!res.body) throw new Error("No response body");
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let result = "";
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          result += decoder.decode(value, { stream: true });
+          setOutputText(result);
         }
       } catch (err) {
         setOutputText("Translation failed.");
@@ -139,8 +143,8 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ minHeight: "100vh", bgcolor: "#fff" }}>
-        <Container maxWidth="sm" sx={{ py: { xs: 2, sm: 5 }, px: { xs: 1, sm: 3 } }}>
+      <Box sx={{ minHeight: "100vh", bgcolor: "#fff", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Container maxWidth="sm" sx={{ py: 0, px: 0 }}>
           {/* Header */}
           <Box display="flex" alignItems="center" justifyContent="center" mb={4}>
             <img src="/Logo-full.svg" alt="Logo" style={{ height: 60, width: "auto", display: "block" }} />
@@ -157,11 +161,10 @@ export default function App() {
                 borderRadius: "24px",
                 background: "#f5f6fa",
                 minHeight: 44,
-                width: 500,
-                maxWidth: 500,
+                width: 400,
+                maxWidth: 400,
                 "& .MuiTabs-indicator": {
                   background: "#1e90ff",
-                  height: 3,
                   borderRadius: 2,
                 },
               }}
@@ -173,19 +176,19 @@ export default function App() {
                   fontSize: 16,
                   color: tab === 0 ? "#1e90ff" : "#888",
                   minHeight: 44,
-                  minWidth: 200,
+                  minWidth: 150,
                   textTransform: 'none',
                 }}
               />
               <Tab
-                label="Document (coming soon)"
+                label="Document"
                 disabled
                 sx={{
                   fontWeight: 500,
                   fontSize: 16,
                   color: "#bbb",
                   minHeight: 44,
-                  minWidth: 200,
+                  minWidth: 150,
                   textTransform: 'none',
                 }}
               />
@@ -248,26 +251,10 @@ export default function App() {
                   </FormControl>
                 </Grid>
                 <Grid size={12}>
-                  {/* Translate button removed for auto-translate */}
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{
-                      bgcolor: "#1e90ff",
-                      color: "#fff",
-                      minHeight: 44,
-                      "&:hover": { bgcolor: "#005bb5" },
-                    }}
-                    disabled
-                  >
-                    {loading ? "Translating..." : "Translate"}
-                  </Button>
-                </Grid>
-                <Grid size={12}>
                   <TextField
                     multiline
-                    minRows={6}
-                    maxRows={10}
+                    minRows={12}
+                    maxRows={20}
                     fullWidth
                     placeholder="Translation will appear here..."
                     value={outputText}

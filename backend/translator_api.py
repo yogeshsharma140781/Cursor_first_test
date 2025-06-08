@@ -4,6 +4,7 @@ from pydantic import BaseModel
 import httpx
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 
 load_dotenv()
 
@@ -43,13 +44,24 @@ async def translate(req: TranslationRequest):
                 {"role": "user", "content": prompt}
             ],
             "temperature": 0.3,
-            "max_tokens": 1024
+            "max_tokens": 1024,
+            "stream": True
         }
-        async with httpx.AsyncClient() as client:
-            response = await client.post(url, headers=headers, json=data, timeout=60)
-            response.raise_for_status()
-            result = response.json()
-            translation = result["choices"][0]["message"]["content"]
-        return {"translation": translation}
+        async def event_stream():
+            async with httpx.AsyncClient() as client:
+                async with client.stream("POST", url, headers=headers, json=data, timeout=60) as response:
+                    async for line in response.aiter_lines():
+                        if line.startswith("data: "):
+                            content = line[6:]
+                            if content == "[DONE]":
+                                break
+                            try:
+                                chunk = httpx.Response(200, content=content).json()
+                                delta = chunk["choices"][0]["delta"].get("content", "")
+                                if delta:
+                                    yield delta
+                            except Exception:
+                                continue
+        return StreamingResponse(event_stream(), media_type="text/plain")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Translation failed: {str(e)}") 

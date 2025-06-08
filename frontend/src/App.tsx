@@ -109,7 +109,7 @@ export default function App() {
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
     debounceTimeout.current = setTimeout(async () => {
       try {
-        const res = await fetch("https://translatorai-bill.onrender.com", {
+        const res = await fetch("https://translay.onrender.com/translate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

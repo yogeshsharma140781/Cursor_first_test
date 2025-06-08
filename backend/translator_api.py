@@ -3,12 +3,21 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import httpx
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
 API_KEY = os.getenv('OPENAI_API_KEY')
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # For production, use ["https://translay.onrender.com"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class TranslationRequest(BaseModel):
     text: str

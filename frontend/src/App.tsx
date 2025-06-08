@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Container,
   Box,
@@ -13,9 +13,9 @@ import {
   FormControl,
   Paper,
   CssBaseline,
-  Grid,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
 
 const LANGUAGES = [
   { value: "en", label: "English" },
@@ -93,7 +93,7 @@ export default function App() {
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
   const [loading, setLoading] = useState(false);
-  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const wordCount = inputText.trim() ? inputText.trim().split(/\s+/).length : 0;
   const charCount = inputText.length;
@@ -109,7 +109,7 @@ export default function App() {
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
     debounceTimeout.current = setTimeout(async () => {
       try {
-        const res = await fetch("http://localhost:8000/translate", {
+        const res = await fetch("https://translatorai-bill.onrender.com", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -135,33 +135,6 @@ export default function App() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputText, sourceLang, targetLang]);
-
-  const handleTranslate = async () => {
-    if (!inputText.trim()) return;
-    setLoading(true);
-    setOutputText("");
-    try {
-      const res = await fetch("http://localhost:8000/translate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          text: inputText,
-          source_lang: sourceLang,
-          target_lang: targetLang,
-        }),
-      });
-      const data = await res.json();
-      if (data.translation && data.translation.startsWith("The text provided does not contain enough information")) {
-        setOutputText("");
-      } else {
-        setOutputText(data.translation || "");
-      }
-    } catch (err) {
-      setOutputText("Translation failed.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -221,8 +194,8 @@ export default function App() {
 
           {tab === 0 && (
             <Paper elevation={0} sx={{ p: 3, bgcolor: "#fff" }}>
-              <Grid container spacing={3} direction="column">
-                <Grid item xs={12}>
+              <Grid container spacing={3}>
+                <Grid size={12}>
                   <FormControl fullWidth>
                     <InputLabel id="source-lang-label">Source Language</InputLabel>
                     <Select
@@ -240,7 +213,7 @@ export default function App() {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <TextField
                     multiline
                     minRows={6}
@@ -252,12 +225,12 @@ export default function App() {
                     variant="outlined"
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <Typography variant="body2" color="#888" sx={{ mt: -1, mb: 0, fontSize: 13 }}>
                     {wordCount} words, {charCount} characters
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <FormControl fullWidth>
                     <InputLabel id="target-lang-label">Target Language</InputLabel>
                     <Select
@@ -274,7 +247,7 @@ export default function App() {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   {/* Translate button removed for auto-translate */}
                   <Button
                     fullWidth
@@ -290,7 +263,7 @@ export default function App() {
                     {loading ? "Translating..." : "Translate"}
                   </Button>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <TextField
                     multiline
                     minRows={6}

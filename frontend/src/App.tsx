@@ -6,7 +6,6 @@ import {
   Tabs,
   Tab,
   TextField,
-  Button,
   MenuItem,
   Select,
   InputLabel,
@@ -92,7 +91,6 @@ export default function App() {
   const [targetLang, setTargetLang] = useState("en");
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
-  const [loading, setLoading] = useState(false);
   const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const wordCount = inputText.trim() ? inputText.trim().split(/\s+/).length : 0;
@@ -102,10 +100,8 @@ export default function App() {
   useEffect(() => {
     if (!inputText.trim()) {
       setOutputText("");
-      setLoading(false);
       return;
     }
-    setLoading(true);
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
     debounceTimeout.current = setTimeout(async () => {
       try {
@@ -130,8 +126,6 @@ export default function App() {
         }
       } catch (err) {
         setOutputText("Translation failed.");
-      } finally {
-        setLoading(false);
       }
     }, 600); // 600ms debounce
     return () => {

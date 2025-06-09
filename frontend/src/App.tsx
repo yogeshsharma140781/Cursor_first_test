@@ -205,7 +205,7 @@ export default function App() {
                       labelId="source-lang-label"
                       value={sourceLang}
                       label="Source Language"
-                      onChange={e => setSourceLang(e.target.value)}
+                      onChange={event => setSourceLang(event.target.value)}
                     >
                       <MenuItem value="auto">Detect Language</MenuItem>
                       {LANGUAGES.map(lang => (
@@ -277,16 +277,16 @@ export default function App() {
                     <textarea
                       ref={inputRef}
                       value={displayValue}
-                      onFocus={e => {
+                      onFocus={() => {
                         setIsFocused(true);
                         if (inputText === "") setInputText("");
                       }}
-                      onBlur={e => setIsFocused(false)}
-                      onChange={e => {
+                      onBlur={() => setIsFocused(false)}
+                      onChange={event => {
                         if (!isFocused && inputText === "") {
-                          setInputText(e.target.value.replace(FAUX_PLACEHOLDER, ""));
+                          setInputText(event.target.value.replace(FAUX_PLACEHOLDER, ""));
                         } else {
-                          setInputText(e.target.value);
+                          setInputText(event.target.value);
                         }
                       }}
                       style={{
@@ -318,7 +318,7 @@ export default function App() {
                       labelId="target-lang-label"
                       value={targetLang}
                       label="Target Language"
-                      onChange={e => setTargetLang(e.target.value)}
+                      onChange={event => setTargetLang(event.target.value)}
                     >
                       {LANGUAGES.map(lang => (
                         <MenuItem key={lang.value} value={lang.value}>

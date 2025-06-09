@@ -12,9 +12,11 @@ import {
   FormControl,
   Paper,
   CssBaseline,
+  Button,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 
 const LANGUAGES = [
   { value: "en", label: "English" },
@@ -91,7 +93,11 @@ export default function App() {
   const [targetLang, setTargetLang] = useState("en");
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
   const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const FAUX_PLACEHOLDER = "Type or paste text here...";
+  const displayValue = !isFocused && inputText === "" ? FAUX_PLACEHOLDER : inputText;
 
   const wordCount = inputText.trim() ? inputText.trim().split(/\s+/).length : 0;
   const charCount = inputText.length;
@@ -211,16 +217,94 @@ export default function App() {
                   </FormControl>
                 </Grid>
                 <Grid size={12}>
-                  <TextField
-                    multiline
-                    minRows={6}
-                    maxRows={10}
-                    fullWidth
-                    placeholder="Type or paste text here..."
-                    value={inputText}
-                    onChange={e => setInputText(e.target.value)}
-                    variant="outlined"
-                  />
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      border: '1px solid #ddd',
+                      borderRadius: 2,
+                      p: 2.5,
+                      bgcolor: '#fafafa',
+                      minHeight: 180,
+                      boxSizing: 'border-box',
+                    }}
+                  >
+                    <Box>
+                      <Button
+                        startIcon={<ContentPasteIcon sx={{ fontSize: 18 }} />}
+                        onClick={async () => {
+                          try {
+                            const text = await navigator.clipboard.readText();
+                            const textarea = inputRef.current;
+                            if (!textarea) return;
+                            // If the faux placeholder is showing, replace it
+                            if (!isFocused && inputText === "") {
+                              setInputText(text);
+                              setTimeout(() => {
+                                textarea.focus();
+                                textarea.selectionStart = textarea.selectionEnd = text.length;
+                              }, 0);
+                            } else {
+                              const start = textarea.selectionStart;
+                              const end = textarea.selectionEnd;
+                              setInputText(prev => prev.slice(0, start) + text + prev.slice(end));
+                              setTimeout(() => {
+                                textarea.focus();
+                                textarea.selectionStart = textarea.selectionEnd = start + text.length;
+                              }, 0);
+                            }
+                          } catch (err) {
+                            alert("Could not read from clipboard. Please allow clipboard permissions.");
+                          }
+                        }}
+                        sx={{
+                          bgcolor: '#999',
+                          color: '#fff',
+                          fontWeight: 600,
+                          fontSize: 15,
+                          borderRadius: 99,
+                          px: 2.5,
+                          py: 0.5,
+                          textTransform: 'none',
+                          boxShadow: 'none',
+                          mb: 1,
+                          minWidth: 0,
+                          '&:hover': { bgcolor: '#888' },
+                        }}
+                      >
+                        Paste
+                      </Button>
+                    </Box>
+                    <textarea
+                      ref={inputRef}
+                      value={displayValue}
+                      onFocus={e => {
+                        setIsFocused(true);
+                        if (inputText === "") setInputText("");
+                      }}
+                      onBlur={e => setIsFocused(false)}
+                      onChange={e => {
+                        if (!isFocused && inputText === "") {
+                          setInputText(e.target.value.replace(FAUX_PLACEHOLDER, ""));
+                        } else {
+                          setInputText(e.target.value);
+                        }
+                      }}
+                      style={{
+                        width: '100%',
+                        minHeight: 100,
+                        border: 'none',
+                        outline: 'none',
+                        resize: 'none',
+                        background: 'transparent',
+                        fontSize: (!isFocused && inputText === "") ? 17 : 18,
+                        marginTop: 16,
+                        color: (!isFocused && inputText === "") ? '#888' : '#222',
+                        fontFamily: 'inherit',
+                        fontStyle: (!isFocused && inputText === "") ? 'italic' : 'normal',
+                      }}
+                      autoFocus
+                    />
+                  </Paper>
                 </Grid>
                 <Grid size={12}>
                   <Typography variant="body2" color="#888" sx={{ mt: -1, mb: 0, fontSize: 13 }}>

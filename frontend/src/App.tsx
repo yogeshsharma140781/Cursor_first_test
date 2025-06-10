@@ -8,7 +8,6 @@ import {
   TextField,
   MenuItem,
   Select,
-  InputLabel,
   FormControl,
   Paper,
   CssBaseline,
@@ -95,7 +94,7 @@ export default function App() {
   const [isFocused, setIsFocused] = useState(false);
   const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const FAUX_PLACEHOLDER = "Type or paste text here...";
+  const [inputHeight, setInputHeight] = useState(60); // px, min height
 
   const wordCount = inputText.trim() ? inputText.trim().split(/\s+/).length : 0;
   const charCount = inputText.length;
@@ -148,6 +147,20 @@ export default function App() {
     };
     window.addEventListener('focus', handleFocus);
     return () => window.removeEventListener('focus', handleFocus);
+  }, [inputText]);
+
+  // Shrink textarea height when user stops typing and text is short
+  useEffect(() => {
+    if (!inputText) {
+      setInputHeight(60);
+      return;
+    }
+    const timeout = setTimeout(() => {
+      if (inputRef.current) {
+        setInputHeight(Math.max(60, inputRef.current.scrollHeight));
+      }
+    }, 700);
+    return () => clearTimeout(timeout);
   }, [inputText]);
 
   return (
@@ -254,7 +267,6 @@ export default function App() {
                       borderRadius: 2,
                       p: 2.5,
                       bgcolor: '#fafafa',
-                      minHeight: 180,
                       boxSizing: 'border-box',
                       position: 'relative',
                       width: 420,
@@ -286,10 +298,14 @@ export default function App() {
                       value={inputText}
                       onFocus={() => setIsFocused(true)}
                       onBlur={() => setIsFocused(false)}
-                      onChange={event => setInputText(event.target.value)}
+                      onChange={event => {
+                        setInputText(event.target.value);
+                        const el = event.target;
+                        setInputHeight(Math.max(60, el.scrollHeight));
+                      }}
                       style={{
                         width: '100%',
-                        minHeight: 100,
+                        height: inputHeight,
                         border: 'none',
                         outline: 'none',
                         resize: 'none',
@@ -302,6 +318,7 @@ export default function App() {
                         zIndex: 3,
                         position: 'relative',
                         textAlign: 'left',
+                        transition: 'height 0.2s',
                       }}
                       autoFocus
                     />

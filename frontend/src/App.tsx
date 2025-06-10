@@ -336,7 +336,7 @@ export default function App() {
                     minRows={12}
                     maxRows={20}
                     fullWidth={true}
-                    placeholder="Translation will appear here..."
+                    placeholder=""
                     value={outputText}
                     InputProps={{
                       readOnly: true,

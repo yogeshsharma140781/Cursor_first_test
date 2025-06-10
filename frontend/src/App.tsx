@@ -12,11 +12,9 @@ import {
   FormControl,
   Paper,
   CssBaseline,
-  Button,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
-import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 
 const LANGUAGES = [
   { value: "en", label: "English" },

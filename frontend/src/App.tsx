@@ -167,14 +167,14 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ bgcolor: "#fff", display: 'block', width: '100vw', minHeight: '100vh' }}>
-        <Container maxWidth="sm" sx={{ py: 0, px: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', width: 420, margin: '0 auto' }}>
+        <Container maxWidth="sm" sx={{ py: 0, px: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '95vw', maxWidth: 420, margin: '0 auto' }}>
           {/* Header */}
-          <Box sx={{ width: 420, display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2, mb: 4 }}>
+          <Box sx={{ width: '95vw', maxWidth: 420, display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2, mb: 4 }}>
             <img src="/Logo-full.svg" alt="Logo" style={{ height: 60, width: "auto", display: "block" }} />
           </Box>
 
           {/* Tabs */}
-          <Box sx={{ width: 420, display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 3 }}>
+          <Box sx={{ width: '95vw', maxWidth: 420, display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 3 }}>
             <Tabs
               value={tab}
               onChange={(_, v) => setTab(v)}
@@ -183,7 +183,7 @@ export default function App() {
                 borderRadius: "24px",
                 background: "#f5f6fa",
                 minHeight: 44,
-                width: 400,
+                width: '95vw',
                 maxWidth: 400,
                 "& .MuiTabs-indicator": {
                   background: "#1e90ff",
@@ -218,17 +218,17 @@ export default function App() {
           </Box>
 
           {tab === 0 && (
-            <Paper elevation={0} sx={{ p: 3, bgcolor: "#fff" }}>
+            <Paper elevation={0} sx={{ p: 3, bgcolor: "#fff", width: '95vw', maxWidth: 420 }}>
               <Grid container spacing={3}>
                 {/* Language selectors row */}
                 <Grid size={12}>
-                  <Box display="flex" alignItems="center" justifyContent="center" sx={{ width: 420, margin: '0 auto' }}>
-                    <FormControl sx={{ width: 192 }}>
+                  <Box display="flex" alignItems="center" justifyContent="center" sx={{ width: '95vw', maxWidth: 420, margin: '0 auto' }}>
+                    <FormControl sx={{ width: '45vw', maxWidth: 192 }}>
                       <Select
                         labelId="source-lang-label"
                         value={sourceLang}
                         onChange={event => setSourceLang(event.target.value)}
-                        sx={{ width: 192, fontSize: 15 }}
+                        sx={{ width: '45vw', maxWidth: 192, fontSize: 15 }}
                         displayEmpty
                       >
                         <MenuItem value="auto">Detect Language</MenuItem>
@@ -242,12 +242,12 @@ export default function App() {
                     <Box display="flex" alignItems="center" justifyContent="center" sx={{ width: 20, mx: 1 }}>
                       <ArrowForwardIcon sx={{ fontSize: 20, color: '#222', display: 'block', mx: 'auto' }} />
                     </Box>
-                    <FormControl sx={{ width: 192 }}>
+                    <FormControl sx={{ width: '45vw', maxWidth: 192 }}>
                       <Select
                         labelId="target-lang-label"
                         value={targetLang}
                         onChange={event => setTargetLang(event.target.value)}
-                        sx={{ width: 192, fontSize: 15 }}
+                        sx={{ width: '45vw', maxWidth: 192, fontSize: 15 }}
                         displayEmpty
                       >
                         {LANGUAGES.map(lang => (
@@ -269,7 +269,8 @@ export default function App() {
                       bgcolor: '#fafafa',
                       boxSizing: 'border-box',
                       position: 'relative',
-                      width: 420,
+                      width: '95vw',
+                      maxWidth: 420,
                       margin: '0 auto',
                       display: 'flex',
                       flexDirection: 'column',
@@ -343,7 +344,8 @@ export default function App() {
                         color: '#007AFF',
                         fontWeight: 500,
                         lineHeight: 1.6,
-                        width: 420,
+                        width: '95vw',
+                        maxWidth: 420,
                         margin: '0 auto',
                         background: '#fafbfc',
                         borderRadius: 8,
@@ -354,7 +356,7 @@ export default function App() {
                       },
                     }}
                     variant="outlined"
-                    sx={{ width: 420, margin: '0 auto', background: '#fafbfc', borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+                    sx={{ width: '95vw', maxWidth: 420, margin: '0 auto', background: '#fafbfc', borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
                   />
                 </Grid>
               </Grid>

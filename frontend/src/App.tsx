@@ -167,14 +167,14 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ bgcolor: "#fff", display: 'block', width: '100vw', minHeight: '100vh' }}>
-        <Container maxWidth="sm" sx={{ py: 0, px: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '95vw', maxWidth: 420, margin: '0 auto' }}>
+        <Container maxWidth="sm" sx={{ py: 0, px: { xs: 2, sm: 0 }, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', maxWidth: 420, margin: '0 auto' }}>
           {/* Header */}
-          <Box sx={{ width: '95vw', maxWidth: 420, display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2, mb: 4 }}>
+          <Box sx={{ width: '100%', maxWidth: 420, display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2, mb: 4, mx: 'auto' }}>
             <img src="/Logo-full.svg" alt="Logo" style={{ height: 60, width: "auto", display: "block" }} />
           </Box>
 
           {/* Tabs */}
-          <Box sx={{ width: '95vw', maxWidth: 420, display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 3 }}>
+          <Box sx={{ width: '100%', maxWidth: 420, display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 3, mx: 'auto' }}>
             <Tabs
               value={tab}
               onChange={(_, v) => setTab(v)}
@@ -183,8 +183,9 @@ export default function App() {
                 borderRadius: "24px",
                 background: "#f5f6fa",
                 minHeight: 44,
-                width: '95vw',
+                width: '100%',
                 maxWidth: 400,
+                mx: 'auto',
                 "& .MuiTabs-indicator": {
                   background: "#1e90ff",
                   borderRadius: 2,
@@ -218,17 +219,17 @@ export default function App() {
           </Box>
 
           {tab === 0 && (
-            <Paper elevation={0} sx={{ p: 3, bgcolor: "#fff", width: '95vw', maxWidth: 420 }}>
+            <Paper elevation={0} sx={{ p: 3, bgcolor: "#fff", width: '100%', maxWidth: 420, mx: 'auto' }}>
               <Grid container spacing={3}>
                 {/* Language selectors row */}
                 <Grid size={12}>
-                  <Box display="flex" alignItems="center" justifyContent="center" sx={{ width: '95vw', maxWidth: 420, margin: '0 auto' }}>
-                    <FormControl sx={{ width: '45vw', maxWidth: 192 }}>
+                  <Box display="flex" alignItems="center" justifyContent="center" sx={{ width: '100%', maxWidth: 420, mx: 'auto' }}>
+                    <FormControl sx={{ width: '48%', maxWidth: 192 }}>
                       <Select
                         labelId="source-lang-label"
                         value={sourceLang}
                         onChange={event => setSourceLang(event.target.value)}
-                        sx={{ width: '45vw', maxWidth: 192, fontSize: 15 }}
+                        sx={{ width: '100%', fontSize: 15, maxWidth: 192 }}
                         displayEmpty
                       >
                         <MenuItem value="auto">Detect Language</MenuItem>
@@ -242,12 +243,12 @@ export default function App() {
                     <Box display="flex" alignItems="center" justifyContent="center" sx={{ width: 20, mx: 1 }}>
                       <ArrowForwardIcon sx={{ fontSize: 20, color: '#222', display: 'block', mx: 'auto' }} />
                     </Box>
-                    <FormControl sx={{ width: '45vw', maxWidth: 192 }}>
+                    <FormControl sx={{ width: '48%', maxWidth: 192 }}>
                       <Select
                         labelId="target-lang-label"
                         value={targetLang}
                         onChange={event => setTargetLang(event.target.value)}
-                        sx={{ width: '45vw', maxWidth: 192, fontSize: 15 }}
+                        sx={{ width: '100%', fontSize: 15, maxWidth: 192 }}
                         displayEmpty
                       >
                         {LANGUAGES.map(lang => (
@@ -269,9 +270,9 @@ export default function App() {
                       bgcolor: '#fafafa',
                       boxSizing: 'border-box',
                       position: 'relative',
-                      width: '95vw',
+                      width: '100%',
                       maxWidth: 420,
-                      margin: '0 auto',
+                      mx: 'auto',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'flex-start',
@@ -334,7 +335,7 @@ export default function App() {
                     multiline
                     minRows={12}
                     maxRows={20}
-                    fullWidth={false}
+                    fullWidth={true}
                     placeholder="Translation will appear here..."
                     value={outputText}
                     InputProps={{
@@ -344,7 +345,7 @@ export default function App() {
                         color: '#007AFF',
                         fontWeight: 500,
                         lineHeight: 1.6,
-                        width: '95vw',
+                        width: '100%',
                         maxWidth: 420,
                         margin: '0 auto',
                         background: '#fafbfc',
@@ -356,7 +357,7 @@ export default function App() {
                       },
                     }}
                     variant="outlined"
-                    sx={{ width: '95vw', maxWidth: 420, margin: '0 auto', background: '#fafbfc', borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+                    sx={{ width: '100%', maxWidth: 420, margin: '0 auto', background: '#fafbfc', borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
                   />
                 </Grid>
               </Grid>

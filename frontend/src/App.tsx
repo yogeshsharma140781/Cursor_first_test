@@ -140,6 +140,18 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputText, sourceLang, targetLang]);
 
+  // Workaround: retrigger translation on window focus after inactivity
+  useEffect(() => {
+    const handleFocus = () => {
+      if (inputText.trim()) {
+        setInputText(prev => prev + " "); // trigger useEffect
+        setTimeout(() => setInputText(prev => prev.trim()), 0); // restore original text
+      }
+    };
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, [inputText]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -228,52 +240,6 @@ export default function App() {
                       boxSizing: 'border-box',
                     }}
                   >
-                    <Box>
-                      <Button
-                        startIcon={<ContentPasteIcon sx={{ fontSize: 18 }} />}
-                        onClick={async () => {
-                          try {
-                            const text = await navigator.clipboard.readText();
-                            const textarea = inputRef.current;
-                            if (!textarea) return;
-                            // If the faux placeholder is showing, replace it
-                            if (!isFocused && inputText === "") {
-                              setInputText(text);
-                              setTimeout(() => {
-                                textarea.focus();
-                                textarea.selectionStart = textarea.selectionEnd = text.length;
-                              }, 0);
-                            } else {
-                              const start = textarea.selectionStart;
-                              const end = textarea.selectionEnd;
-                              setInputText(prev => prev.slice(0, start) + text + prev.slice(end));
-                              setTimeout(() => {
-                                textarea.focus();
-                                textarea.selectionStart = textarea.selectionEnd = start + text.length;
-                              }, 0);
-                            }
-                          } catch (err) {
-                            alert("Could not read from clipboard. Please allow clipboard permissions.");
-                          }
-                        }}
-                        sx={{
-                          bgcolor: '#999',
-                          color: '#fff',
-                          fontWeight: 600,
-                          fontSize: 15,
-                          borderRadius: 99,
-                          px: 2.5,
-                          py: 0.5,
-                          textTransform: 'none',
-                          boxShadow: 'none',
-                          mb: 1,
-                          minWidth: 0,
-                          '&:hover': { bgcolor: '#888' },
-                        }}
-                      >
-                        Paste
-                      </Button>
-                    </Box>
                     <textarea
                       ref={inputRef}
                       value={displayValue}

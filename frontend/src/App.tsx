@@ -95,7 +95,6 @@ export default function App() {
   const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const FAUX_PLACEHOLDER = "Type or paste text here...";
-  const displayValue = !isFocused && inputText === "" ? FAUX_PLACEHOLDER : inputText;
 
   const wordCount = inputText.trim() ? inputText.trim().split(/\s+/).length : 0;
   const charCount = inputText.length;

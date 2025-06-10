@@ -236,23 +236,32 @@ export default function App() {
                       bgcolor: '#fafafa',
                       minHeight: 180,
                       boxSizing: 'border-box',
+                      position: 'relative',
                     }}
                   >
+                    {/* Faux placeholder absolutely positioned at the top */}
+                    {(!isFocused && inputText === "") && (
+                      <span
+                        style={{
+                          position: 'absolute',
+                          top: 32,
+                          left: 20,
+                          color: '#888',
+                          fontStyle: 'italic',
+                          fontSize: 20,
+                          pointerEvents: 'none',
+                          zIndex: 2,
+                        }}
+                      >
+                        Type or paste text here...
+                      </span>
+                    )}
                     <textarea
                       ref={inputRef}
-                      value={displayValue}
-                      onFocus={() => {
-                        setIsFocused(true);
-                        if (inputText === "") setInputText("");
-                      }}
+                      value={inputText}
+                      onFocus={() => setIsFocused(true)}
                       onBlur={() => setIsFocused(false)}
-                      onChange={event => {
-                        if (!isFocused && inputText === "") {
-                          setInputText(event.target.value.replace(FAUX_PLACEHOLDER, ""));
-                        } else {
-                          setInputText(event.target.value);
-                        }
-                      }}
+                      onChange={event => setInputText(event.target.value)}
                       style={{
                         width: '100%',
                         minHeight: 100,
@@ -260,11 +269,13 @@ export default function App() {
                         outline: 'none',
                         resize: 'none',
                         background: 'transparent',
-                        fontSize: (!isFocused && inputText === "") ? 17 : 18,
+                        fontSize: 20,
                         marginTop: 16,
-                        color: (!isFocused && inputText === "") ? '#888' : '#222',
+                        color: '#222',
                         fontFamily: 'inherit',
-                        fontStyle: (!isFocused && inputText === "") ? 'italic' : 'normal',
+                        fontStyle: 'normal',
+                        zIndex: 3,
+                        position: 'relative',
                       }}
                       autoFocus
                     />
@@ -302,6 +313,12 @@ export default function App() {
                     value={outputText}
                     InputProps={{
                       readOnly: true,
+                      style: {
+                        fontSize: 20,
+                        color: '#1e90ff', // blue and readable
+                        fontWeight: 500,
+                        lineHeight: 1.6,
+                      },
                     }}
                     variant="outlined"
                   />

@@ -221,7 +221,7 @@ export default function App() {
             <Paper elevation={0} sx={{ p: 3, bgcolor: "#fff" }}>
               <Grid container spacing={3}>
                 {/* Language selectors row */}
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <Box display="flex" alignItems="center" justifyContent="center" sx={{ width: 420, margin: '0 auto' }}>
                     <FormControl sx={{ width: 192 }}>
                       <Select
@@ -259,7 +259,7 @@ export default function App() {
                     </FormControl>
                   </Box>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <Paper
                     elevation={0}
                     sx={{
@@ -328,7 +328,7 @@ export default function App() {
                     </Typography>
                   </Paper>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid size={12}>
                   <TextField
                     multiline
                     minRows={12}

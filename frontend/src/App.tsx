@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const LANGUAGES = [
   { value: "en", label: "English" },
@@ -152,21 +153,20 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ minHeight: "100vh", bgcolor: "#fff", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Container maxWidth="sm" sx={{ py: 0, px: 0 }}>
+      <Box sx={{ bgcolor: "#fff", display: 'block', width: '100vw', minHeight: '100vh' }}>
+        <Container maxWidth="sm" sx={{ py: 0, px: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', width: 420, margin: '0 auto' }}>
           {/* Header */}
-          <Box display="flex" alignItems="center" justifyContent="center" mb={4}>
+          <Box sx={{ width: 420, display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2, mb: 4 }}>
             <img src="/Logo-full.svg" alt="Logo" style={{ height: 60, width: "auto", display: "block" }} />
           </Box>
 
           {/* Tabs */}
-          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <Box sx={{ width: 420, display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 3 }}>
             <Tabs
               value={tab}
               onChange={(_, v) => setTab(v)}
               variant="fullWidth"
               sx={{
-                mb: 3,
                 borderRadius: "24px",
                 background: "#f5f6fa",
                 minHeight: 44,
@@ -207,25 +207,46 @@ export default function App() {
           {tab === 0 && (
             <Paper elevation={0} sx={{ p: 3, bgcolor: "#fff" }}>
               <Grid container spacing={3}>
-                <Grid size={12}>
-                  <FormControl fullWidth>
-                    <InputLabel id="source-lang-label">Source Language</InputLabel>
-                    <Select
-                      labelId="source-lang-label"
-                      value={sourceLang}
-                      label="Source Language"
-                      onChange={event => setSourceLang(event.target.value)}
-                    >
-                      <MenuItem value="auto">Detect Language</MenuItem>
-                      {LANGUAGES.map(lang => (
-                        <MenuItem key={lang.value} value={lang.value}>
-                          {lang.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                {/* Language selectors row */}
+                <Grid item xs={12}>
+                  <Box display="flex" alignItems="center" justifyContent="center" sx={{ width: 420, margin: '0 auto' }}>
+                    <FormControl sx={{ width: 192 }}>
+                      <Select
+                        labelId="source-lang-label"
+                        value={sourceLang}
+                        onChange={event => setSourceLang(event.target.value)}
+                        sx={{ width: 192, fontSize: 15 }}
+                        displayEmpty
+                      >
+                        <MenuItem value="auto">Detect Language</MenuItem>
+                        {LANGUAGES.map(lang => (
+                          <MenuItem key={lang.value} value={lang.value}>
+                            {lang.label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <Box display="flex" alignItems="center" justifyContent="center" sx={{ width: 20, mx: 1 }}>
+                      <ArrowForwardIcon sx={{ fontSize: 20, color: '#222', display: 'block', mx: 'auto' }} />
+                    </Box>
+                    <FormControl sx={{ width: 192 }}>
+                      <Select
+                        labelId="target-lang-label"
+                        value={targetLang}
+                        onChange={event => setTargetLang(event.target.value)}
+                        sx={{ width: 192, fontSize: 15 }}
+                        displayEmpty
+                      >
+                        {LANGUAGES.map(lang => (
+                          <MenuItem key={lang.value} value={lang.value}>
+                            {lang.label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
                 </Grid>
-                <Grid size={12}>
+                <Grid item xs={12}>
                   <Paper
                     elevation={0}
                     sx={{
@@ -236,6 +257,11 @@ export default function App() {
                       minHeight: 180,
                       boxSizing: 'border-box',
                       position: 'relative',
+                      width: 420,
+                      margin: '0 auto',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
                     }}
                   >
                     {/* Faux placeholder absolutely positioned at the top */}
@@ -275,51 +301,43 @@ export default function App() {
                         fontStyle: 'normal',
                         zIndex: 3,
                         position: 'relative',
+                        textAlign: 'left',
                       }}
                       autoFocus
                     />
+                    {/* Word/character count left-aligned under input box */}
+                    <Typography variant="body2" color="#888" sx={{ mt: 1, mb: 0, fontSize: 13, textAlign: 'left', width: '100%' }}>
+                      {wordCount} words, {charCount} characters
+                    </Typography>
                   </Paper>
                 </Grid>
-                <Grid size={12}>
-                  <Typography variant="body2" color="#888" sx={{ mt: -1, mb: 0, fontSize: 13 }}>
-                    {wordCount} words, {charCount} characters
-                  </Typography>
-                </Grid>
-                <Grid size={12}>
-                  <FormControl fullWidth>
-                    <InputLabel id="target-lang-label">Target Language</InputLabel>
-                    <Select
-                      labelId="target-lang-label"
-                      value={targetLang}
-                      label="Target Language"
-                      onChange={event => setTargetLang(event.target.value)}
-                    >
-                      {LANGUAGES.map(lang => (
-                        <MenuItem key={lang.value} value={lang.value}>
-                          {lang.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid size={12}>
+                <Grid item xs={12}>
                   <TextField
                     multiline
                     minRows={12}
                     maxRows={20}
-                    fullWidth
+                    fullWidth={false}
                     placeholder="Translation will appear here..."
                     value={outputText}
                     InputProps={{
                       readOnly: true,
                       style: {
                         fontSize: 20,
-                        color: '#1e90ff', // blue and readable
+                        color: '#007AFF',
                         fontWeight: 500,
                         lineHeight: 1.6,
+                        width: 420,
+                        margin: '0 auto',
+                        background: '#fafbfc',
+                        borderRadius: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        textAlign: 'left',
                       },
                     }}
                     variant="outlined"
+                    sx={{ width: 420, margin: '0 auto', background: '#fafbfc', borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
                   />
                 </Grid>
               </Grid>

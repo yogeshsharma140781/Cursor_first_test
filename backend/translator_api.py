@@ -4,13 +4,23 @@ from pydantic import BaseModel
 import httpx
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+import hashlib
 
 load_dotenv()
 
 API_KEY = os.getenv('OPENAI_API_KEY')
 
 app = FastAPI()
+
+# Create a persistent HTTP client for connection pooling
+client = httpx.AsyncClient(
+    timeout=httpx.Timeout(60.0),
+    limits=httpx.Limits(max_keepalive_connections=20, max_connections=100)
+)
+
+# Simple in-memory cache for translations
+translation_cache = {}
+CACHE_SIZE = 1000
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,43 +35,69 @@ class TranslationRequest(BaseModel):
     source_lang: str
     target_lang: str
 
+def get_cache_key(text: str, source_lang: str, target_lang: str) -> str:
+    """Generate a cache key for the translation request."""
+    content = f"{text}|{source_lang}|{target_lang}"
+    return hashlib.md5(content.encode()).hexdigest()
+
 @app.post("/translate")
 async def translate(req: TranslationRequest):
     if not API_KEY:
         raise HTTPException(status_code=500, detail="OPENAI_API_KEY not set on server.")
     if not req.text.strip():
         raise HTTPException(status_code=400, detail="No text provided.")
+    
+    # Check cache first
+    cache_key = get_cache_key(req.text, req.source_lang, req.target_lang)
+    if cache_key in translation_cache:
+        return {"translation": translation_cache[cache_key]}
+    
     try:
-        prompt = f"Analyze the following text and identify its domain/context (e.g., Legal, Medical, Education, Finance, Technical, etc.). Then translate it from {req.source_lang} to {req.target_lang}, taking into account that this is a General text. Output only the translation (do not prefix 'Domain:' or 'Translation:').\n\nText to analyze and translate:\n{req.text}"
+        # Use simplified prompt for faster translation
+        prompt = f"Translate the following text from {req.source_lang} to {req.target_lang}. Output only the translation:\n\n{req.text}"
+        
         url = "https://api.openai.com/v1/chat/completions"
         headers = {
             "Authorization": f"Bearer {API_KEY}",
             "Content-Type": "application/json"
         }
         data = {
-            "model": "gpt-4",
+            "model": "gpt-4o-mini",  # Much faster than gpt-4
             "messages": [
                 {"role": "user", "content": prompt}
             ],
             "temperature": 0.3,
-            "max_tokens": 1024,
-            "stream": True
+            "max_tokens": 1024
         }
-        async def event_stream():
-            async with httpx.AsyncClient() as client:
-                async with client.stream("POST", url, headers=headers, json=data, timeout=60) as response:
-                    async for line in response.aiter_lines():
-                        if line.startswith("data: "):
-                            content = line[6:]
-                            if content == "[DONE]":
-                                break
-                            try:
-                                chunk = httpx.Response(200, content=content).json()
-                                delta = chunk["choices"][0]["delta"].get("content", "")
-                                if delta:
-                                    yield delta
-                            except Exception:
-                                continue
-        return StreamingResponse(event_stream(), media_type="text/plain")
+        
+        response = await client.post(url, headers=headers, json=data)
+        result = response.json()
+        translation = result["choices"][0]["message"]["content"].strip()
+        
+        # Cache the result (with size limit)
+        if len(translation_cache) >= CACHE_SIZE:
+            # Remove oldest entry (simple FIFO)
+            oldest_key = next(iter(translation_cache))
+            del translation_cache[oldest_key]
+        
+        translation_cache[cache_key] = translation
+        
+        return {"translation": translation}
+        
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Translation failed: {str(e)}") 
+        raise HTTPException(status_code=500, detail=f"Translation failed: {str(e)}")
+
+@app.on_event("startup")
+async def startup_event():
+    """Warm up the connection to reduce cold start latency."""
+    try:
+        # Make a simple request to warm up connections
+        await client.get("https://api.openai.com/v1/models", 
+                        headers={"Authorization": f"Bearer {API_KEY}"})
+    except:
+        pass  # Ignore errors during warmup
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Clean up resources."""
+    await client.aclose() 

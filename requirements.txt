@@ -1,7 +1,12 @@
+# Core dependencies for translation apps
 streamlit
 requests
 python-dotenv
+httpx
+fastapi
+uvicorn[standard]
 
+# Original dependencies
 python-docx>=0.8.11
 PyPDF2>=3.0.0
 googletrans>=3.1.0a0

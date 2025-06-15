@@ -11,6 +11,7 @@ import {
   FormControl,
   Paper,
   CssBaseline,
+  CircularProgress,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
@@ -92,21 +93,34 @@ export default function App() {
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [isTranslating, setIsTranslating] = useState(false);
   const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [inputHeight, setInputHeight] = useState(60); // px, min height
+  const abortController = useRef<AbortController | null>(null);
 
   const wordCount = inputText.trim() ? inputText.trim().split(/\s+/).length : 0;
   const charCount = inputText.length;
 
-  // Debounced auto-translate effect
+  // Debounced auto-translate effect with better performance
   useEffect(() => {
     if (!inputText.trim()) {
       setOutputText("");
+      setIsTranslating(false);
       return;
     }
+    
+    // Cancel previous request if still running
+    if (abortController.current) {
+      abortController.current.abort();
+    }
+    
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    
     debounceTimeout.current = setTimeout(async () => {
+      setIsTranslating(true);
+      abortController.current = new AbortController();
+      
       try {
         const res = await fetch("https://cursor-first-test.onrender.com/translate", {
           method: "POST",
@@ -116,38 +130,32 @@ export default function App() {
             source_lang: sourceLang,
             target_lang: targetLang,
           }),
+          signal: abortController.current.signal,
         });
-        if (!res.body) throw new Error("No response body");
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let result = "";
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) break;
-          result += decoder.decode(value, { stream: true });
-          setOutputText(result);
+        
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
         }
-      } catch (err) {
-        setOutputText("Translation failed.");
+        
+        const result = await res.json();
+        setOutputText(result.translation || "Translation failed.");
+        
+      } catch (err: any) {
+        if (err.name !== 'AbortError') {
+          console.error('Translation error:', err);
+          setOutputText("Translation failed. Please try again.");
+        }
+      } finally {
+        setIsTranslating(false);
       }
-    }, 600); // 600ms debounce
+    }, 1200); // Increased debounce time for better UX
+    
     return () => {
       if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+      if (abortController.current) abortController.current.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputText, sourceLang, targetLang]);
-
-  // Workaround: retrigger translation on window focus after inactivity
-  useEffect(() => {
-    const handleFocus = () => {
-      if (inputText.trim()) {
-        setInputText(prev => prev + " "); // trigger useEffect
-        setTimeout(() => setInputText(prev => prev.trim()), 0); // restore original text
-      }
-    };
-    window.addEventListener('focus', handleFocus);
-    return () => window.removeEventListener('focus', handleFocus);
-  }, [inputText]);
 
   // Shrink textarea height when user stops typing and text is short
   useEffect(() => {
@@ -331,34 +339,55 @@ export default function App() {
                   </Paper>
                 </Grid>
                 <Grid size={12}>
-                  <TextField
-                    multiline
-                    minRows={12}
-                    maxRows={20}
-                    fullWidth={true}
-                    placeholder=""
-                    value={outputText}
-                    InputProps={{
-                      readOnly: true,
-                      style: {
-                        fontSize: 20,
-                        color: '#007AFF',
-                        fontWeight: 500,
-                        lineHeight: 1.6,
-                        width: '100%',
-                        maxWidth: 420,
-                        margin: '0 auto',
-                        background: '#fafbfc',
-                        borderRadius: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'flex-start',
-                        textAlign: 'left',
-                      },
-                    }}
-                    variant="outlined"
-                    sx={{ width: '100%', maxWidth: 420, margin: '0 auto', background: '#fafbfc', borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
-                  />
+                  <Box sx={{ position: 'relative' }}>
+                    <TextField
+                      multiline
+                      minRows={12}
+                      maxRows={20}
+                      fullWidth={true}
+                      placeholder=""
+                      value={outputText}
+                      InputProps={{
+                        readOnly: true,
+                        style: {
+                          fontSize: 20,
+                          color: '#007AFF',
+                          fontWeight: 500,
+                          lineHeight: 1.6,
+                          width: '100%',
+                          maxWidth: 420,
+                          margin: '0 auto',
+                          background: '#fafbfc',
+                          borderRadius: 8,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'flex-start',
+                          textAlign: 'left',
+                        },
+                      }}
+                      variant="outlined"
+                      sx={{ width: '100%', maxWidth: 420, margin: '0 auto', background: '#fafbfc', borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+                    />
+                    {/* Loading indicator */}
+                    {isTranslating && (
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1,
+                        }}
+                      >
+                        <CircularProgress size={20} />
+                        <Typography variant="body2" color="#888">
+                          Translating...
+                        </Typography>
+                      </Box>
+                    )}
+                  </Box>
                 </Grid>
               </Grid>
             </Paper>
@@ -368,3 +397,4 @@ export default function App() {
     </ThemeProvider>
   );
 }
+ 

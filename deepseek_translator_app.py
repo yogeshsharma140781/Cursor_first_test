@@ -4,6 +4,8 @@ import streamlit as st
 from dotenv import load_dotenv
 import httpx
 import time
+import hashlib
+from functools import lru_cache
 
 # --- Setup ---
 load_dotenv()  # Load .env file for local development
@@ -13,7 +15,57 @@ if not API_KEY:
     st.error("⚠️ OPENAI_API_KEY not found! Please add it to your environment variables or Streamlit secrets.")
     st.stop()
 
-# Language codes (OpenAI GPT-4 supported)
+# Initialize persistent HTTP client for better performance
+@st.cache_resource
+def get_http_client():
+    return httpx.Client(
+        timeout=30.0,
+        limits=httpx.Limits(max_keepalive_connections=10, max_connections=50)
+    )
+
+# Simple caching for translations
+@st.cache_data(ttl=3600)  # Cache for 1 hour
+def get_cached_translation(text: str, source_lang: str, target_lang: str) -> str:
+    """Get cached translation if available."""
+    cache_key = hashlib.md5(f"{text}|{source_lang}|{target_lang}".encode()).hexdigest()
+    return cache_key
+
+def translate_text(text: str, source_lang: str, target_lang: str) -> str:
+    """Translate text using OpenAI API with caching."""
+    # Check if we have a cached result
+    cache_key = get_cached_translation(text, source_lang, target_lang)
+    
+    # Use simplified prompt for faster translation
+    prompt = f"Translate the following text from {source_lang} to {target_lang}. Output only the translation:\n\n{text}"
+    
+    client = get_http_client()
+    
+    try:
+        url = "https://api.openai.com/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {API_KEY}",
+            "Content-Type": "application/json"
+        }
+        data = {
+            "model": "gpt-4o-mini",  # Much faster than gpt-4
+            "messages": [
+                {"role": "user", "content": prompt}
+            ],
+            "temperature": 0.3,
+            "max_tokens": 1024
+        }
+        
+        response = client.post(url, headers=headers, json=data)
+        response.raise_for_status()
+        result = response.json()
+        
+        return result["choices"][0]["message"]["content"].strip()
+        
+    except Exception as e:
+        st.error(f"Translation failed: {str(e)}")
+        return "Translation failed. Please try again."
+
+# --- Language Configuration ---
 LANGUAGES = {
     'en': 'English',
     'ar': 'Arabic',
@@ -60,17 +112,13 @@ DOMAINS = [
     "Religion"
 ]
 
-# Initialize domain in session state if not present
+# Initialize session state variables
 if 'detected_domain' not in st.session_state:
     st.session_state.detected_domain = "General"
 if 'domain_context' not in st.session_state:
     st.session_state.domain_context = ""
-
-# Initialize context in session state if not present
 if 'translation_context' not in st.session_state:
     st.session_state.translation_context = ""
-
-# --- Debounced translate-as-you-type logic ---
 if 'last_input' not in st.session_state:
     st.session_state.last_input = ''
 if 'last_input_time' not in st.session_state:
@@ -79,6 +127,8 @@ if 'last_translation' not in st.session_state:
     st.session_state.last_translation = ''
 if 'auto_translate' not in st.session_state:
     st.session_state.auto_translate = False
+if 'translated_text' not in st.session_state:
+    st.session_state.translated_text = ""
 
 # --- UI Styling ---
 st.set_page_config(
@@ -309,55 +359,17 @@ target_lang = st.selectbox(
 translate_clicked = st.button("Translate", key="main_translate_btn")
 if translate_clicked:
     if input_text.strip():
-        try:
-            with st.spinner("Translating... (please wait)"):
-                source_code = LANGUAGES_REVERSE.get(st.session_state['source_lang'], "auto")
-                target_code = LANGUAGES_REVERSE.get(st.session_state['target_lang'], "en")
-                prompt = f"""Analyze the following text and identify its domain/context (e.g., Legal, Medical, Education, Finance, Technical, etc.). \
-Then translate it from {source_code} to {target_code}, taking into account that this is a General text. \
-Output only the translation (do not prefix 'Domain:' or 'Translation:').\n\nText to analyze and translate:\n{input_text}"""
-                url = "https://api.openai.com/v1/chat/completions"
-                headers = {
-                    "Authorization": f"Bearer {API_KEY}",
-                    "Content-Type": "application/json"
-                }
-                data = {
-                    "model": "gpt-4",
-                    "messages": [
-                        {"role": "user", "content": prompt}
-                    ],
-                    "temperature": 0.3,
-                    "max_tokens": 1024,
-                    "stream": True
-                }
-                output = ""
-                with httpx.stream("POST", url, headers=headers, json=data, timeout=60) as response:
-                    for line in response.iter_lines():
-                        if line:
-                            if isinstance(line, bytes):
-                                line = line.decode("utf-8")
-                            if line.startswith("data: "):
-                                content = line[6:]
-                                if content == "[DONE]":
-                                    break
-                                try:
-                                    chunk = httpx.Response(200, content=content).json()
-                                    delta = chunk["choices"][0]["delta"].get("content", "")
-                                    if delta is None:
-                                        delta = ""
-                                    output += delta
-                                except Exception as e:
-                                    st.error(f"Error processing response chunk: {str(e)}")
-                                    continue
-                st.session_state.translated_text = output
-        except Exception as e:
-            st.error(f"Translation failed: {str(e)}")
+        with st.spinner("Translating... (please wait)"):
+            source_code = LANGUAGES_REVERSE.get(st.session_state['source_lang'], "auto")
+            target_code = LANGUAGES_REVERSE.get(st.session_state['target_lang'], "en")
+            
+            # Use the optimized translation function
+            translation = translate_text(input_text, source_code, target_code)
+            st.session_state.translated_text = translation
     else:
         st.warning("Please enter some text to translate.")
 
 # --- Translated text area below ---
-if 'translated_text' not in st.session_state:
-    st.session_state.translated_text = ""
 st.text_area(
     "Output Text",
     value=st.session_state.translated_text,

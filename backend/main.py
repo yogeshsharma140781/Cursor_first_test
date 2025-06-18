@@ -102,7 +102,7 @@ async def translate_pdf(
     # Return success response (placeholder for now)
     return {
         "success": True,
-        "message": "PDF endpoint is working!",
+        "message": "PDF endpoint is working! (v3.1)",
         "filename": file.filename,
         "file_size": len(file_content),
         "source_lang": source_lang,

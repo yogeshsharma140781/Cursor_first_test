@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 import hashlib
 import io
+import base64
 
 load_dotenv()
 
@@ -219,7 +220,7 @@ async def root():
         "message": "Translation API is running",
         "version": "4.3",
         "status": "OK",
-        "endpoints": ["/translate", "/translate-pdf"]
+        "endpoints": ["/translate", "/translate-pdf", "/translate-pdf-debug"]
     }
 
 @app.post("/translate")
@@ -292,6 +293,69 @@ async def translate_pdf(
             filename=f"translated_{file.filename}",
             background=lambda: os.unlink(tmp_file_path)  # Clean up after sending
         )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        return JSONResponse({
+            "success": False,
+            "error": str(e),
+            "message": "PDF translation failed",
+            "filename": file.filename if file else "unknown"
+        })
+
+@app.post("/translate-pdf-debug")
+async def translate_pdf_debug(
+    file: UploadFile = File(...),
+    source_lang: str = Form("auto"),
+    target_lang: str = Form("en")
+):
+    """Debug version that returns JSON with base64-encoded PDF"""
+    try:
+        # Validate file
+        if not file.filename.lower().endswith('.pdf'):
+            raise HTTPException(status_code=400, detail="File must be a PDF")
+        
+        # Read file content
+        file_content = await file.read()
+        
+        # Validate PDF header
+        if not file_content.startswith(b'%PDF-'):
+            raise HTTPException(status_code=400, detail="Invalid PDF file")
+        
+        # Extract text from PDF
+        extracted_text = extract_text_from_pdf(file_content)
+        
+        if not extracted_text or len(extracted_text.strip()) < 3:
+            return JSONResponse({
+                "success": False,
+                "message": "Could not extract readable text from PDF",
+                "filename": file.filename,
+                "file_size": len(file_content),
+                "extracted_text": extracted_text[:200] if extracted_text else "No text found"
+            })
+        
+        # Translate the extracted text
+        translated_text = await translate_text_openai(extracted_text, source_lang, target_lang)
+        
+        # Create a simple PDF with translated text
+        translated_pdf_content = create_simple_pdf_with_text(translated_text)
+        
+        # Return JSON with base64-encoded PDF
+        pdf_base64 = base64.b64encode(translated_pdf_content).decode('utf-8')
+        
+        return JSONResponse({
+            "success": True,
+            "message": "PDF translated successfully",
+            "filename": f"translated_{file.filename}",
+            "original_text": extracted_text,
+            "translated_text": translated_text,
+            "source_lang": source_lang,
+            "target_lang": target_lang,
+            "pdf_base64": pdf_base64,
+            "pdf_size": len(translated_pdf_content),
+            "version": "4.3-debug"
+        })
         
     except HTTPException:
         raise

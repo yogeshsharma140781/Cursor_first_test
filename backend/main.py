@@ -1,5 +1,6 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import os
 import httpx
@@ -7,6 +8,9 @@ from dotenv import load_dotenv
 import asyncio
 from functools import lru_cache
 import hashlib
+import tempfile
+import shutil
+from pathlib import Path
 
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -36,6 +40,10 @@ class TranslateRequest(BaseModel):
     text: str
     source_lang: str
     target_lang: str
+
+class PDFTranslateRequest(BaseModel):
+    source_lang: str = "auto"
+    target_lang: str = "en"
 
 def get_cache_key(text: str, source_lang: str, target_lang: str) -> str:
     """Generate a cache key for the translation request."""
@@ -83,6 +91,62 @@ async def translate(req: TranslateRequest):
     translation_cache[cache_key] = translation
     
     return {"translation": translation}
+
+@app.post("/translate-pdf")
+async def translate_pdf(
+    file: UploadFile = File(...),
+    source_lang: str = "auto",
+    target_lang: str = "en"
+):
+    """
+    Translate a PDF file with enhanced formatting including URL formatting.
+    Returns the translated PDF file.
+    """
+    if not file.filename.lower().endswith('.pdf'):
+        raise HTTPException(status_code=400, detail="Only PDF files are supported")
+    
+    # Create temporary directory for processing
+    with tempfile.TemporaryDirectory() as temp_dir:
+        temp_path = Path(temp_dir)
+        
+        # Save uploaded file
+        input_pdf_path = temp_path / "input.pdf"
+        with open(input_pdf_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        
+        # Generate output filename
+        output_pdf_path = temp_path / "translated.pdf"
+        
+        try:
+            # Import and use the enhanced PDF translator
+            import sys
+            sys.path.append(str(Path(__file__).parent.parent))
+            from test_layoutparser_simple import SimplePDFLayoutParser
+            
+            # Initialize the parser with API key
+            parser = SimplePDFLayoutParser(require_api_key=True)
+            
+            # Set the OpenAI API key
+            import openai
+            openai.api_key = OPENAI_API_KEY
+            
+            # Process the PDF with enhanced translation
+            parser.process_pdf(
+                pdf_path=str(input_pdf_path),
+                output_path=str(output_pdf_path),
+                translate=True,
+                target_lang=target_lang
+            )
+            
+            # Return the translated PDF
+            return FileResponse(
+                path=str(output_pdf_path),
+                filename=f"translated_{file.filename}",
+                media_type="application/pdf"
+            )
+            
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"PDF processing failed: {str(e)}")
 
 @app.on_event("startup")
 async def startup_event():

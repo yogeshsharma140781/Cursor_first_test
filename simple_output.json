@@ -1,0 +1,551 @@
+[
+  {
+    "block_id": 0,
+    "page_number": 1,
+    "original_text": "PRODUCT TABLE:\nHeaders: Pos. | Artikelnummer Beschrijving | Aantal | BTW | Stuksprijs | Totaal\nPosition: 1, Article: 1807418, Description: SAMSUNG LS34C652UAUXEN VIEWFINITY S6, Qty: 1, VAT: 21,00%, Unit Price: 361,00 EUR, Total: 361,00 EUR",
+    "bbox": [
+      50.5890007019043,
+      423.9670104980469,
+      552.7554931640625,
+      444.4245300292969
+    ],
+    "type": "table",
+    "confidence": 1.0,
+    "structured_data": {
+      "type": "product_table",
+      "block_index": 14,
+      "bbox": [
+        50.5890007019043,
+        423.9670104980469,
+        552.7554931640625,
+        444.4245300292969
+      ],
+      "headers": [
+        "Pos.",
+        "Artikelnummer Beschrijving",
+        "Aantal",
+        "BTW",
+        "Stuksprijs",
+        "Totaal"
+      ],
+      "rows": [
+        {
+          "position": "1",
+          "article_number": "1807418",
+          "description": "SAMSUNG LS34C652UAUXEN VIEWFINITY S6",
+          "quantity": "1",
+          "vat_rate": "21,00%",
+          "unit_price": "361,00 EUR",
+          "total": "361,00 EUR"
+        }
+      ]
+    },
+    "translated_text": "PRODUCT TABLE: Headers: pos. | Article Number description | Quantity | BTW | Unit Price | Total position: 1, article: 1807418, description: SAMSUNG ls34c652uauxen VIEWFINITY s6, qty: 1, VAT: 21,00%, unit price: 361,00 EUR, total: 361,00 EUR"
+  },
+  {
+    "block_id": 1,
+    "page_number": 1,
+    "original_text": "VAT CALCULATION TABLE:\nHeaders: BTW | BTW-grondslag | BTW-bedrag | Totaal\nVAT Rate: 21,00%, VAT Base: 298,35 EUR, VAT Amount: 62,65 EUR, Total: 361,00 EUR",
+    "bbox": [
+      150.75399780273438,
+      451.2200012207031,
+      399.68450927734375,
+      471.1775207519531
+    ],
+    "type": "table",
+    "confidence": 1.0,
+    "structured_data": {
+      "type": "vat_table",
+      "block_index": 15,
+      "bbox": [
+        150.75399780273438,
+        451.2200012207031,
+        399.68450927734375,
+        471.1775207519531
+      ],
+      "headers": [
+        "BTW",
+        "BTW-grondslag",
+        "BTW-bedrag",
+        "Totaal"
+      ],
+      "rows": [
+        {
+          "vat_rate": "21,00%",
+          "vat_base": "298,35 EUR",
+          "vat_amount": "62,65 EUR",
+          "total": "361,00 EUR"
+        }
+      ]
+    },
+    "translated_text": "VAT CALCULATION TABLE: Headers: BTW | VAT Base | VAT Amount | Total VAT rate: 21,00%, VAT base: 298,35 EUR, VAT amount: 62,65 EUR, total: 361,00 EUR"
+  },
+  {
+    "block_id": 2,
+    "page_number": 1,
+    "original_text": "SUMMARY TABLE:\nTotaal: 361,00 EUR\nRestbedrag: 0,00 EUR",
+    "bbox": [
+      446.8940124511719,
+      451.2200012207031,
+      552.7550659179688,
+      471.6775207519531
+    ],
+    "type": "table",
+    "confidence": 1.0,
+    "structured_data": {
+      "type": "summary_table",
+      "block_index": 16,
+      "bbox": [
+        446.8940124511719,
+        451.2200012207031,
+        552.7550659179688,
+        471.6775207519531
+      ],
+      "rows": [
+        {
+          "label": "Totaal",
+          "value": "361,00 EUR"
+        },
+        {
+          "label": "Restbedrag",
+          "value": "0,00 EUR"
+        }
+      ]
+    },
+    "translated_text": "SUMMARY TABLE: Total: 361,00 EUR Remaining Amount: 0,00 EUR"
+  },
+  {
+    "block_id": 3,
+    "page_number": 1,
+    "original_text": "MM Online Nederland Wilhelminakade 161 3072 AP Rotterdam",
+    "bbox": [
+      70.86500549316406,
+      141.958984375,
+      241.8889923095703,
+      150.72499084472656
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "MM Online Netherlands Wilhelminakade 161 3072 AP Rotterdam"
+  },
+  {
+    "block_id": 4,
+    "page_number": 1,
+    "original_text": "Yogesh Sharma",
+    "bbox": [
+      70.86500549316406,
+      155.6920166015625,
+      132.83900451660156,
+      168.8410186767578
+    ],
+    "type": "title",
+    "confidence": 1.0,
+    "translated_text": "Yogesh Sharma"
+  },
+  {
+    "block_id": 5,
+    "page_number": 1,
+    "original_text": "IJburglaan 816",
+    "bbox": [
+      70.86500549316406,
+      166.4920196533203,
+      128.9239959716797,
+      179.64102172851562
+    ],
+    "type": "title",
+    "confidence": 1.0,
+    "translated_text": "IJburglaan 816"
+  },
+  {
+    "block_id": 6,
+    "page_number": 1,
+    "original_text": "1087 EM Amsterdam",
+    "bbox": [
+      70.86500549316406,
+      177.29200744628906,
+      153.6110076904297,
+      190.44100952148438
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "1087 IN Amsterdam"
+  },
+  {
+    "block_id": 7,
+    "page_number": 1,
+    "original_text": "NL",
+    "bbox": [
+      70.86500549316406,
+      188.09201049804688,
+      81.80000305175781,
+      201.2410125732422
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "NL"
+  },
+  {
+    "block_id": 8,
+    "page_number": 1,
+    "original_text": "BTW-Nr.",
+    "bbox": [
+      314.6440124511719,
+      164.40699768066406,
+      344.6520080566406,
+      176.09500122070312
+    ],
+    "type": "title",
+    "confidence": 1.0,
+    "translated_text": "BTW-Nr."
+  },
+  {
+    "block_id": 9,
+    "page_number": 1,
+    "original_text": "N.v.t.",
+    "bbox": [
+      314.6440124511719,
+      174.0070037841797,
+      332.80401611328125,
+      185.69500732421875
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "N.v.t."
+  },
+  {
+    "block_id": 10,
+    "page_number": 1,
+    "original_text": "Club-nummer",
+    "bbox": [
+      386.0770263671875,
+      164.40699768066406,
+      438.373046875,
+      176.09500122070312
+    ],
+    "type": "title",
+    "confidence": 1.0,
+    "translated_text": "Club Quantity"
+  },
+  {
+    "block_id": 11,
+    "page_number": 1,
+    "original_text": "9813100925912797",
+    "bbox": [
+      386.0770263671875,
+      174.0070037841797,
+      454.8130187988281,
+      185.69500732421875
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "9813100925912797"
+  },
+  {
+    "block_id": 12,
+    "page_number": 1,
+    "original_text": "Factuur",
+    "bbox": [
+      42.51900100708008,
+      299.4549865722656,
+      101.49500274658203,
+      322.83099365234375
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Invoice"
+  },
+  {
+    "block_id": 13,
+    "page_number": 1,
+    "original_text": "Factuurnummer",
+    "bbox": [
+      42.51900100708008,
+      320.35101318359375,
+      104.90299987792969,
+      332.03900146484375
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Invoice Number"
+  },
+  {
+    "block_id": 14,
+    "page_number": 1,
+    "original_text": "8103643663",
+    "bbox": [
+      121.60499572753906,
+      320.35101318359375,
+      164.56500244140625,
+      332.03900146484375
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "8103643663"
+  },
+  {
+    "block_id": 15,
+    "page_number": 1,
+    "original_text": "Factuurdatum",
+    "bbox": [
+      42.51900100708008,
+      349.7919921875,
+      97.07099914550781,
+      361.47998046875
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Invoice Date"
+  },
+  {
+    "block_id": 16,
+    "page_number": 1,
+    "original_text": "26.05.2025",
+    "bbox": [
+      42.51900100708008,
+      359.3919982910156,
+      80.95099639892578,
+      371.0799865722656
+    ],
+    "type": "table",
+    "confidence": 1.0,
+    "translated_text": "26.05.2025"
+  },
+  {
+    "block_id": 17,
+    "page_number": 1,
+    "original_text": "Bezorgwijze",
+    "bbox": [
+      42.51900100708008,
+      377.4949951171875,
+      88.4469985961914,
+      389.1829833984375
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Delivery Method"
+  },
+  {
+    "block_id": 18,
+    "page_number": 1,
+    "original_text": "Bezorging aan huis",
+    "bbox": [
+      42.51900100708008,
+      387.0950012207031,
+      110.73500061035156,
+      398.7829895019531
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Home delivery"
+  },
+  {
+    "block_id": 19,
+    "page_number": 1,
+    "original_text": "Bestelnummer",
+    "bbox": [
+      159.8730010986328,
+      349.7919921875,
+      216.4650115966797,
+      361.47998046875
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Order Number"
+  },
+  {
+    "block_id": 20,
+    "page_number": 1,
+    "original_text": "261891936",
+    "bbox": [
+      159.8730010986328,
+      359.3919982910156,
+      198.53700256347656,
+      371.0799865722656
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "261891936"
+  },
+  {
+    "block_id": 21,
+    "page_number": 1,
+    "original_text": "Liefernummer",
+    "bbox": [
+      159.8730010986328,
+      377.4949951171875,
+      215.0170135498047,
+      389.1829833984375
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Delivery Number"
+  },
+  {
+    "block_id": 22,
+    "page_number": 1,
+    "original_text": "Besteldatum",
+    "bbox": [
+      261.9200134277344,
+      349.7919921875,
+      310.83203125,
+      361.47998046875
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Order Date"
+  },
+  {
+    "block_id": 23,
+    "page_number": 1,
+    "original_text": "26.05.2025",
+    "bbox": [
+      261.9200134277344,
+      359.3919982910156,
+      300.35198974609375,
+      371.0799865722656
+    ],
+    "type": "table",
+    "confidence": 1.0,
+    "translated_text": "26.05.2025"
+  },
+  {
+    "block_id": 24,
+    "page_number": 1,
+    "original_text": "Bezorgdatum",
+    "bbox": [
+      261.9200134277344,
+      377.4949951171875,
+      313.40802001953125,
+      389.1829833984375
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Delivery Date"
+  },
+  {
+    "block_id": 25,
+    "page_number": 1,
+    "original_text": "Betaalwijze",
+    "bbox": [
+      363.9670104980469,
+      349.7919921875,
+      408.1910095214844,
+      361.47998046875
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Payment Method"
+  },
+  {
+    "block_id": 26,
+    "page_number": 1,
+    "original_text": "Online betaling",
+    "bbox": [
+      363.9670104980469,
+      359.3919982910156,
+      418.4549865722656,
+      371.0799865722656
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Online payment"
+  },
+  {
+    "block_id": 27,
+    "page_number": 1,
+    "original_text": "Voorgaand document",
+    "bbox": [
+      363.9670104980469,
+      377.4949951171875,
+      446.302978515625,
+      389.1829833984375
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Previous document"
+  },
+  {
+    "block_id": 28,
+    "page_number": 1,
+    "original_text": "N.v.t.",
+    "bbox": [
+      363.9670104980469,
+      387.0950012207031,
+      382.12701416015625,
+      398.7829895019531
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "N.v.t."
+  },
+  {
+    "block_id": 29,
+    "page_number": 1,
+    "original_text": "Totaalbedrag is inclusief BTW en eventuele thuiskopieheﬃng.",
+    "bbox": [
+      42.51900100708008,
+      477.90496826171875,
+      287.8049621582031,
+      491.0539855957031
+    ],
+    "type": "text",
+    "confidence": 1.0,
+    "translated_text": "Total amount includes VAT and any home copying levy."
+  },
+  {
+    "block_id": 30,
+    "page_number": 1,
+    "original_text": "MM Online Nederland Wilhelminakade 161 3072 AP Rotterdam",
+    "bbox": [
+      42.51900100708008,
+      777.93994140625,
+      242.0469512939453,
+      788.1669921875
+    ],
+    "type": "footer",
+    "confidence": 1.0,
+    "translated_text": "MM Online Netherlands Wilhelminakade 161 3072 AP Rotterdam"
+  },
+  {
+    "block_id": 31,
+    "page_number": 1,
+    "original_text": "Telefoon: 010 808 2207",
+    "bbox": [
+      42.51900100708008,
+      786.3399658203125,
+      113.72999572753906,
+      796.5670166015625
+    ],
+    "type": "footer",
+    "confidence": 1.0,
+    "translated_text": "Telephone: 010 808 2207"
+  },
+  {
+    "block_id": 32,
+    "page_number": 1,
+    "original_text": "KvK Nummer: 24471203 BTW-Nr.: NL821222296B01",
+    "bbox": [
+      42.51900100708008,
+      794.7399291992188,
+      201.2510223388672,
+      804.9669799804688
+    ],
+    "type": "footer",
+    "confidence": 1.0,
+    "translated_text": "Kvk quantity: 24471203 BTW no.: NL821222296b01"
+  },
+  {
+    "block_id": 33,
+    "page_number": 1,
+    "original_text": "Pagina 1/1",
+    "bbox": [
+      519.77099609375,
+      805.5399780273438,
+      552.7550048828125,
+      815.7670288085938
+    ],
+    "type": "footer",
+    "confidence": 1.0,
+    "translated_text": "Page 1/1"
+  }
+]

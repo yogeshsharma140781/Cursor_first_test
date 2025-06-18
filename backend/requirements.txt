@@ -1,4 +1,15 @@
 fastapi
 uvicorn
 python-dotenv
-httpx 
+httpx
+python-multipart
+PyMuPDF
+reportlab
+layoutparser
+pillow
+opencv-python
+torch
+torchvision
+transformers
+openai
+qrcode[pil] 

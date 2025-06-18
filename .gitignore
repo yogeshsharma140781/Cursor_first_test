@@ -39,7 +39,7 @@ env/
 # Project specific
 *.pdf
 *.docx
-*.json
+
 *.txt
 *.tar
 *.png

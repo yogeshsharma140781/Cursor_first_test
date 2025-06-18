@@ -1,0 +1,726 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EC8046C22DFEE5EA003ECFF5 /* TranslateExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EC8046B82DFEE5EA003ECFF5 /* TranslateExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EC8046982DFEE5AB003ECFF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC8046822DFEE5AA003ECFF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EC8046892DFEE5AA003ECFF5;
+			remoteInfo = TranslatorApp;
+		};
+		EC8046A22DFEE5AB003ECFF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC8046822DFEE5AA003ECFF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EC8046892DFEE5AA003ECFF5;
+			remoteInfo = TranslatorApp;
+		};
+		EC8046C02DFEE5EA003ECFF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC8046822DFEE5AA003ECFF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EC8046B72DFEE5EA003ECFF5;
+			remoteInfo = TranslateExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EC8046C72DFEE5EA003ECFF5 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				EC8046C22DFEE5EA003ECFF5 /* TranslateExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		EC80468A2DFEE5AA003ECFF5 /* TranslatorApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TranslatorApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC8046972DFEE5AB003ECFF5 /* TranslatorAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TranslatorAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC8046A12DFEE5AB003ECFF5 /* TranslatorAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TranslatorAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC8046B82DFEE5EA003ECFF5 /* TranslateExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TranslateExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EC8046C32DFEE5EA003ECFF5 /* Exceptions for "TranslateExtension" folder in "TranslateExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = EC8046B72DFEE5EA003ECFF5 /* TranslateExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		EC80468C2DFEE5AA003ECFF5 /* TranslatorApp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TranslatorApp;
+			sourceTree = "<group>";
+		};
+		EC80469A2DFEE5AB003ECFF5 /* TranslatorAppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TranslatorAppTests;
+			sourceTree = "<group>";
+		};
+		EC8046A42DFEE5AB003ECFF5 /* TranslatorAppUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TranslatorAppUITests;
+			sourceTree = "<group>";
+		};
+		EC8046B92DFEE5EA003ECFF5 /* TranslateExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EC8046C32DFEE5EA003ECFF5 /* Exceptions for "TranslateExtension" folder in "TranslateExtension" target */,
+			);
+			path = TranslateExtension;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EC8046872DFEE5AA003ECFF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC8046942DFEE5AB003ECFF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC80469E2DFEE5AB003ECFF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC8046B52DFEE5EA003ECFF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EC8046812DFEE5AA003ECFF5 = {
+			isa = PBXGroup;
+			children = (
+				EC80468C2DFEE5AA003ECFF5 /* TranslatorApp */,
+				EC80469A2DFEE5AB003ECFF5 /* TranslatorAppTests */,
+				EC8046A42DFEE5AB003ECFF5 /* TranslatorAppUITests */,
+				EC8046B92DFEE5EA003ECFF5 /* TranslateExtension */,
+				EC80468B2DFEE5AA003ECFF5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EC80468B2DFEE5AA003ECFF5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EC80468A2DFEE5AA003ECFF5 /* TranslatorApp.app */,
+				EC8046972DFEE5AB003ECFF5 /* TranslatorAppTests.xctest */,
+				EC8046A12DFEE5AB003ECFF5 /* TranslatorAppUITests.xctest */,
+				EC8046B82DFEE5EA003ECFF5 /* TranslateExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EC8046892DFEE5AA003ECFF5 /* TranslatorApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC8046AB2DFEE5AB003ECFF5 /* Build configuration list for PBXNativeTarget "TranslatorApp" */;
+			buildPhases = (
+				EC8046862DFEE5AA003ECFF5 /* Sources */,
+				EC8046872DFEE5AA003ECFF5 /* Frameworks */,
+				EC8046882DFEE5AA003ECFF5 /* Resources */,
+				EC8046C72DFEE5EA003ECFF5 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EC8046C12DFEE5EA003ECFF5 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				EC80468C2DFEE5AA003ECFF5 /* TranslatorApp */,
+			);
+			name = TranslatorApp;
+			packageProductDependencies = (
+			);
+			productName = "Translay AI";
+			productReference = EC80468A2DFEE5AA003ECFF5 /* TranslatorApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EC8046962DFEE5AB003ECFF5 /* TranslatorAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC8046AE2DFEE5AB003ECFF5 /* Build configuration list for PBXNativeTarget "TranslatorAppTests" */;
+			buildPhases = (
+				EC8046932DFEE5AB003ECFF5 /* Sources */,
+				EC8046942DFEE5AB003ECFF5 /* Frameworks */,
+				EC8046952DFEE5AB003ECFF5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EC8046992DFEE5AB003ECFF5 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				EC80469A2DFEE5AB003ECFF5 /* TranslatorAppTests */,
+			);
+			name = TranslatorAppTests;
+			packageProductDependencies = (
+			);
+			productName = TranslatorAppTests;
+			productReference = EC8046972DFEE5AB003ECFF5 /* TranslatorAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EC8046A02DFEE5AB003ECFF5 /* TranslatorAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC8046B12DFEE5AB003ECFF5 /* Build configuration list for PBXNativeTarget "TranslatorAppUITests" */;
+			buildPhases = (
+				EC80469D2DFEE5AB003ECFF5 /* Sources */,
+				EC80469E2DFEE5AB003ECFF5 /* Frameworks */,
+				EC80469F2DFEE5AB003ECFF5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EC8046A32DFEE5AB003ECFF5 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				EC8046A42DFEE5AB003ECFF5 /* TranslatorAppUITests */,
+			);
+			name = TranslatorAppUITests;
+			packageProductDependencies = (
+			);
+			productName = TranslatorAppUITests;
+			productReference = EC8046A12DFEE5AB003ECFF5 /* TranslatorAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		EC8046B72DFEE5EA003ECFF5 /* TranslateExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC8046C42DFEE5EA003ECFF5 /* Build configuration list for PBXNativeTarget "TranslateExtension" */;
+			buildPhases = (
+				EC8046B42DFEE5EA003ECFF5 /* Sources */,
+				EC8046B52DFEE5EA003ECFF5 /* Frameworks */,
+				EC8046B62DFEE5EA003ECFF5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EC8046B92DFEE5EA003ECFF5 /* TranslateExtension */,
+			);
+			name = TranslateExtension;
+			packageProductDependencies = (
+			);
+			productName = TranslateExtension;
+			productReference = EC8046B82DFEE5EA003ECFF5 /* TranslateExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EC8046822DFEE5AA003ECFF5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					EC8046892DFEE5AA003ECFF5 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					EC8046962DFEE5AB003ECFF5 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = EC8046892DFEE5AA003ECFF5;
+					};
+					EC8046A02DFEE5AB003ECFF5 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = EC8046892DFEE5AA003ECFF5;
+					};
+					EC8046B72DFEE5EA003ECFF5 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+				};
+			};
+			buildConfigurationList = EC8046852DFEE5AA003ECFF5 /* Build configuration list for PBXProject "TranslatorApp" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EC8046812DFEE5AA003ECFF5;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = EC80468B2DFEE5AA003ECFF5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EC8046892DFEE5AA003ECFF5 /* TranslatorApp */,
+				EC8046962DFEE5AB003ECFF5 /* TranslatorAppTests */,
+				EC8046A02DFEE5AB003ECFF5 /* TranslatorAppUITests */,
+				EC8046B72DFEE5EA003ECFF5 /* TranslateExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EC8046882DFEE5AA003ECFF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC8046952DFEE5AB003ECFF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC80469F2DFEE5AB003ECFF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC8046B62DFEE5EA003ECFF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EC8046862DFEE5AA003ECFF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC8046932DFEE5AB003ECFF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC80469D2DFEE5AB003ECFF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC8046B42DFEE5EA003ECFF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EC8046992DFEE5AB003ECFF5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EC8046892DFEE5AA003ECFF5 /* TranslatorApp */;
+			targetProxy = EC8046982DFEE5AB003ECFF5 /* PBXContainerItemProxy */;
+		};
+		EC8046A32DFEE5AB003ECFF5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EC8046892DFEE5AA003ECFF5 /* TranslatorApp */;
+			targetProxy = EC8046A22DFEE5AB003ECFF5 /* PBXContainerItemProxy */;
+		};
+		EC8046C12DFEE5EA003ECFF5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EC8046B72DFEE5EA003ECFF5 /* TranslateExtension */;
+			targetProxy = EC8046C02DFEE5EA003ECFF5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		EC8046A92DFEE5AB003ECFF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EC8046AA2DFEE5AB003ECFF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EC8046AC2DFEE5AB003ECFF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = UHY6Q34C63;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Translay AI";
+				INFOPLIST_KEY_CFBundleName = "Translay AI";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yogeshsharma.translayai;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EC8046AD2DFEE5AB003ECFF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = UHY6Q34C63;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Translay AI";
+				INFOPLIST_KEY_CFBundleName = "Translay AI";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yogeshsharma.translayai;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EC8046AF2DFEE5AB003ECFF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = yogeshsharma.TranslatorAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TranslatorApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TranslatorApp";
+			};
+			name = Debug;
+		};
+		EC8046B02DFEE5AB003ECFF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = yogeshsharma.TranslatorAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TranslatorApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TranslatorApp";
+			};
+			name = Release;
+		};
+		EC8046B22DFEE5AB003ECFF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = yogeshsharma.TranslatorAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TranslatorApp;
+			};
+			name = Debug;
+		};
+		EC8046B32DFEE5AB003ECFF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = yogeshsharma.TranslatorAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TranslatorApp;
+			};
+			name = Release;
+		};
+		EC8046C52DFEE5EA003ECFF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = UHY6Q34C63;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TranslateExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Translay AI";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yogeshsharma.translayai.TranslateExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EC8046C62DFEE5EA003ECFF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = UHY6Q34C63;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TranslateExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Translay AI";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yogeshsharma.translayai.TranslateExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EC8046852DFEE5AA003ECFF5 /* Build configuration list for PBXProject "TranslatorApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC8046A92DFEE5AB003ECFF5 /* Debug */,
+				EC8046AA2DFEE5AB003ECFF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC8046AB2DFEE5AB003ECFF5 /* Build configuration list for PBXNativeTarget "TranslatorApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC8046AC2DFEE5AB003ECFF5 /* Debug */,
+				EC8046AD2DFEE5AB003ECFF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC8046AE2DFEE5AB003ECFF5 /* Build configuration list for PBXNativeTarget "TranslatorAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC8046AF2DFEE5AB003ECFF5 /* Debug */,
+				EC8046B02DFEE5AB003ECFF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC8046B12DFEE5AB003ECFF5 /* Build configuration list for PBXNativeTarget "TranslatorAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC8046B22DFEE5AB003ECFF5 /* Debug */,
+				EC8046B32DFEE5AB003ECFF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC8046C42DFEE5EA003ECFF5 /* Build configuration list for PBXNativeTarget "TranslateExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC8046C52DFEE5EA003ECFF5 /* Debug */,
+				EC8046C62DFEE5EA003ECFF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EC8046822DFEE5AA003ECFF5 /* Project object */;
+}

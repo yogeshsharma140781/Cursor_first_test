@@ -202,7 +202,8 @@ def detect_blocks_layoutparser(pdf_path: str, page_num: int = 0):
     img_np = np.array(img)
     # Use layoutparser's Detectron2 model
     model = lp.Detectron2LayoutModel(
-        'lp://PubLayNet/faster_rcnn_R_50_FPN_3x/config',
+        config_path='publaynet_config.yml',
+        model_path='/Users/yogesh/.torch/iopath_cache/s/dgy9c10wykk4lq4/model_final.pth',
         extra_config=["MODEL.ROI_HEADS.SCORE_THRESH_TEST", 0.5, "MODEL.ROI_HEADS.NMS_THRESH_TEST", 0.5],
         label_map={0: "Text", 1: "Title", 2: "List", 3: "Table", 4: "Figure"}
     )

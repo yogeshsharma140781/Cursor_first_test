@@ -217,7 +217,7 @@ startxref
 async def root():
     return {
         "message": "Translation API is running",
-        "version": "4.2",
+        "version": "4.3",
         "status": "OK",
         "endpoints": ["/translate", "/translate-pdf"]
     }

@@ -10,7 +10,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Create FastAPI app
-app = FastAPI(title="Translation API", version="3.0")
+app = FastAPI(title="Translation API", version="3.1", description="PDF and Text Translation API")
 
 # Add CORS middleware
 app.add_middleware(
@@ -32,7 +32,7 @@ class TranslateRequest(BaseModel):
 async def root():
     return {
         "message": "Translation API is running", 
-        "version": "3.0", 
+        "version": "3.1", 
         "status": "OK",
         "endpoints": ["/translate", "/translate-pdf"]
     }

@@ -2,16 +2,13 @@ import os
 import tempfile
 import shutil
 from fastapi import FastAPI, HTTPException, UploadFile, File
-from fastapi.responses import FileResponse
+from fastapi.responses import Response
 from pydantic import BaseModel
 import httpx
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 import hashlib
-import PyPDF2
 import io
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
 
 load_dotenv()
 
@@ -47,27 +44,62 @@ def get_cache_key(text: str, source_lang: str, target_lang: str) -> str:
     content = f"{text}|{source_lang}|{target_lang}"
     return hashlib.md5(content.encode()).hexdigest()
 
-def extract_text_from_pdf(pdf_content: bytes) -> list:
-    """Extract text from PDF content."""
+def extract_text_from_pdf_simple(pdf_content: bytes) -> str:
+    """Simple PDF text extraction without heavy libraries."""
     try:
-        pdf_reader = PyPDF2.PdfReader(io.BytesIO(pdf_content))
+        # Convert bytes to string and look for text between stream objects
+        pdf_text = pdf_content.decode('latin-1', errors='ignore')
+        
+        # Simple text extraction - look for text between BT and ET markers
         text_blocks = []
+        lines = pdf_text.split('\n')
         
-        for page_num, page in enumerate(pdf_reader.pages):
-            text = page.extract_text()
-            if text.strip():
-                # Split into paragraphs
-                paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
-                for para in paragraphs:
-                    text_blocks.append({
-                        'text': para,
-                        'page': page_num,
-                        'type': 'text'
-                    })
+        in_text_block = False
+        current_text = ""
         
-        return text_blocks
+        for line in lines:
+            if 'BT' in line:  # Begin text
+                in_text_block = True
+                continue
+            elif 'ET' in line:  # End text
+                if in_text_block and current_text:
+                    text_blocks.append(current_text.strip())
+                in_text_block = False
+                current_text = ""
+                continue
+            
+            if in_text_block:
+                # Look for text in parentheses or brackets
+                if '(' in line and ')' in line:
+                    start = line.find('(')
+                    end = line.rfind(')')
+                    if start < end:
+                        text = line[start+1:end]
+                        # Clean up the text
+                        text = text.replace('\\n', '\n').replace('\\t', '\t')
+                        current_text += text + " "
+        
+        # If no text blocks found, try a different approach
+        if not text_blocks:
+            # Look for any readable text in the PDF
+            readable_text = ""
+            for char in pdf_text:
+                if char.isprintable() and char not in '<>[]{}()':
+                    readable_text += char
+                elif char in '\n\r\t ':
+                    readable_text += char
+            
+            # Extract words that look like actual text
+            words = readable_text.split()
+            text_words = [word for word in words if len(word) > 1 and any(c.isalpha() for c in word)]
+            
+            if text_words:
+                text_blocks = [' '.join(text_words)]
+        
+        return '\n\n'.join(text_blocks) if text_blocks else "No text could be extracted from this PDF."
+        
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Failed to extract text from PDF: {str(e)}")
+        return f"Error extracting text: {str(e)}"
 
 async def translate_text(text: str, source_lang: str, target_lang: str) -> str:
     """Translate text using OpenAI API."""
@@ -93,7 +125,7 @@ async def translate_text(text: str, source_lang: str, target_lang: str) -> str:
                 {"role": "user", "content": prompt}
             ],
             "temperature": 0.3,
-            "max_tokens": 1024
+            "max_tokens": 2048
         }
         
         response = await client.post(url, headers=headers, json=data)
@@ -110,55 +142,6 @@ async def translate_text(text: str, source_lang: str, target_lang: str) -> str:
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Translation failed: {str(e)}")
-
-def create_translated_pdf(text_blocks: list, translations: list, output_path: str):
-    """Create a new PDF with translated text."""
-    try:
-        c = canvas.Canvas(output_path, pagesize=letter)
-        width, height = letter
-        
-        current_page = 0
-        y_position = height - 50  # Start from top
-        
-        for i, (block, translation) in enumerate(zip(text_blocks, translations)):
-            # Check if we need a new page
-            if block['page'] > current_page:
-                c.showPage()
-                current_page = block['page']
-                y_position = height - 50
-            
-            # Word wrap the translation
-            words = translation.split()
-            lines = []
-            current_line = ""
-            
-            for word in words:
-                test_line = current_line + " " + word if current_line else word
-                if c.stringWidth(test_line, "Helvetica", 12) < width - 100:
-                    current_line = test_line
-                else:
-                    if current_line:
-                        lines.append(current_line)
-                    current_line = word
-            
-            if current_line:
-                lines.append(current_line)
-            
-            # Draw the text lines
-            for line in lines:
-                if y_position < 50:  # Need new page
-                    c.showPage()
-                    y_position = height - 50
-                
-                c.drawString(50, y_position, line)
-                y_position -= 20
-            
-            y_position -= 10  # Extra space between blocks
-        
-        c.save()
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to create PDF: {str(e)}")
 
 @app.post("/translate")
 async def translate(req: TranslationRequest):
@@ -223,7 +206,7 @@ async def translate_pdf(
     source_lang: str = "auto", 
     target_lang: str = "en"
 ):
-    """PDF translation endpoint - processes PDF and returns translated version"""
+    """PDF translation endpoint - extracts text and returns translated text file"""
     
     # Validate file
     if not file.filename:
@@ -244,31 +227,27 @@ async def translate_pdf(
     
     try:
         # Extract text from PDF
-        text_blocks = extract_text_from_pdf(file_content)
+        extracted_text = extract_text_from_pdf_simple(file_content)
         
-        if not text_blocks:
-            raise HTTPException(status_code=400, detail="No text found in PDF")
+        if not extracted_text or extracted_text.strip() == "No text could be extracted from this PDF.":
+            return {
+                "success": True,
+                "message": "PDF processed but no extractable text found",
+                "filename": file.filename,
+                "extracted_text": extracted_text,
+                "translation": "No text to translate"
+            }
         
-        # Translate all text blocks
-        translations = []
-        for block in text_blocks:
-            translation = await translate_text(block['text'], source_lang, target_lang)
-            translations.append(translation)
+        # Translate the extracted text
+        translation = await translate_text(extracted_text, source_lang, target_lang)
         
-        # Create a persistent temporary file that won't be cleaned up immediately
-        output_filename = f"translated_{file.filename}"
-        temp_dir = tempfile.mkdtemp()
-        output_path = os.path.join(temp_dir, output_filename)
+        # Return translated text as downloadable file
+        output_filename = f"translated_{file.filename.replace('.pdf', '.txt')}"
         
-        # Create translated PDF
-        create_translated_pdf(text_blocks, translations, output_path)
-        
-        # Return the file
-        return FileResponse(
-            path=output_path,
-            filename=output_filename,
-            media_type="application/pdf",
-            background=None  # Don't delete immediately
+        return Response(
+            content=f"Original PDF: {file.filename}\nSource Language: {source_lang}\nTarget Language: {target_lang}\n\n--- EXTRACTED TEXT ---\n{extracted_text}\n\n--- TRANSLATION ---\n{translation}",
+            media_type="text/plain",
+            headers={"Content-Disposition": f"attachment; filename={output_filename}"}
         )
         
     except HTTPException:
@@ -280,10 +259,10 @@ async def translate_pdf(
 async def root():
     return {
         "message": "Translation API is running", 
-        "version": "4.0", 
+        "version": "4.1", 
         "status": "OK",
         "endpoints": ["/translate", "/translate-pdf"],
-        "features": ["Text translation", "PDF translation with file download"]
+        "features": ["Text translation", "PDF text extraction and translation"]
     }
 
 @app.on_event("shutdown")

@@ -125,7 +125,7 @@ async def translate_pdf(
     # Return success response (placeholder for now)
     return {
         "success": True,
-        "message": "PDF endpoint is working! (v3.1)",
+        "message": "PDF endpoint is working! (v3.2)",
         "filename": file.filename,
         "file_size": len(file_content),
         "source_lang": source_lang,
@@ -137,7 +137,7 @@ async def translate_pdf(
 async def root():
     return {
         "message": "Translation API is running", 
-        "version": "3.1", 
+        "version": "3.2", 
         "status": "OK",
         "endpoints": ["/translate", "/translate-pdf"]
     }

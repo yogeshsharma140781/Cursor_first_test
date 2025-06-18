@@ -1,6 +1,5 @@
 from fastapi import FastAPI, Request, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import os
 import httpx
@@ -8,9 +7,6 @@ from dotenv import load_dotenv
 import asyncio
 from functools import lru_cache
 import hashlib
-import tempfile
-import shutil
-from pathlib import Path
 
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -40,10 +36,6 @@ class TranslateRequest(BaseModel):
     text: str
     source_lang: str
     target_lang: str
-
-class PDFTranslateRequest(BaseModel):
-    source_lang: str = "auto"
-    target_lang: str = "en"
 
 def get_cache_key(text: str, source_lang: str, target_lang: str) -> str:
     """Generate a cache key for the translation request."""
@@ -99,45 +91,36 @@ async def translate_pdf(
     target_lang: str = "en"
 ):
     """
-    Translate a PDF file with enhanced formatting including URL formatting.
-    Returns the translated PDF file.
+    Simplified PDF endpoint for testing - just validates the PDF and returns success.
     """
     if not file.filename.lower().endswith('.pdf'):
         raise HTTPException(status_code=400, detail="Only PDF files are supported")
     
-    # Create temporary directory for processing
-    with tempfile.TemporaryDirectory() as temp_dir:
-        temp_path = Path(temp_dir)
+    try:
+        # Read the file content to ensure it's valid
+        file_content = await file.read()
         
-        # Save uploaded file
-        input_pdf_path = temp_path / "input.pdf"
-        with open(input_pdf_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        # Basic PDF validation
+        if not file_content.startswith(b'%PDF-'):
+            raise HTTPException(status_code=400, detail="Invalid PDF file")
         
-        # Generate output filename
-        output_pdf_path = temp_path / "translated.pdf"
+        # Return success message for testing
+        return {
+            "success": True,
+            "message": "PDF endpoint is working! Translation feature coming soon.",
+            "filename": file.filename,
+            "size": len(file_content),
+            "source_lang": source_lang,
+            "target_lang": target_lang,
+            "note": "This is a test response - actual PDF translation will be implemented later"
+        }
         
-        try:
-            # Read the file content to ensure it's valid
-            file_content = await file.read()
-            
-            # Basic PDF validation
-            if not file_content.startswith(b'%PDF-'):
-                raise HTTPException(status_code=400, detail="Invalid PDF file")
-            
-            # For now, return a test response to verify the endpoint works
-            # TODO: Implement actual PDF translation
-            return {
-                "success": True,
-                "message": "PDF endpoint is working! Translation will be implemented soon.",
-                "filename": file.filename,
-                "size": len(file_content),
-                "source_lang": source_lang,
-                "target_lang": target_lang
-            }
-            
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=f"PDF processing failed: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"PDF processing failed: {str(e)}")
+
+@app.get("/")
+async def root():
+    return {"message": "Translation API is running", "endpoints": ["/translate", "/translate-pdf"]}
 
 @app.on_event("startup")
 async def startup_event():

@@ -93,6 +93,7 @@ async def translate_pdf(
     """
     Simplified PDF endpoint for testing - just validates the PDF and returns success.
     """
+    print(f"PDF endpoint called with file: {file.filename}")
     if not file.filename.lower().endswith('.pdf'):
         raise HTTPException(status_code=400, detail="Only PDF files are supported")
     
@@ -120,7 +121,7 @@ async def translate_pdf(
 
 @app.get("/")
 async def root():
-    return {"message": "Translation API is running", "endpoints": ["/translate", "/translate-pdf"]}
+    return {"message": "Translation API is running", "version": "1.1", "endpoints": ["/translate", "/translate-pdf"]}
 
 @app.on_event("startup")
 async def startup_event():

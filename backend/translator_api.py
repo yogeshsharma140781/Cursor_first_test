@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from pydantic import BaseModel
 import httpx
 from dotenv import load_dotenv
@@ -96,6 +96,51 @@ async def startup_event():
                         headers={"Authorization": f"Bearer {API_KEY}"})
     except:
         pass  # Ignore errors during warmup
+
+@app.post("/translate-pdf")
+async def translate_pdf(
+    file: UploadFile = File(...),
+    source_lang: str = "auto", 
+    target_lang: str = "en"
+):
+    """PDF translation endpoint - currently returns test response"""
+    
+    # Validate file
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="No file provided")
+    
+    if not file.filename.lower().endswith('.pdf'):
+        raise HTTPException(status_code=400, detail="Only PDF files are supported")
+    
+    # Read file content
+    try:
+        file_content = await file.read()
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Failed to read file: {str(e)}")
+    
+    # Basic PDF validation
+    if not file_content.startswith(b'%PDF-'):
+        raise HTTPException(status_code=400, detail="Invalid PDF file format")
+    
+    # Return success response (placeholder for now)
+    return {
+        "success": True,
+        "message": "PDF endpoint is working! (v3.1)",
+        "filename": file.filename,
+        "file_size": len(file_content),
+        "source_lang": source_lang,
+        "target_lang": target_lang,
+        "status": "processed"
+    }
+
+@app.get("/")
+async def root():
+    return {
+        "message": "Translation API is running", 
+        "version": "3.1", 
+        "status": "OK",
+        "endpoints": ["/translate", "/translate-pdf"]
+    }
 
 @app.on_event("shutdown")
 async def shutdown_event():

@@ -25,7 +25,7 @@ class TranslateRequest(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"message": "Translation API is running", "version": "2.0", "status": "OK"}
+    return {"message": "Translation API is running", "version": "2.1", "status": "OK"}
 
 @app.post("/translate")
 async def translate(req: TranslateRequest):

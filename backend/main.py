@@ -118,17 +118,11 @@ async def translate_pdf(
         output_pdf_path = temp_path / "translated.pdf"
         
         try:
-            # Import and use the enhanced PDF translator
-            import sys
-            sys.path.append(str(Path(__file__).parent.parent))
+            # Import the PDF processor from the backend directory
             from test_layoutparser_simple import SimplePDFLayoutParser
             
             # Initialize the parser with API key
             parser = SimplePDFLayoutParser(require_api_key=True)
-            
-            # Set the OpenAI API key
-            import openai
-            openai.api_key = OPENAI_API_KEY
             
             # Process the PDF with enhanced translation
             parser.process_pdf(

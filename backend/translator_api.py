@@ -27,7 +27,7 @@ from fuzzywuzzy import fuzz
 import qrcode
 from reportlab.lib.utils import ImageReader
 
-from fastapi import FastAPI, HTTPException, UploadFile, File, Form
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form, BackgroundTasks
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
 import httpx
@@ -1526,6 +1526,7 @@ async def translate(request: TranslationRequest):
 
 @app.post("/translate-pdf")
 async def translate_pdf(
+    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     source_lang: str = Form("auto"),
     target_lang: str = Form("en")
@@ -1604,17 +1605,18 @@ async def translate_pdf(
             tmp_file.flush()
             output_path = tmp_file.name
         
-        async def cleanup():
+        def cleanup():
             try:
                 os.unlink(output_path)
             except:
                 pass
         
+        background_tasks.add_task(cleanup)
+        
         return FileResponse(
             output_path,
             media_type='application/pdf',
-            filename=f"translated_{file.filename}",
-            background=cleanup
+            filename=f"translated_{file.filename}"
         )
         
     except Exception as e:

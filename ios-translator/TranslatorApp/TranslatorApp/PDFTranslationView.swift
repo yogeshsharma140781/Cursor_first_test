@@ -247,19 +247,8 @@ struct PDFTranslationView: View {
                     
                     // Translation Results Area - matching ContentView output area
                     VStack(alignment: .leading, spacing: 8) {
-                        if translatedPDFData != nil && !pdfService.isProcessing {
-                            HStack {
-                                Spacer()
-                                Button(action: { showingShareSheet = true }) {
-                                    HStack(spacing: 4) {
-                                        Image(systemName: "square.and.arrow.up")
-                                        Text("Share")
-                                    }
-                                    .font(.caption)
-                                    .foregroundColor(.blue)
-                                }
-                            }
-                        }
+                        // Removed separate share button as requested
+                    }
                         
                         ZStack {
                             VStack {
@@ -287,24 +276,20 @@ struct PDFTranslationView: View {
                                     .padding()
                                 } else if translatedPDFData != nil {
                                     VStack(spacing: 16) {
-                                        Image(systemName: "checkmark.circle.fill")
-                                            .font(.system(size: 40))
-                                            .foregroundColor(.green)
-                                        
-                                        Text("✅ Translation Complete!")
-                                            .font(.headline)
-                                            .foregroundColor(.green)
+                                        Text("PDF translated")
+                                            .font(.body)
+                                            .foregroundColor(.black)
                                         
                                         Button(action: { showingShareSheet = true }) {
                                             HStack {
-                                                Image(systemName: "square.and.arrow.up")
-                                                Text("Share Translated PDF")
+                                                Image(systemName: "square.and.arrow.down")
+                                                Text("Save Translated PDF")
                                             }
                                             .font(.headline)
                                             .foregroundColor(.white)
                                             .padding(.horizontal, 30)
                                             .padding(.vertical, 12)
-                                            .background(Color.green)
+                                            .background(Color.blue)
                                             .cornerRadius(10)
                                         }
                                         
@@ -315,20 +300,6 @@ struct PDFTranslationView: View {
                                         .font(.caption)
                                     }
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                    .padding()
-                                } else if selectedPDFData != nil {
-                                    Button(action: translatePDF) {
-                                        HStack {
-                                            Image(systemName: "arrow.right.circle.fill")
-                                            Text("Translate PDF")
-                                        }
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                        .frame(maxWidth: .infinity)
-                                        .padding(.vertical, 16)
-                                        .background(Color.blue)
-                                        .cornerRadius(10)
-                                    }
                                     .padding()
                                 }
                             }
@@ -367,7 +338,6 @@ struct PDFTranslationView: View {
             } message: {
                 Text(errorMessage)
             }
-        }
     }
     
     private func handleFileSelection(_ result: Result<[URL], Error>) {
@@ -396,6 +366,9 @@ struct PDFTranslationView: View {
                 selectedPDFData = data
                 selectedFileName = url.lastPathComponent
                 translatedPDFData = nil // Reset previous translation
+                
+                // Auto-start translation after successful upload
+                translatePDF()
             } catch {
                 errorMessage = "Failed to load PDF: \(error.localizedDescription)"
                 showError = true

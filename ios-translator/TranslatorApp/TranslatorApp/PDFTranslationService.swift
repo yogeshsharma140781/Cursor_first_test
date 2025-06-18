@@ -6,7 +6,9 @@ class PDFTranslationService: ObservableObject {
     static let shared = PDFTranslationService()
     
     // Update this URL to match your deployment
-    private let baseURL = "https://cursor-first-test.onrender.com"
+    // For local testing: Use your computer's IP address
+    // For production: Use "https://cursor-first-test.onrender.com"
+    private let baseURL = "https://cursor-first-test.onrender.com" // Production deployment
     
     @Published var isProcessing = false
     @Published var errorMessage: String?

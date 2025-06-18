@@ -8,7 +8,11 @@ struct TranslationRequest: Codable {
 }
 
 struct TranslationResponse: Codable {
-    let translation: String
+    let translated_text: String
+    let original_text: String
+    let source_lang: String
+    let target_lang: String
+    let status: String
 }
 
 @MainActor
@@ -16,7 +20,9 @@ class TranslationService: ObservableObject {
     static let shared = TranslationService()
     
     // Update this URL to match your deployment
-    private let baseURL = "https://cursor-first-test.onrender.com"
+    // For local testing: Use your computer's IP address
+    // For production: Use "https://cursor-first-test.onrender.com"
+    private let baseURL = "https://cursor-first-test.onrender.com" // Production deployment
     
     @Published var isLoading = false
     @Published var errorMessage: String?
@@ -66,7 +72,7 @@ class TranslationService: ObservableObject {
             }
             
             let translationResponse = try JSONDecoder().decode(TranslationResponse.self, from: data)
-            return .success(translationResponse.translation)
+            return .success(translationResponse.translated_text)
             
         } catch {
             if error.localizedDescription.contains("cancelled") {
@@ -119,7 +125,9 @@ class PDFTranslationService: ObservableObject {
     static let shared = PDFTranslationService()
     
     // Update this URL to match your deployment
-    private let baseURL = "https://cursor-first-test.onrender.com"
+    // For local testing: Use your computer's IP address
+    // For production: Use "https://cursor-first-test.onrender.com"
+    private let baseURL = "https://cursor-first-test.onrender.com" // Production deployment
     
     @Published var isProcessing = false
     @Published var errorMessage: String?

@@ -14,7 +14,11 @@ public struct TranslationRequest: Codable {
 }
 
 public struct TranslationResponse: Codable {
-    public let translation: String
+    public let translated_text: String
+    public let original_text: String
+    public let source_lang: String
+    public let target_lang: String
+    public let status: String
 }
 
 // MARK: - Language Support
@@ -54,7 +58,9 @@ public class LanguageSupport {
 // MARK: - Network Service
 public class NetworkService {
     public static let shared = NetworkService()
-    private let baseURL = "https://cursor-first-test.onrender.com"
+    // For local testing: Use your computer's IP address
+    // For production: Use "https://cursor-first-test.onrender.com"
+    private let baseURL = "https://cursor-first-test.onrender.com" // Production deployment
     
     private init() {}
     
@@ -92,7 +98,7 @@ public class NetworkService {
             }
             
             let translationResponse = try JSONDecoder().decode(TranslationResponse.self, from: data)
-            return .success(translationResponse.translation)
+            return .success(translationResponse.translated_text)
             
         } catch {
             return .failure(error)

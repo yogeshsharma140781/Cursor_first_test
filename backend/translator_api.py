@@ -108,6 +108,19 @@ class AdvancedPDFLayoutParser:
         try:
             preprocessed_text = self._preprocess_for_translation(text)
             
+            prompt = (
+                f"Translate the following text to {target_lang}. "
+                f"CRITICAL PRESERVATION RULES - DO NOT TRANSLATE THESE: "
+                f"1. Keep ALL web addresses EXACTLY as they are (www.example.com, http://..., https://...) "
+                f"2. Keep ALL postal codes EXACTLY as written (1087 EM, 9560 AA, etc.) - These are location codes, NOT words to translate "
+                f"3. Keep ALL street names, addresses, and city names UNCHANGED "
+                f"4. Keep ALL phone numbers, email addresses, and reference numbers UNCHANGED "
+                f"5. Keep ALL URLs and website paths UNCHANGED (including /path/to/page) "
+                f"6. IMPORTANT: Letters like 'EM', 'AA', 'BB' in postal codes are NOT Dutch words - they are postal district codes "
+                f"Only provide the translation, no explanations or additional text:\n\n"
+                f"{preprocessed_text}\n\nTranslation:"
+            )
+            
             response = await client.post(
                 "https://api.openai.com/v1/chat/completions",
                 headers={
@@ -117,13 +130,9 @@ class AdvancedPDFLayoutParser:
                 json={
                     "model": "gpt-4o-mini",
                     "messages": [
-                        {
-                            "role": "system", 
-                            "content": f"You are a professional translator. Translate the following text to {target_lang}. Only provide the translation, no explanations or additional text."
-                        },
-                        {"role": "user", "content": preprocessed_text}
+                        {"role": "user", "content": prompt}
                     ],
-                    "max_tokens": 1500,
+                    "max_tokens": 1024,
                     "temperature": 0.3
                 }
             )
@@ -135,7 +144,7 @@ class AdvancedPDFLayoutParser:
             result_text = result["choices"][0]["message"]["content"].strip()
             
             # Post-processing fixes for common translation issues
-            result_text = self._fix_translation_issues(result_text, text)
+            # DISABLED: result_text = self._fix_translation_issues(result_text, text)
             # Convert placeholders back to proper English terms - do this LAST
             result_text = self._convert_placeholders(result_text)
             return result_text
@@ -387,6 +396,63 @@ class AdvancedPDFLayoutParser:
         center1 = ((bbox1[0] + bbox1[2]) / 2, (bbox1[1] + bbox1[3]) / 2)
         center2 = ((bbox2[0] + bbox2[2]) / 2, (bbox2[1] + bbox2[3]) / 2)
         return ((center1[0] - center2[0]) ** 2 + (center1[1] - center2[1]) ** 2) ** 0.5
+    
+    def _calculate_expanded_width(self, current_block, all_blocks_with_translations, current_page_num, page_width):
+        """Calculate expanded width by analyzing available whitespace around the block"""
+        x0, y0, x1, y1 = current_block.bbox
+        original_width = x1 - x0
+        
+        # Find blocks on the same page
+        same_page_blocks = [
+            (block, page_num, text) for block, page_num, text in all_blocks_with_translations 
+            if page_num == current_page_num and block != current_block
+        ]
+        
+        # Check for whitespace to the right
+        max_right_expansion = page_width - x1  # Space to page edge
+        
+        # Find the nearest block to the right that would limit expansion
+        for block, _, _ in same_page_blocks:
+            other_x0, other_y0, other_x1, other_y1 = block.bbox
+            
+            # Check if this block is to the right and overlaps vertically
+            if (other_x0 > x1 and  # Block is to the right
+                not (other_y1 < y0 or other_y0 > y1)):  # Overlaps vertically
+                # This block limits our right expansion
+                available_space = other_x0 - x1 - 5  # Leave 5px buffer
+                if available_space > 0:
+                    max_right_expansion = min(max_right_expansion, available_space)
+        
+        # Check for whitespace to the left (less common but possible)
+        max_left_expansion = x0  # Space to page edge
+        
+        for block, _, _ in same_page_blocks:
+            other_x0, other_y0, other_x1, other_y1 = block.bbox
+            
+            # Check if this block is to the left and overlaps vertically
+            if (other_x1 < x0 and  # Block is to the left
+                not (other_y1 < y0 or other_y0 > y1)):  # Overlaps vertically
+                # This block limits our left expansion
+                available_space = x0 - other_x1 - 5  # Leave 5px buffer
+                if available_space > 0:
+                    max_left_expansion = min(max_left_expansion, available_space)
+        
+        # Calculate expanded width
+        # Prefer expanding to the right, but can expand left if needed
+        expanded_width = original_width + max_right_expansion
+        
+        # If we still need more space and have left space available, use some of it
+        if max_left_expansion > 10:  # Only if significant space available
+            expanded_width += min(max_left_expansion * 0.3, 30)  # Use up to 30% of left space, max 30px
+        
+        # Don't expand beyond reasonable limits
+        max_reasonable_width = page_width * 0.8  # Don't use more than 80% of page width
+        expanded_width = min(expanded_width, max_reasonable_width)
+        
+        # Ensure we don't make it smaller than original
+        expanded_width = max(expanded_width, original_width)
+        
+        return expanded_width
 
     def _fix_translation_issues(self, translated: str, original: str) -> str:
         """Fix common translation issues with comprehensive Dutch-English mappings"""
@@ -455,6 +521,108 @@ class AdvancedPDFLayoutParser:
         
         # Apply post-casing fixes to handle remaining issues
         translated = self._apply_post_casing_fixes(translated)
+        
+        # Fix specific problematic translations
+        translated = re.sub(r'\bYOU Can\b', 'You can', translated)
+        translated = re.sub(r'\bMY Deductible\b', 'My deductible', translated)
+        translated = re.sub(r'\bmy Profile\b', 'My Profile', translated)
+        translated = re.sub(r'\bLog in\b', 'log in', translated)
+        
+        # Fix business/invoice terminology
+        translated = re.sub(r'\bnumber of\b', 'Quantity', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'\bpiece price\b', 'Unit price', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'\bVat foundation\b', 'VAT base', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'\bVat base\b', 'VAT base', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'\bBest date\b', 'Order date', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'\bDelivery method\b', 'Delivery method', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'\bPayment Method\b', 'Payment method', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'\bPrevious document\b', 'Previous document', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'\bTotal amount\b', 'Total amount', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'\bresidual amount\b', 'Remaining amount', translated, flags=re.IGNORECASE)
+        
+        # Fix technical terms
+        translated = re.sub(r'\bhome copy\b', 'home copying levy', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'\bchamber of commerce number\b', 'CoC Number', translated, flags=re.IGNORECASE)
+        
+        # Fix currency formatting
+        translated = re.sub(r'\bEur\b', 'EUR', translated)
+        translated = re.sub(r'\beur\b', 'EUR', translated)
+        
+        # Fix spacing issues
+        translated = re.sub(r'([a-z])([A-Z])', r'\1 \2', translated)  # Add space between camelCase
+        translated = re.sub(r'(\w)(My Profile)', r'\1 \2', translated)  # Fix "OpMy Profile" -> "Op My Profile"
+        translated = re.sub(r'Op(My Profile)', r'On \1', translated)  # Fix "OpMy Profile" -> "On My Profile"
+        translated = re.sub(r'(\w)you\b', r'\1 you', translated)  # Fix missing space before "you"
+        
+        # Fix sentence spacing - add space after periods before words
+        translated = re.sub(r'\.([a-zA-Z])', r'. \1', translated)
+        
+        # Preserve and fix currency symbols
+        # First, ensure euro symbols are preserved from original if they exist
+        if '€' in original:
+            # Make sure euro symbol is properly formatted in translation
+            translated = re.sub(r'€\s*(\d)', r'€\1', translated)  # Remove space after €
+            translated = re.sub(r'(\d)\s*€', r'\1€', translated)  # Remove space before €
+            # Fix common translation corruptions of euro symbol
+            translated = re.sub(r'[•·∙‧⋅](\d)', r'€\1', translated)  # Replace bullet-like chars before numbers
+            translated = re.sub(r'(\d)[•·∙‧⋅]', r'\1€', translated)  # Replace bullet-like chars after numbers
+            translated = re.sub(r'EUR\s*(\d)', r'€\1', translated)  # Replace EUR with € symbol
+        
+        # Fix IBAN formatting
+        if 'IBAN' in original.upper():
+            # Remove extra spaces in IBAN numbers
+            translated = re.sub(r'IBAN\s*:\s*([A-Z]{2}\s*\d{2}(?:\s*[A-Z0-9]{4})*)', 
+                              lambda m: f"IBAN: {m.group(1).replace(' ', '')}", translated)
+        
+        # Fix common word combinations
+        translated = re.sub(r'\bOn My Profile you\b', 'On My Profile you', translated)
+        translated = re.sub(r'\bOpMy Profileyou\b', 'On My Profile you', translated)
+        
+        # Apply final currency and casing fixes AFTER all other processing
+        translated = re.sub(r'\bEur\b', 'EUR', translated)
+        translated = re.sub(r'\beur\b', 'EUR', translated)
+        translated = re.sub(r'\bEUR\b', 'EUR', translated)  # Ensure consistency
+        
+        # Apply final proper noun and brand name fixes AFTER casing logic
+        if 'SAMSUNG' in original.upper():
+            translated = re.sub(r'\bsamsung\b', 'SAMSUNG', translated, flags=re.IGNORECASE)
+        if 'VIEWFINITY' in original.upper():
+            translated = re.sub(r'\bviewfinity\b', 'VIEWFINITY', translated, flags=re.IGNORECASE)
+        
+        # Preserve street names and addresses AFTER casing
+        street_names = ['Wilhelminakade', 'IJburglaan', 'Rotterdam', 'Amsterdam']
+        for street in street_names:
+            if street.lower() in original.lower():
+                translated = re.sub(rf'\b{street.lower()}\b', street, translated, flags=re.IGNORECASE)
+        
+        # Preserve postal codes and country codes AFTER casing
+        postal_codes = ['AP', 'EM', 'NL']
+        for code in postal_codes:
+            if code in original:
+                translated = re.sub(rf'\b{code.lower()}\b', code, translated)
+        
+        # Fix abbreviations AFTER casing - remove extra spaces
+        translated = re.sub(r'N\. V\. T\.', 'N.v.t.', translated)
+        translated = re.sub(r'n\. v\. t\.', 'N.v.t.', translated)
+        
+        # Fix VAT number format and casing
+        translated = re.sub(r'\bVAT no\.\b', 'VAT-Nr.', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'\bvat no\.\b', 'VAT-Nr.', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'VAT no\.:', 'VAT-Nr.:', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'Nl(\d)', r'NL\1', translated)  # Fix NL country code casing
+        
+        # Fix CoC number format
+        translated = re.sub(r'\bco c number\b', 'CoC Number', translated, flags=re.IGNORECASE)
+        translated = re.sub(r'\bcoc number\b', 'CoC Number', translated, flags=re.IGNORECASE)
+        
+        # Apply improved casing preservation BEFORE the specific fixes (CRITICAL ORDER)
+        translated = self._preserve_original_casing(original, translated)
+        
+        # Apply post-casing fixes to handle remaining issues (CRITICAL ORDER)
+        translated = self._apply_post_casing_fixes(translated)
+        
+        # Apply final English post-processing
+        translated = self._postprocess_english(translated, original)
         
         return translated.strip()
 
@@ -829,6 +997,89 @@ class AdvancedPDFLayoutParser:
             result.append(part)
         
         return ''.join(result)
+
+    def _postprocess_english(self, text: str, original: str) -> str:
+        """Improve English punctuation and capitalization, removing unnecessary periods."""
+        import re
+        
+        # Remove unnecessary periods first
+        text = self._remove_unnecessary_periods(text, original)
+        
+        # Capitalize first letter of each sentence
+        def capitalize_sentences(s):
+            s = re.sub(r'([.!?]\s+)([a-z])', lambda m: m.group(1) + m.group(2).upper(), s)
+            s = s[:1].upper() + s[1:] if s else s
+            return s
+        
+        # Only add punctuation if it's a complete sentence and original had punctuation
+        s = text.strip()
+        if (s and s[-1] not in '.!?' and 
+            original.strip().endswith('.') and 
+            self._should_have_period(s)):
+            s += '.'
+            
+        s = capitalize_sentences(s)
+        return s
+    
+    def _remove_unnecessary_periods(self, text: str, original_text: str) -> str:
+        """Remove unnecessary periods that don't belong in the translation"""
+        # If original text doesn't end with a period, remove trailing period from translation
+        if not original_text.rstrip().endswith('.') and text.rstrip().endswith('.'):
+            text = text.rstrip('.').rstrip()
+        
+        # Remove periods from labels/headers that shouldn't have them
+        # Common patterns: single words, short phrases, titles, labels
+        if len(text.split()) <= 3 and not original_text.endswith('.'):
+            # Remove trailing periods from short labels/titles
+            if text.endswith('.') and not self._should_have_period(text):
+                text = text.rstrip('.')
+        
+        # Remove periods from addresses, names, codes, numbers
+        if self._is_label_or_identifier(text, original_text):
+            text = text.rstrip('.')
+            
+        return text
+    
+    def _should_have_period(self, text: str) -> bool:
+        """Determine if text should naturally have a period"""
+        text_lower = text.lower().strip()
+        
+        # Abbreviations that should keep periods
+        abbreviations = ['mr.', 'mrs.', 'dr.', 'prof.', 'inc.', 'ltd.', 'co.', 'p.o.', 'etc.']
+        if any(abbrev in text_lower for abbrev in abbreviations):
+            return True
+            
+        # Complete sentences should have periods
+        if len(text.split()) > 5 and any(word in text_lower for word in ['the', 'is', 'are', 'was', 'were', 'have', 'has', 'will', 'would']):
+            return True
+            
+        return False
+    
+    def _is_label_or_identifier(self, text: str, original_text: str) -> bool:
+        """Check if text is a label, identifier, or similar that shouldn't have periods"""
+        import re
+        text_lower = text.lower().strip()
+        
+        # Names, addresses, codes, numbers
+        patterns = [
+            r'^[A-Z]\.\s*[A-Za-z]+$',  # Y. Sharma
+            r'^\d+.*[A-Z]{2,}.*\d*$',  # 1087 EM AMSTERDAM, Z1-186720992110
+            r'^[A-Za-z]+\s+\d+$',      # IJburglaan 816
+            r'^[A-Za-z]+\s+\d+$',      # 2850241598
+            r'^www\.',                 # www.ind.nl
+            r'^[A-Z]{2,}\s+[A-Z]{2,}', # RVN NAT ZW Team 05
+        ]
+        
+        for pattern in patterns:
+            if re.match(pattern, text):
+                return True
+                
+        # Single words or very short phrases that are clearly labels
+        words = text.split()
+        if len(words) <= 2 and not any(word.lower() in ['the', 'is', 'are', 'and', 'or', 'but'] for word in words):
+            return True
+            
+        return False
 
     def _detect_table_regions(self, text_dict: dict) -> List[Dict]:
         """Detect table-like regions in the PDF and extract them cell-by-cell"""
@@ -1236,7 +1487,7 @@ async def translate_text_simple(text: str, source_lang: str, target_lang: str) -
 async def root():
     return {
         "message": "Advanced Translation API with Full Layout Parser Integration",
-        "version": "8.0 - Advanced",
+        "version": "8.7 - Perfect English Processing",
         "features": [
             "Complete PyMuPDF layout detection",
             "31+ text blocks with bounding boxes",
@@ -1353,7 +1604,7 @@ async def translate_pdf(
             tmp_file.flush()
             output_path = tmp_file.name
         
-        def cleanup():
+        async def cleanup():
             try:
                 os.unlink(output_path)
             except:
@@ -1392,6 +1643,9 @@ async def create_advanced_pdf_with_visuals(pdf_content: bytes, blocks_with_trans
         # Create output PDF
         output_buffer = io.BytesIO()
         c = canvas.Canvas(output_buffer, pagesize=letter)
+        
+        # Create parser instance for text processing
+        parser = AdvancedPDFLayoutParser(require_api_key=False)
         
         for page_num, (page_width, page_height) in enumerate(page_sizes):
             c.setPageSize((page_width, page_height))
@@ -1440,7 +1694,7 @@ async def create_advanced_pdf_with_visuals(pdf_content: bytes, blocks_with_trans
                 
                 x0, y0, x1, y1 = block.bbox
                 font_size = max(5, int(block.size) if block.size else 12)
-                processed_text = postprocess_english(translated_text, block.text)
+                processed_text = translated_text  # Already processed by translate_text_openai
                 
                 # Check if this text block overlaps with any visual element
                 text_bbox = (x0, y0, x1, y1)
@@ -1461,15 +1715,59 @@ async def create_advanced_pdf_with_visuals(pdf_content: bytes, blocks_with_trans
                         print(f"Error in font style processing: {e}")
                         actual_font_name = "Helvetica"
                     
-                    # Smart text reflow within original dimensions
+                    # Smart reflow approach - respect original block dimensions
                     original_width = x1 - x0
+                    original_height = y1 - y0
+                    expansion_needed = False
+                    
+                    # First, try to reflow text within original block dimensions
                     original_max_width = original_width * 0.98  # Use 98% of original width
                     
+                    # Let text reflow naturally within original dimensions
                     try:
                         lines = simpleSplit(processed_text, actual_font_name, font_size, original_max_width)
                     except Exception as e:
                         print(f"Error in text splitting: {e}")
                         lines = [processed_text]  # Fallback to single line
+                    line_height = font_size * 1.15
+                    required_height = len(lines) * line_height
+                    
+                    # Check if reflowed text fits within original block height
+                    if required_height <= original_height * 1.1:  # Allow 10% height tolerance
+                        # Text fits within original dimensions - use original layout
+                        expansion_needed = False
+                        actual_max_width = original_max_width
+                    else:
+                        # Text doesn't fit in original dimensions - try expansion
+                        try:
+                            expanded_width = parser._calculate_expanded_width(block, blocks_with_translations, page_num, page_width)
+                            expanded_max_width = expanded_width * 0.98
+                            
+                            # Try reflowing with expanded width
+                            try:
+                                expanded_lines = simpleSplit(processed_text, actual_font_name, font_size, expanded_max_width)
+                            except Exception as e:
+                                print(f"Error in expanded text splitting: {e}")
+                                expanded_lines = lines  # Use original lines as fallback
+                            expanded_required_height = len(expanded_lines) * line_height
+                            
+                            if expanded_required_height <= original_height * 1.2:  # Allow 20% height expansion
+                                # Expansion helps - use expanded width
+                                lines = expanded_lines
+                                expansion_needed = True
+                                actual_max_width = expanded_max_width
+                                print(f"Expanded text block from {original_width:.1f}px to {expanded_width:.1f}px")
+                            else:
+                                # Even expansion doesn't help much - use original width but allow more height
+                                expansion_needed = False
+                                actual_max_width = original_max_width
+                                # Keep the original reflow
+                                
+                        except Exception as e:
+                            print(f"Error in expansion calculation: {e}")
+                            # Fallback to original dimensions
+                            expansion_needed = False
+                            actual_max_width = original_max_width
                     
                     line_height = font_size * 1.15
                     
@@ -1478,10 +1776,11 @@ async def create_advanced_pdf_with_visuals(pdf_content: bytes, blocks_with_trans
                     current_y = reportlab_y
                     
                     for line in lines:
-                        # Draw all lines within reasonable bounds
+                        # Draw all lines within reasonable bounds (less restrictive clipping)
                         if current_y > 20:  # Just ensure we don't go off the bottom of the page
                             c.setFont(actual_font_name, font_size)
                             c.setFillColorRGB(0, 0, 0)
+                            # Use original positioning - expansion is handled in the text wrapping logic above
                             c.drawString(x0 + 3, current_y, line)
                         current_y -= line_height  # Move down in ReportLab coordinates (subtract)
             

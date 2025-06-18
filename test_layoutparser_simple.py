@@ -346,7 +346,15 @@ class SimplePDFLayoutParser:
                 "Content-Type": "application/json"
             }
             prompt = (
-                f"Translate the following text to {target_lang}. Only provide the translation, no explanations or additional text:\n\n"
+                f"Translate the following text to {target_lang}. "
+                f"CRITICAL PRESERVATION RULES - DO NOT TRANSLATE THESE: "
+                f"1. Keep ALL web addresses EXACTLY as they are (www.example.com, http://..., https://...) "
+                f"2. Keep ALL postal codes EXACTLY as written (1087 EM, 9560 AA, etc.) - These are location codes, NOT words to translate "
+                f"3. Keep ALL street names, addresses, and city names UNCHANGED "
+                f"4. Keep ALL phone numbers, email addresses, and reference numbers UNCHANGED "
+                f"5. Keep ALL URLs and website paths UNCHANGED (including /path/to/page) "
+                f"6. IMPORTANT: Letters like 'EM', 'AA', 'BB' in postal codes are NOT Dutch words - they are postal district codes "
+                f"Only provide the translation, no explanations or additional text:\n\n"
                 f"{preprocessed_text}\n\nTranslation:"
             )
             data = {

@@ -10,6 +10,12 @@ from fastapi.middleware.cors import CORSMiddleware
 import hashlib
 import io
 import base64
+from PyPDF2 import PdfReader
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.units import inch
 
 load_dotenv()
 
@@ -96,131 +102,125 @@ async def translate_text_openai(text: str, source_lang: str, target_lang: str) -
         raise HTTPException(status_code=500, detail=f"Translation failed: {str(e)}")
 
 def extract_text_from_pdf(file_content: bytes) -> str:
-    """Simple PDF text extraction - looks for readable text patterns"""
+    """Extract text from PDF using PyPDF2"""
     try:
-        # Convert to string and look for readable text
-        text_content = file_content.decode('utf-8', errors='ignore')
+        # Create a PDF reader from bytes
+        pdf_file = io.BytesIO(file_content)
+        pdf_reader = PdfReader(pdf_file)
         
-        # Look for common PDF text patterns
-        lines = text_content.split('\n')
-        readable_lines = []
+        # Extract text from all pages
+        text_content = []
+        for page_num in range(len(pdf_reader.pages)):
+            page = pdf_reader.pages[page_num]
+            text = page.extract_text()
+            if text.strip():
+                text_content.append(text.strip())
         
+        # Join all text
+        full_text = '\n\n'.join(text_content)
+        
+        if not full_text.strip():
+            return "No readable text found in PDF"
+        
+        # Limit text length to avoid API limits
+        if len(full_text) > 4000:
+            full_text = full_text[:4000] + "..."
+        
+        return full_text
+        
+    except Exception as e:
+        return f"Error extracting text from PDF: {str(e)}"
+
+def create_pdf_with_text(text: str, filename: str = "translated.pdf") -> bytes:
+    """Create a PDF with translated text using reportlab"""
+    try:
+        # Create a BytesIO buffer
+        buffer = io.BytesIO()
+        
+        # Create the PDF document
+        doc = SimpleDocTemplate(buffer, pagesize=letter)
+        
+        # Get styles
+        styles = getSampleStyleSheet()
+        normal_style = styles['Normal']
+        
+        # Split text into paragraphs
+        paragraphs = text.split('\n\n')
+        story = []
+        
+        for para_text in paragraphs:
+            if para_text.strip():
+                # Clean up text for reportlab
+                clean_text = para_text.replace('\n', ' ').strip()
+                if clean_text:
+                    para = Paragraph(clean_text, normal_style)
+                    story.append(para)
+                    story.append(Spacer(1, 0.2 * inch))
+        
+        # Build the PDF
+        doc.build(story)
+        
+        # Get the PDF content
+        pdf_content = buffer.getvalue()
+        buffer.close()
+        
+        return pdf_content
+        
+    except Exception as e:
+        # Fallback: create simple text-based PDF
+        buffer = io.BytesIO()
+        c = canvas.Canvas(buffer, pagesize=letter)
+        
+        # Add text to PDF
+        c.setFont("Helvetica", 12)
+        y_position = 750
+        
+        lines = text.split('\n')
         for line in lines:
-            # Skip binary/encoded lines
-            if len(line) > 100 and any(ord(c) > 127 for c in line[:50]):
-                continue
-            # Skip lines with too many special characters
-            if len([c for c in line if c.isalnum() or c.isspace()]) < len(line) * 0.3:
-                continue
-            # Keep lines with reasonable text
-            if len(line.strip()) > 3 and any(c.isalpha() for c in line):
-                readable_lines.append(line.strip())
-        
-        # If we found readable text, return it
-        if readable_lines:
-            return '\n'.join(readable_lines[:10])  # Limit to first 10 lines
-        
-        # Fallback: look for any text between common PDF markers
-        import re
-        text_matches = re.findall(r'\((.*?)\)', text_content)
-        readable_text = []
-        for match in text_matches:
-            if len(match) > 3 and any(c.isalpha() for c in match):
-                readable_text.append(match)
-        
-        if readable_text:
-            return ' '.join(readable_text[:20])  # Limit to first 20 matches
+            if y_position < 50:  # Start new page if needed
+                c.showPage()
+                y_position = 750
             
-        return "This appears to be a complex PDF with embedded content. Please try with a simpler text-based PDF."
+            # Wrap long lines
+            if len(line) > 80:
+                words = line.split(' ')
+                current_line = ""
+                for word in words:
+                    if len(current_line + word) < 80:
+                        current_line += word + " "
+                    else:
+                        c.drawString(50, y_position, current_line.strip())
+                        y_position -= 15
+                        current_line = word + " "
+                        if y_position < 50:
+                            c.showPage()
+                            y_position = 750
+                if current_line:
+                    c.drawString(50, y_position, current_line.strip())
+                    y_position -= 15
+            else:
+                c.drawString(50, y_position, line)
+                y_position -= 15
         
-    except Exception as e:
-        return f"Could not extract text from PDF: {str(e)}"
-
-def create_simple_pdf_with_text(text: str) -> bytes:
-    """Create a simple PDF with the translated text"""
-    try:
-        # Create a simple PDF-like structure
-        pdf_content = f"""%PDF-1.4
-1 0 obj
-<<
-/Type /Catalog
-/Pages 2 0 R
->>
-endobj
-
-2 0 obj
-<<
-/Type /Pages
-/Kids [3 0 R]
-/Count 1
->>
-endobj
-
-3 0 obj
-<<
-/Type /Page
-/Parent 2 0 R
-/MediaBox [0 0 612 792]
-/Contents 4 0 R
-/Resources <<
-/Font <<
-/F1 5 0 R
->>
->>
->>
-endobj
-
-4 0 obj
-<<
-/Length {len(text) + 100}
->>
-stream
-BT
-/F1 12 Tf
-50 750 Td
-({text}) Tj
-ET
-endstream
-endobj
-
-5 0 obj
-<<
-/Type /Font
-/Subtype /Type1
-/BaseFont /Helvetica
->>
-endobj
-
-xref
-0 6
-0000000000 65535 f 
-0000000009 00000 n 
-0000000074 00000 n 
-0000000120 00000 n 
-0000000274 00000 n 
-0000000373 00000 n 
-trailer
-<<
-/Size 6
-/Root 1 0 R
->>
-startxref
-456
-%%EOF"""
+        c.save()
+        pdf_content = buffer.getvalue()
+        buffer.close()
         
-        return pdf_content.encode('utf-8')
-        
-    except Exception as e:
-        # Fallback: return text file as PDF
-        return f"Translated Text:\n\n{text}".encode('utf-8')
+        return pdf_content
 
 @app.get("/")
 async def root():
     return {
         "message": "Translation API is running",
-        "version": "4.3",
+        "version": "5.0",
         "status": "OK",
-        "endpoints": ["/translate", "/translate-pdf", "/translate-pdf-debug"]
+        "endpoints": ["/translate", "/translate-pdf", "/translate-pdf-debug"],
+        "improvements": [
+            "Proper PDF text extraction with PyPDF2",
+            "Professional PDF generation with ReportLab", 
+            "Enhanced error handling and validation",
+            "File size limits and better cleanup"
+        ]
     }
 
 @app.post("/translate")
@@ -251,58 +251,112 @@ async def translate_pdf(
     source_lang: str = Form("auto"),
     target_lang: str = Form("en")
 ):
+    temp_file_path = None
     try:
         # Validate file
-        if not file.filename.lower().endswith('.pdf'):
+        if not file.filename or not file.filename.lower().endswith('.pdf'):
             raise HTTPException(status_code=400, detail="File must be a PDF")
         
         # Read file content
         file_content = await file.read()
         
+        # Validate file size
+        if len(file_content) == 0:
+            raise HTTPException(status_code=400, detail="Empty file received")
+        
+        if len(file_content) > 10 * 1024 * 1024:  # 10MB limit
+            raise HTTPException(status_code=400, detail="File too large (max 10MB)")
+        
         # Validate PDF header
         if not file_content.startswith(b'%PDF-'):
-            raise HTTPException(status_code=400, detail="Invalid PDF file")
+            raise HTTPException(status_code=400, detail="Invalid PDF file - missing PDF header")
         
         # Extract text from PDF
         extracted_text = extract_text_from_pdf(file_content)
         
+        # Check if text extraction failed
         if not extracted_text or len(extracted_text.strip()) < 3:
-            return JSONResponse({
-                "success": False,
-                "message": "Could not extract readable text from PDF",
-                "filename": file.filename,
-                "file_size": len(file_content),
-                "extracted_text": extracted_text[:200] if extracted_text else "No text found"
-            })
+            return JSONResponse(
+                status_code=422,
+                content={
+                    "success": False,
+                    "message": "Could not extract readable text from PDF",
+                    "filename": file.filename,
+                    "file_size": len(file_content),
+                    "extracted_text": extracted_text[:200] if extracted_text else "No text found",
+                    "suggestion": "Please try with a text-based PDF (not scanned images)"
+                }
+            )
+        
+        # Check if extracted text contains error message
+        if "Error extracting text" in extracted_text or "No readable text found" in extracted_text:
+            return JSONResponse(
+                status_code=422,
+                content={
+                    "success": False,
+                    "message": extracted_text,
+                    "filename": file.filename,
+                    "file_size": len(file_content),
+                    "suggestion": "Please try with a different PDF or check if the PDF contains selectable text"
+                }
+            )
         
         # Translate the extracted text
         translated_text = await translate_text_openai(extracted_text, source_lang, target_lang)
         
-        # Create a simple PDF with translated text
-        translated_pdf_content = create_simple_pdf_with_text(translated_text)
+        if not translated_text or len(translated_text.strip()) < 3:
+            raise HTTPException(status_code=500, detail="Translation returned empty result")
+        
+        # Create PDF with translated text
+        translated_pdf_content = create_pdf_with_text(translated_text, file.filename)
+        
+        if not translated_pdf_content or len(translated_pdf_content) < 100:
+            raise HTTPException(status_code=500, detail="Failed to generate translated PDF")
         
         # Create temporary file for response
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf', mode='wb') as tmp_file:
             tmp_file.write(translated_pdf_content)
-            tmp_file_path = tmp_file.name
+            temp_file_path = tmp_file.name
+        
+        # Verify the file was created successfully
+        if not os.path.exists(temp_file_path) or os.path.getsize(temp_file_path) == 0:
+            raise HTTPException(status_code=500, detail="Failed to create temporary PDF file")
         
         # Return the translated PDF
         return FileResponse(
-            tmp_file_path,
+            temp_file_path,
             media_type='application/pdf',
             filename=f"translated_{file.filename}",
-            background=lambda: os.unlink(tmp_file_path)  # Clean up after sending
+            background=lambda: safe_cleanup(temp_file_path)
         )
         
     except HTTPException:
+        # Clean up temp file if it exists
+        if temp_file_path and os.path.exists(temp_file_path):
+            safe_cleanup(temp_file_path)
         raise
     except Exception as e:
-        return JSONResponse({
-            "success": False,
-            "error": str(e),
-            "message": "PDF translation failed",
-            "filename": file.filename if file else "unknown"
-        })
+        # Clean up temp file if it exists
+        if temp_file_path and os.path.exists(temp_file_path):
+            safe_cleanup(temp_file_path)
+        
+        return JSONResponse(
+            status_code=500,
+            content={
+                "success": False,
+                "error": str(e),
+                "message": "PDF translation failed due to server error",
+                "filename": file.filename if file and file.filename else "unknown"
+            }
+        )
+
+def safe_cleanup(file_path: str):
+    """Safely remove temporary file"""
+    try:
+        if os.path.exists(file_path):
+            os.unlink(file_path)
+    except Exception:
+        pass  # Ignore cleanup errors
 
 @app.post("/translate-pdf-debug")
 async def translate_pdf_debug(
@@ -338,8 +392,8 @@ async def translate_pdf_debug(
         # Translate the extracted text
         translated_text = await translate_text_openai(extracted_text, source_lang, target_lang)
         
-        # Create a simple PDF with translated text
-        translated_pdf_content = create_simple_pdf_with_text(translated_text)
+        # Create PDF with translated text
+        translated_pdf_content = create_pdf_with_text(translated_text, file.filename)
         
         # Return JSON with base64-encoded PDF
         pdf_base64 = base64.b64encode(translated_pdf_content).decode('utf-8')

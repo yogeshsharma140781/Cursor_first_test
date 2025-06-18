@@ -52,7 +52,7 @@ class TranslationRequest(BaseModel):
     target_lang: str = "en"
 
 class SimpleTextBlock:
-    """Simple text block representation adapted from test_layoutparser_simple.py"""
+    """Simple text block representation inspired by test_layoutparser_simple.py"""
     def __init__(self, text: str, block_type: str = "text", font_size: float = 12, is_bold: bool = False, is_italic: bool = False):
         self.text = text.strip()
         self.type = block_type
@@ -116,8 +116,38 @@ async def translate_text_openai(text: str, source_lang: str, target_lang: str) -
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Translation failed: {str(e)}")
 
+def extract_text_from_pdf(file_content: bytes) -> str:
+    """Extract text from PDF using PyPDF2 - robust fallback approach"""
+    try:
+        # Create a PDF reader from bytes
+        pdf_file = io.BytesIO(file_content)
+        pdf_reader = PdfReader(pdf_file)
+        
+        # Extract text from all pages
+        text_content = []
+        for page_num in range(len(pdf_reader.pages)):
+            page = pdf_reader.pages[page_num]
+            text = page.extract_text()
+            if text.strip():
+                text_content.append(text.strip())
+        
+        # Join all text
+        full_text = '\n\n'.join(text_content)
+        
+        if not full_text.strip():
+            return "No readable text found in PDF"
+        
+        # Limit text length to avoid API limits
+        if len(full_text) > 4000:
+            full_text = full_text[:4000] + "..."
+        
+        return full_text
+        
+    except Exception as e:
+        return f"Error extracting text from PDF: {str(e)}"
+
 def extract_text_blocks_from_pdf(file_content: bytes) -> List[SimpleTextBlock]:
-    """Extract text blocks from PDF using PyPDF2 with smart paragraph detection (adapted from test_layoutparser_simple.py concepts)"""
+    """Extract text blocks from PDF with smart paragraph detection (inspired by test_layoutparser_simple.py)"""
     try:
         # Create a PDF reader from bytes
         pdf_file = io.BytesIO(file_content)
@@ -149,6 +179,12 @@ def extract_text_blocks_from_pdf(file_content: bytes) -> List[SimpleTextBlock]:
         return all_blocks
         
     except Exception as e:
+        # Fallback to simple text extraction
+        simple_text = extract_text_from_pdf(file_content)
+        if simple_text and not simple_text.startswith("Error"):
+            # Create a single text block
+            block = SimpleTextBlock(simple_text, "text", 12, False, False)
+            return [block]
         raise HTTPException(status_code=500, detail=f"Error extracting text blocks from PDF: {str(e)}")
 
 def smart_paragraph_detection(text: str) -> List[str]:
@@ -287,6 +323,194 @@ def apply_translation_fixes(text: str, original: str) -> str:
     
     return text
 
+def create_pdf_with_text(text: str, filename: str = "translated.pdf") -> bytes:
+    """Create a well-formatted PDF with translated text using reportlab - ROBUST VERSION"""
+    try:
+        # Create a BytesIO buffer
+        buffer = io.BytesIO()
+        
+        # Create the PDF document with better margins
+        doc = SimpleDocTemplate(
+            buffer, 
+            pagesize=letter,
+            rightMargin=72,  # 1 inch margins
+            leftMargin=72,
+            topMargin=72,
+            bottomMargin=72
+        )
+        
+        # Get styles and customize them
+        styles = getSampleStyleSheet()
+        
+        # Create custom styles for better formatting
+        title_style = styles['Title']
+        title_style.spaceAfter = 20
+        
+        normal_style = styles['Normal']
+        normal_style.fontSize = 11
+        normal_style.leading = 14  # Line spacing
+        normal_style.spaceAfter = 12
+        normal_style.alignment = 0  # Left align
+        
+        # Create a custom style for better paragraph spacing
+        custom_para_style = ParagraphStyle(
+            'CustomNormal',
+            parent=normal_style,
+            fontSize=11,
+            leading=16,
+            spaceAfter=8,
+            spaceBefore=4,
+            alignment=0,
+            leftIndent=0,
+            rightIndent=0
+        )
+        
+        story = []
+        
+        # Add title if the text seems to have one (first line is shorter and looks like a title)
+        lines = text.strip().split('\n')
+        first_line = lines[0].strip() if lines else ""
+        
+        # Check if first line looks like a title (short, no ending punctuation)
+        if (len(first_line) < 80 and 
+            len(lines) > 1 and 
+            not first_line.endswith('.') and 
+            not first_line.endswith('!') and 
+            not first_line.endswith('?')):
+            
+            # Use first line as title
+            title = Paragraph(first_line, title_style)
+            story.append(title)
+            story.append(Spacer(1, 0.3 * inch))
+            
+            # Process remaining lines
+            remaining_text = '\n'.join(lines[1:])
+        else:
+            # No title, process all text
+            remaining_text = text
+        
+        # Split text into paragraphs (double line breaks or single line breaks)
+        paragraphs = []
+        current_paragraph = []
+        
+        for line in remaining_text.split('\n'):
+            line = line.strip()
+            
+            if not line:  # Empty line - end current paragraph
+                if current_paragraph:
+                    paragraphs.append(' '.join(current_paragraph))
+                    current_paragraph = []
+            else:
+                current_paragraph.append(line)
+        
+        # Add final paragraph if exists
+        if current_paragraph:
+            paragraphs.append(' '.join(current_paragraph))
+        
+        # Add paragraphs to story
+        for para_text in paragraphs:
+            if para_text.strip():
+                # Handle special formatting
+                clean_text = para_text.strip()
+                
+                # Check if it's a list item or bullet point
+                if (clean_text.startswith('-') or 
+                    clean_text.startswith('•') or 
+                    clean_text.startswith('*') or
+                    any(clean_text.startswith(f'{i}.') for i in range(1, 10))):
+                    
+                    # Format as list item with indentation
+                    list_style = ParagraphStyle(
+                        'ListItem',
+                        parent=custom_para_style,
+                        leftIndent=20,
+                        bulletIndent=10,
+                        spaceAfter=6
+                    )
+                    para = Paragraph(clean_text, list_style)
+                else:
+                    # Format as regular paragraph
+                    para = Paragraph(clean_text, custom_para_style)
+                
+                story.append(para)
+                story.append(Spacer(1, 0.1 * inch))
+        
+        # Build the PDF
+        doc.build(story)
+        
+        # Get the PDF content
+        pdf_content = buffer.getvalue()
+        buffer.close()
+        
+        return pdf_content
+        
+    except Exception as e:
+        # Enhanced fallback: create better formatted simple PDF
+        buffer = io.BytesIO()
+        c = canvas.Canvas(buffer, pagesize=letter)
+        width, height = letter
+        
+        # Set up better formatting
+        c.setFont("Helvetica", 11)
+        margin = 72  # 1 inch margin
+        y_position = height - margin
+        line_height = 16
+        
+        # Split text into lines and handle wrapping
+        lines = text.split('\n')
+        
+        for line in lines:
+            line = line.strip()
+            if not line:  # Empty line - add some space
+                y_position -= line_height * 0.5
+                continue
+            
+            # Check if we need a new page
+            if y_position < margin + line_height:
+                c.showPage()
+                c.setFont("Helvetica", 11)
+                y_position = height - margin
+            
+            # Handle long lines by wrapping them
+            max_width = width - (2 * margin)
+            if len(line) > 80:  # Approximate character limit
+                words = line.split(' ')
+                current_line = ""
+                
+                for word in words:
+                    test_line = current_line + (" " if current_line else "") + word
+                    
+                    # Rough character-based wrapping (better than nothing)
+                    if len(test_line) <= 80:
+                        current_line = test_line
+                    else:
+                        if current_line:
+                            c.drawString(margin, y_position, current_line)
+                            y_position -= line_height
+                            
+                            # Check for new page
+                            if y_position < margin + line_height:
+                                c.showPage()
+                                c.setFont("Helvetica", 11)
+                                y_position = height - margin
+                        
+                        current_line = word
+                
+                # Draw the last line
+                if current_line:
+                    c.drawString(margin, y_position, current_line)
+                    y_position -= line_height
+            else:
+                # Short line, draw directly
+                c.drawString(margin, y_position, line)
+                y_position -= line_height
+        
+        c.save()
+        pdf_content = buffer.getvalue()
+        buffer.close()
+        
+        return pdf_content
+
 def create_pdf_with_advanced_formatting(blocks: List[SimpleTextBlock], filename: str = "translated.pdf") -> bytes:
     """Create a well-formatted PDF with advanced layout (adapted from test_layoutparser_simple.py concepts)"""
     try:
@@ -401,74 +625,9 @@ def create_pdf_with_advanced_formatting(blocks: List[SimpleTextBlock], filename:
         return pdf_content
         
     except Exception as e:
-        # Enhanced fallback
-        return create_simple_pdf_fallback(blocks, filename)
-
-def create_simple_pdf_fallback(blocks: List[SimpleTextBlock], filename: str) -> bytes:
-    """Simple PDF fallback with basic formatting"""
-    buffer = io.BytesIO()
-    c = canvas.Canvas(buffer, pagesize=letter)
-    width, height = letter
-    
-    # Set up formatting
-    margin = 72  # 1 inch margin
-    y_position = height - margin
-    
-    for block in blocks:
-        text = block.text.strip()
-        if not text:
-            continue
-        
-        # Set font based on block type
-        if block.type == "title":
-            c.setFont("Helvetica-Bold", 16)
-            line_height = 20
-        elif block.type == "header":
-            c.setFont("Helvetica-Bold", 14)
-            line_height = 18
-        elif block.type == "table":
-            c.setFont("Helvetica", 10)
-            line_height = 14
-        else:
-            c.setFont("Helvetica", 11)
-            line_height = 16
-        
-        # Check if we need a new page
-        if y_position < margin + line_height * 2:
-            c.showPage()
-            y_position = height - margin
-        
-        # Simple text wrapping
-        max_chars = 80
-        words = text.split(' ')
-        current_line = ""
-        
-        for word in words:
-            test_line = current_line + (" " if current_line else "") + word
-            
-            if len(test_line) <= max_chars:
-                current_line = test_line
-            else:
-                if current_line:
-                    c.drawString(margin, y_position, current_line)
-                    y_position -= line_height
-                    
-                if y_position < margin + line_height:
-                    c.showPage()
-                    y_position = height - margin
-                
-                current_line = word
-        
-        # Draw the last line
-        if current_line:
-            c.drawString(margin, y_position, current_line)
-            y_position -= line_height * 1.5  # Extra space after block
-    
-    c.save()
-    pdf_content = buffer.getvalue()
-    buffer.close()
-    
-    return pdf_content
+        # Fallback to simple text approach
+        combined_text = "\n\n".join([block.text for block in blocks])
+        return create_pdf_with_text(combined_text, filename)
 
 async def openai_translate_batch(texts: List[str], target_lang: str = 'en') -> List[str]:
     """Translate multiple texts using OpenAI API (adapted from test_layoutparser_simple.py)"""
@@ -486,16 +645,16 @@ async def openai_translate_batch(texts: List[str], target_lang: str = 'en') -> L
 async def root():
     return {
         "message": "Translation API is running",
-        "version": "6.1",
+        "version": "6.2",
         "status": "OK",
         "endpoints": ["/translate", "/translate-pdf", "/translate-pdf-debug"],
         "improvements": [
-            "Lightweight layout parser (adapted from test_layoutparser_simple.py)",
-            "Smart paragraph detection and block classification", 
-            "Font property estimation and style preservation",
-            "Advanced text post-processing and formatting",
-            "Professional PDF generation with block-based layout",
-            "Deployment-friendly (no heavy dependencies)"
+            "Hybrid approach with robust fallbacks",
+            "Smart paragraph detection (inspired by test_layoutparser_simple.py)", 
+            "Block classification and font estimation",
+            "Advanced formatting with reliable PDF generation",
+            "Multiple fallback strategies for maximum reliability",
+            "Enhanced error handling and recovery"
         ]
     }
 
@@ -547,40 +706,56 @@ async def translate_pdf(
         if not file_content.startswith(b'%PDF-'):
             raise HTTPException(status_code=400, detail="Invalid PDF file - missing PDF header")
         
-        # Extract blocks using lightweight layout parser
-        text_blocks = extract_text_blocks_from_pdf(file_content)
-        
-        if not text_blocks:
-            return JSONResponse(
-                status_code=422,
-                content={
-                    "success": False,
-                    "message": "Could not extract readable text blocks from PDF",
-                    "filename": file.filename,
-                    "file_size": len(file_content),
-                    "suggestion": "Please try with a text-based PDF (not scanned images)"
-                }
-            )
-        
-        # Translate the extracted blocks
-        texts = [block.text for block in text_blocks]
-        translated_texts = await openai_translate_batch(texts, target_lang)
-        
-        if not translated_texts or len(translated_texts) != len(texts):
-            raise HTTPException(status_code=500, detail="Translation returned incomplete results")
-        
-        # Apply post-processing to translations
-        processed_blocks = []
-        for i, block in enumerate(text_blocks):
-            translated_text = translated_texts[i] if i < len(translated_texts) else block.text
-            processed_text = postprocess_english(translated_text, block.text)
+        # Try advanced approach first, with fallback to simple approach
+        try:
+            # Extract blocks using smart layout parser (inspired by test_layoutparser_simple.py)
+            text_blocks = extract_text_blocks_from_pdf(file_content)
             
-            # Create new block with processed text
-            processed_block = SimpleTextBlock(processed_text, block.type, block.size, block.bold, block.italic)
-            processed_blocks.append(processed_block)
-        
-        # Create PDF with advanced formatting
-        translated_pdf_content = create_pdf_with_advanced_formatting(processed_blocks, file.filename)
+            if text_blocks and len(text_blocks) > 1:
+                # Advanced approach worked - translate blocks
+                texts = [block.text for block in text_blocks]
+                translated_texts = await openai_translate_batch(texts, target_lang)
+                
+                if translated_texts and len(translated_texts) == len(texts):
+                    # Apply post-processing to translations
+                    processed_blocks = []
+                    for i, block in enumerate(text_blocks):
+                        translated_text = translated_texts[i] if i < len(translated_texts) else block.text
+                        processed_text = postprocess_english(translated_text, block.text)
+                        
+                        # Create new block with processed text
+                        processed_block = SimpleTextBlock(processed_text, block.type, block.size, block.bold, block.italic)
+                        processed_blocks.append(processed_block)
+                    
+                    # Create PDF with advanced formatting
+                    translated_pdf_content = create_pdf_with_advanced_formatting(processed_blocks, file.filename)
+                else:
+                    raise Exception("Translation batch failed")
+            else:
+                raise Exception("Advanced block extraction failed")
+                
+        except Exception as e:
+            print(f"Advanced approach failed: {e}, falling back to simple approach")
+            # Fallback to simple approach
+            text_content = extract_text_from_pdf(file_content)
+            
+            if text_content.startswith("Error") or text_content.startswith("No readable"):
+                return JSONResponse(
+                    status_code=422,
+                    content={
+                        "success": False,
+                        "message": "Could not extract readable text from PDF",
+                        "filename": file.filename,
+                        "file_size": len(file_content),
+                        "suggestion": "Please try with a text-based PDF (not scanned images)"
+                    }
+                )
+            
+            # Translate the text
+            translated_text = await translate_text_openai(text_content, source_lang, target_lang)
+            
+            # Create PDF with simple formatting
+            translated_pdf_content = create_pdf_with_text(translated_text, file.filename)
         
         if not translated_pdf_content or len(translated_pdf_content) < 100:
             raise HTTPException(status_code=500, detail="Failed to generate translated PDF")
@@ -649,55 +824,86 @@ async def translate_pdf_debug(
         if not file_content.startswith(b'%PDF-'):
             raise HTTPException(status_code=400, detail="Invalid PDF file")
         
-        # Extract blocks using lightweight layout parser
-        text_blocks = extract_text_blocks_from_pdf(file_content)
-        
-        if not text_blocks:
-            return JSONResponse({
-                "success": False,
-                "message": "Could not extract readable text blocks from PDF",
-                "filename": file.filename,
-                "file_size": len(file_content),
-                "extracted_blocks": 0
-            })
-        
-        # Get sample text from blocks
-        sample_text = "\n\n".join([f"[{block.type.upper()}] {block.text[:100]}..." if len(block.text) > 100 else f"[{block.type.upper()}] {block.text}" 
-                                   for block in text_blocks[:3]])
-        
-        # Translate the extracted blocks
-        texts = [block.text for block in text_blocks]
-        translated_texts = await openai_translate_batch(texts, target_lang)
-        
-        # Apply post-processing to translations
-        processed_blocks = []
-        for i, block in enumerate(text_blocks):
-            translated_text = translated_texts[i] if i < len(translated_texts) else block.text
-            processed_text = postprocess_english(translated_text, block.text)
+        # Try advanced approach first
+        approach_used = "advanced"
+        try:
+            # Extract blocks using smart layout parser
+            text_blocks = extract_text_blocks_from_pdf(file_content)
             
-            processed_block = SimpleTextBlock(processed_text, block.type, block.size, block.bold, block.italic)
-            processed_blocks.append(processed_block)
-        
-        # Create PDF with advanced formatting
-        translated_pdf_content = create_pdf_with_advanced_formatting(processed_blocks, file.filename)
+            if text_blocks and len(text_blocks) > 1:
+                # Get sample text from blocks
+                sample_text = "\n\n".join([f"[{block.type.upper()}] {block.text[:100]}..." if len(block.text) > 100 else f"[{block.type.upper()}] {block.text}" 
+                                           for block in text_blocks[:3]])
+                
+                # Translate the extracted blocks
+                texts = [block.text for block in text_blocks]
+                translated_texts = await openai_translate_batch(texts, target_lang)
+                
+                # Apply post-processing to translations
+                processed_blocks = []
+                for i, block in enumerate(text_blocks):
+                    translated_text = translated_texts[i] if i < len(translated_texts) else block.text
+                    processed_text = postprocess_english(translated_text, block.text)
+                    
+                    processed_block = SimpleTextBlock(processed_text, block.type, block.size, block.bold, block.italic)
+                    processed_blocks.append(processed_block)
+                
+                # Create PDF with advanced formatting
+                translated_pdf_content = create_pdf_with_advanced_formatting(processed_blocks, file.filename)
+                
+                translated_sample = "\n\n".join([f"[{block.type.upper()}] {trans[:100]}..." if len(trans) > 100 else f"[{block.type.upper()}] {trans}" 
+                                               for trans in translated_texts[:3]])
+                
+                block_types = [block.type for block in text_blocks]
+                blocks_processed = len(text_blocks)
+            else:
+                raise Exception("Advanced block extraction failed")
+                
+        except Exception as e:
+            print(f"Advanced approach failed: {e}, using simple approach")
+            approach_used = "simple"
+            
+            # Fallback to simple approach
+            text_content = extract_text_from_pdf(file_content)
+            
+            if text_content.startswith("Error") or text_content.startswith("No readable"):
+                return JSONResponse({
+                    "success": False,
+                    "message": "Could not extract readable text from PDF",
+                    "filename": file.filename,
+                    "file_size": len(file_content),
+                    "extracted_blocks": 0
+                })
+            
+            sample_text = text_content[:300] + "..." if len(text_content) > 300 else text_content
+            
+            # Translate the text
+            translated_text = await translate_text_openai(text_content, source_lang, target_lang)
+            translated_sample = translated_text[:300] + "..." if len(translated_text) > 300 else translated_text
+            
+            # Create PDF with simple formatting
+            translated_pdf_content = create_pdf_with_text(translated_text, file.filename)
+            
+            block_types = ["text"]
+            blocks_processed = 1
         
         # Return JSON with base64-encoded PDF
         pdf_base64 = base64.b64encode(translated_pdf_content).decode('utf-8')
         
         return JSONResponse({
             "success": True,
-            "message": "PDF translated successfully with lightweight layout parser (adapted from test_layoutparser_simple.py)",
+            "message": f"PDF translated successfully using {approach_used} approach (inspired by test_layoutparser_simple.py)",
             "filename": f"translated_{file.filename}",
             "original_text": sample_text,
-            "translated_text": "\n\n".join([f"[{block.type.upper()}] {trans[:100]}..." if len(trans) > 100 else f"[{block.type.upper()}] {trans}" 
-                                           for trans in translated_texts[:3]]),
+            "translated_text": translated_sample,
             "source_lang": source_lang,
             "target_lang": target_lang,
             "pdf_base64": pdf_base64,
             "pdf_size": len(translated_pdf_content),
-            "blocks_processed": len(text_blocks),
-            "block_types": [block.type for block in text_blocks],
-            "version": "6.1-debug-lightweight-layout"
+            "blocks_processed": blocks_processed,
+            "block_types": block_types,
+            "approach_used": approach_used,
+            "version": "6.2-debug-hybrid"
         })
         
     except HTTPException:

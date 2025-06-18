@@ -137,7 +137,7 @@ async def translate_pdf(
 async def root():
     return {
         "message": "Translation API is running", 
-        "version": "3.2", 
+        "version": "3.3", 
         "status": "OK",
         "endpoints": ["/translate", "/translate-pdf"]
     }

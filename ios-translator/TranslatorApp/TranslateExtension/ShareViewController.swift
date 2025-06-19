@@ -9,7 +9,7 @@ class ShareViewController: UIViewController {
         super.viewDidLoad()
         
         // Check if we have a PDF or text content
-        checkSharedContent { [weak self] contentType, content in
+        checkSharedContent { [weak self] contentType in
             DispatchQueue.main.async {
                 switch contentType {
                 case .text(let text):

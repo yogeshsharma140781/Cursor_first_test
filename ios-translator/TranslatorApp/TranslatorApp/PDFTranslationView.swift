@@ -166,7 +166,7 @@ struct PDFTranslationView: View {
                                 HStack {
                                     Image("PDF-Icon")
                                         .resizable()
-                                        .frame(width: 24, height: 24)
+                                        .frame(width: 32, height: 32)
                                         .foregroundColor(.red)
                                     
                                     VStack(alignment: .leading, spacing: 4) {
@@ -180,72 +180,89 @@ struct PDFTranslationView: View {
                                     }
                                     
                                     Spacer()
-                                    
-                                    Button("Change") {
-                                        showingFilePicker = true
-                                    }
-                                    .font(.caption)
-                                    .foregroundColor(.blue)
                                 }
-                                .padding(16)
-                                .background(Color.white)
+                                .padding()
+                                .background(Color(.systemGray6))
                                 .cornerRadius(12)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.blue, lineWidth: 1)
-                                )
+                                
+                                // Language Selection
+                                HStack {
+                                    Text("Translate to:")
+                                        .font(.headline)
+                                    
+                                    Picker("Target Language", selection: $targetLang) {
+                                        ForEach(supportedLanguages, id: \.code) { language in
+                                            Text(language.name).tag(language.code)
+                                        }
+                                    }
+                                    .pickerStyle(MenuPickerStyle())
+                                    .frame(maxWidth: .infinity)
+                                }
+                                
+                                // Translate Button
+                                Button(action: translatePDF) {
+                                    HStack {
+                                        if pdfService.isProcessing {
+                                            ProgressView()
+                                                .scaleEffect(0.8)
+                                        }
+                                        Text(pdfService.isProcessing ? "Translating..." : "Translate PDF")
+                                            .font(.headline)
+                                    }
+                                    .foregroundColor(.white)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 16)
+                                    .background(pdfService.isProcessing ? Color.gray : Color.blue)
+                                    .cornerRadius(12)
+                                }
+                                .disabled(pdfService.isProcessing)
                             }
                         } else {
-                            // PDF Upload Area - dashed border like text input
-                            Button(action: { showingFilePicker = true }) {
-                                VStack(spacing: 16) {
-                                    Image("PDF-Icon")
-                                        .resizable()
-                                        .frame(width: 40, height: 40)
-                                        .foregroundColor(.gray)
-                                    
-                                    VStack(spacing: 4) {
-                                        Text("PDF Translator")
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.black)
-                                        
-                                        Text("Upload PDF to translate")
-                                            .font(.caption)
-                                            .foregroundColor(.gray)
-                                    }
-                                    .multilineTextAlignment(.center)
-                                }
-                                .frame(maxWidth: .infinity)
-                                .frame(minHeight: 240)
-                                .background(Color.white)
-                                .cornerRadius(12)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.gray.opacity(0.3), style: StrokeStyle(lineWidth: 1, dash: [8, 4]))
-                                )
-                            }
-                            .disabled(pdfService.isProcessing)
-                        }
-                    }
-                    
-                    // Full width Upload PDF button
-                    if selectedPDFData == nil {
-                        Button(action: { showingFilePicker = true }) {
-                            HStack {
+                            // Upload area
+                            VStack(spacing: 24) {
                                 Image("PDF-Icon")
                                     .resizable()
-                                    .frame(width: 16, height: 16)
-                                Text("Upload PDF")
-                                    .font(.headline)
+                                    .frame(width: 64, height: 64)
+                                    .foregroundColor(.gray)
+                                
+                                VStack(spacing: 8) {
+                                    Text("Select PDF to Translate")
+                                        .font(.title2)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.primary)
+                                    
+                                    Text("Choose a PDF file from your device")
+                                        .font(.body)
+                                        .foregroundColor(.secondary)
+                                        .multilineTextAlignment(.center)
+                                }
                             }
-                            .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
-                            .background(Color.blue)
-                            .cornerRadius(12)
+                            .padding(.vertical, 60)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(16)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                showingFilePicker = true
+                            }
                         }
-                        .disabled(pdfService.isProcessing)
+                        
+                        Spacer()
+                        
+                        // Full width Upload PDF button
+                        if selectedPDFData == nil {
+                            Button(action: { showingFilePicker = true }) {
+                                HStack {
+                                    Text("Select PDF File")
+                                        .font(.headline)
+                                }
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 16)
+                                .background(Color.blue)
+                                .cornerRadius(12)
+                            }
+                        }
                     }
                     
                     // Translation Results Area - matching ContentView output area

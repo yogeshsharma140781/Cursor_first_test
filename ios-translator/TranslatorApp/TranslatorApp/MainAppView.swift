@@ -15,6 +15,8 @@ struct MainAppView: View {
             PDFTranslationView()
                 .tabItem {
                     Image("PDF-Icon")
+                        .resizable()
+                        .frame(width: 24, height: 24)
                         .renderingMode(.template)
                     Text("PDF")
                 }

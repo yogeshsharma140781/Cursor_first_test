@@ -1145,13 +1145,13 @@ class SimplePDFLayoutParser:
                 text_blocks.append((block, page_num))
         
         # Only translate non-QR blocks
-        texts = [block.text for block, _ in text_blocks]
+            texts = [block.text for block, _ in text_blocks]
         if translate and texts:
-            translations = self.openai_translate_batch(texts, target_lang=target_lang)
-            print(f"Translations received: {len(translations)}")
-        else:
-            translations = texts
-        
+                translations = self.openai_translate_batch(texts, target_lang=target_lang)
+                print(f"Translations received: {len(translations)}")
+            else:
+                translations = texts
+            
         # Combine translated text blocks and QR blocks
         text_idx = 0
         for block, page_num in unique_blocks_with_pages:
@@ -1180,7 +1180,7 @@ class SimplePDFLayoutParser:
         # Visualize paragraph blocks
         self.visualize_paragraph_blocks_on_page(pdf_path, unique_blocks_with_pages, 'paragraph_blocks.png')
         print("Processing complete!")
-    
+
     def _detect_table_regions(self, text_dict: dict) -> List[Dict]:
         """Detect table-like regions in the PDF and extract them cell-by-cell"""
         tables = []
@@ -1369,8 +1369,8 @@ class SimplePDFLayoutParser:
         if self._is_label_or_identifier(text, original_text):
             text = text.rstrip('.')
             
-        return text
-    
+            return text
+            
     def _should_have_period(self, text: str) -> bool:
         """Determine if text should naturally have a period"""
         text_lower = text.lower().strip()
@@ -1683,7 +1683,7 @@ class SimplePDFLayoutParser:
                 reportlab_y = page_height - y0 - font_size
                 current_y = reportlab_y
                 
-                for line in lines:
+            for line in lines:
                     # Draw all lines within reasonable bounds (less restrictive clipping)
                     if current_y > 20:  # Just ensure we don't go off the bottom of the page
                         c.setFont(actual_font_name, font_size)
@@ -1882,7 +1882,7 @@ class SimplePDFLayoutParser:
         
         try:
             bbox = element["bbox"]
-            x0, y0, x1, y1 = bbox
+        x0, y0, x1, y1 = bbox
             original_width = x1 - x0
             original_height = y1 - y0
             
@@ -2076,10 +2076,10 @@ class SimplePDFLayoutParser:
         """
         from reportlab.pdfgen import canvas
         from reportlab.lib.pagesizes import letter
-        from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase import pdfmetrics
         from reportlab.pdfbase.ttfonts import TTFont
         from reportlab.lib.utils import simpleSplit
-        import os
+    import os
         import fitz
         
         debug = False  # Enable debug output
@@ -2165,7 +2165,7 @@ class SimplePDFLayoutParser:
                         
                         if debug:
                             print(f"Block font: {block.font}, Bold: {font_style['bold']}, Italic: {font_style['italic']}, Selected font: {actual_font_name}")
-                    except Exception as e:
+            except Exception as e:
                         if debug:
                             print(f"Error in font style processing: {e}")
                         actual_font_name = font_name
@@ -2194,7 +2194,7 @@ class SimplePDFLayoutParser:
                         # Text fits within original dimensions - use original layout
                         expansion_needed = False
                         actual_max_width = original_max_width
-                    else:
+        else:
                         # Text doesn't fit in original dimensions - try expansion
                         try:
                             expanded_width = self._calculate_expanded_width(block, blocks_with_translations, page_num, page_width)

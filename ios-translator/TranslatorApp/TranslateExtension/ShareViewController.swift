@@ -8,46 +8,99 @@ class ShareViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Extract the shared text
-        extractSharedText { [weak self] sharedText in
+        // Check if we have a PDF or text content
+        checkSharedContent { [weak self] contentType, content in
             DispatchQueue.main.async {
-                self?.setupTranslationView(with: sharedText)
+                switch contentType {
+                case .text(let text):
+                    self?.setupTextTranslationView(with: text)
+                case .pdf(let data, let filename):
+                    self?.setupPDFTranslationView(with: data, filename: filename)
+                case .none:
+                    self?.setupErrorView(message: "No supported content found")
+                }
             }
         }
     }
     
-    private func extractSharedText(completion: @escaping (String) -> Void) {
+    enum SharedContentType {
+        case text(String)
+        case pdf(Data, String)
+        case none
+    }
+    
+    private func checkSharedContent(completion: @escaping (SharedContentType) -> Void) {
         guard let extensionItem = extensionContext?.inputItems.first as? NSExtensionItem,
               let itemProvider = extensionItem.attachments?.first else {
-            completion("No text found")
+            completion(.none)
             return
         }
         
+        // Check for PDF files first
+        if itemProvider.hasItemConformingToTypeIdentifier(UTType.pdf.identifier) {
+            itemProvider.loadItem(forTypeIdentifier: UTType.pdf.identifier, options: nil) { [weak self] item, error in
+                if let url = item as? URL {
+                    self?.loadPDFFromURL(url: url, completion: completion)
+                } else if let data = item as? Data {
+                    completion(.pdf(data, "shared_document.pdf"))
+                } else {
+                    // If PDF loading fails, try text
+                    self?.extractTextContent(from: itemProvider, completion: completion)
+                }
+            }
+        } else {
+            // Try to extract text content
+            extractTextContent(from: itemProvider, completion: completion)
+        }
+    }
+    
+    private func loadPDFFromURL(url: URL, completion: @escaping (SharedContentType) -> Void) {
+        // Start accessing security-scoped resource
+        guard url.startAccessingSecurityScopedResource() else {
+            completion(.none)
+            return
+        }
+        
+        defer {
+            url.stopAccessingSecurityScopedResource()
+        }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let filename = url.lastPathComponent
+            completion(.pdf(data, filename))
+        } catch {
+            print("Failed to load PDF from URL: \(error)")
+            completion(.none)
+        }
+    }
+    
+    private func extractTextContent(from itemProvider: NSItemProvider, completion: @escaping (SharedContentType) -> Void) {
         // Try to get plain text first
         if itemProvider.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) {
             itemProvider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) { item, error in
                 if let text = item as? String {
-                    completion(text)
+                    completion(.text(text))
                 } else if let data = item as? Data, let text = String(data: data, encoding: .utf8) {
-                    completion(text)
+                    completion(.text(text))
                 } else {
-                    completion("Unable to extract text")
+                    completion(.none)
                 }
             }
         } else if itemProvider.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
             itemProvider.loadItem(forTypeIdentifier: UTType.url.identifier, options: nil) { item, error in
                 if let url = item as? URL {
-                    completion(url.absoluteString)
+                    completion(.text(url.absoluteString))
                 } else {
-                    completion("Unable to extract URL")
+                    completion(.none)
                 }
             }
         } else {
-            completion("No text content found")
+            completion(.none)
         }
     }
     
-    private func setupTranslationView(with text: String) {
+    private func setupTextTranslationView(with text: String) {
         let translationView = SimpleTranslationView(
             originalText: text,
             onTranslationComplete: { [weak self] in
@@ -58,16 +111,53 @@ class ShareViewController: UIViewController {
             }
         )
         
-        let hostingController = UIHostingController(rootView: translationView)
+        setupHostingController(with: translationView)
+    }
+    
+    private func setupPDFTranslationView(with pdfData: Data, filename: String) {
+        let pdfTranslationView = PDFTranslationExtensionView(
+            pdfData: pdfData,
+            filename: filename,
+            onTranslationComplete: { [weak self] translatedData in
+                // Share the translated PDF
+                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("translated_\(filename)")
+                try? translatedData.write(to: tempURL)
+                
+                let activityViewController = UIActivityViewController(activityItems: [tempURL], applicationActivities: nil)
+                self?.present(activityViewController, animated: true) {
+                    self?.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
+                }
+            },
+            onCancel: { [weak self] in
+                self?.extensionContext?.cancelRequest(withError: NSError(domain: "UserCancelled", code: 0, userInfo: nil))
+            }
+        )
+        
+        setupHostingController(with: pdfTranslationView)
+    }
+    
+    private func setupErrorView(message: String) {
+        let errorView = ErrorView(
+            message: message,
+            onDismiss: { [weak self] in
+                self?.extensionContext?.cancelRequest(withError: NSError(domain: "NoContent", code: 0, userInfo: nil))
+            }
+        )
+        
+        setupHostingController(with: errorView)
+    }
+    
+    private func setupHostingController<T: View>(with view: T) {
+        let hostingController = UIHostingController(rootView: view)
         addChild(hostingController)
-        view.addSubview(hostingController.view)
+        self.view.addSubview(hostingController.view)
         
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
-            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            hostingController.view.topAnchor.constraint(equalTo: self.view.topAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         
         hostingController.didMove(toParent: self)
@@ -263,5 +353,182 @@ struct SimpleTranslationView: View {
     
     private func copyTranslation() {
         UIPasteboard.general.string = translatedText
+    }
+}
+
+// PDF Translation View for Share Extension
+struct PDFTranslationExtensionView: View {
+    let pdfData: Data
+    let filename: String
+    let onTranslationComplete: (Data) -> Void
+    let onCancel: () -> Void
+    
+    @State private var selectedLanguage = "en"
+    @State private var isTranslating = false
+    @State private var showError = false
+    @State private var errorMessage = ""
+    @StateObject private var pdfService = PDFTranslationService.shared
+    
+    // Define supported languages locally for the extension
+    private let supportedLanguages = [
+        (code: "en", name: "English"),
+        (code: "ar", name: "Arabic"),
+        (code: "zh-cn", name: "Chinese (Simplified)"),
+        (code: "zh-tw", name: "Chinese (Traditional)"),
+        (code: "nl", name: "Dutch"),
+        (code: "fr", name: "French"),
+        (code: "de", name: "German"),
+        (code: "hi", name: "Hindi"),
+        (code: "it", name: "Italian"),
+        (code: "ja", name: "Japanese"),
+        (code: "ko", name: "Korean"),
+        (code: "pl", name: "Polish"),
+        (code: "pt", name: "Portuguese"),
+        (code: "ru", name: "Russian"),
+        (code: "es", name: "Spanish"),
+        (code: "tr", name: "Turkish"),
+        (code: "uk", name: "Ukrainian"),
+        (code: "vi", name: "Vietnamese")
+    ]
+    
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 20) {
+                // PDF Info
+                VStack(spacing: 12) {
+                    Image("PDF-Icon")
+                        .resizable()
+                        .frame(width: 48, height: 48)
+                        .foregroundColor(.red)
+                    
+                    Text(filename)
+                        .font(.headline)
+                        .multilineTextAlignment(.center)
+                    
+                    Text("PDF ready for translation")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .padding()
+                
+                // Language selection
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Translate to:")
+                        .font(.headline)
+                    
+                    Picker("Target Language", selection: $selectedLanguage) {
+                        ForEach(supportedLanguages, id: \.code) { language in
+                            Text(language.name).tag(language.code)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                }
+                
+                // Translation button or progress
+                if isTranslating {
+                    VStack(spacing: 16) {
+                        ProgressView(value: pdfService.progress)
+                            .progressViewStyle(LinearProgressViewStyle())
+                        
+                        Text("Translating PDF...")
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                        
+                        Text("\(Int(pdfService.progress * 100))%")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding()
+                } else {
+                    Button("Translate PDF") {
+                        translatePDF()
+                    }
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(Color.blue)
+                    .cornerRadius(12)
+                }
+                
+                Spacer()
+            }
+            .padding()
+            .navigationTitle("PDF Translation")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                leading: Button("Cancel", action: onCancel)
+            )
+        }
+        .alert("Translation Error", isPresented: $showError) {
+            Button("OK") { showError = false }
+        } message: {
+            Text(errorMessage)
+        }
+    }
+    
+    private func translatePDF() {
+        isTranslating = true
+        
+        Task {
+            let result = await pdfService.translatePDF(
+                pdfData: pdfData,
+                filename: filename,
+                fromLanguage: "auto",
+                toLanguage: selectedLanguage
+            )
+            
+            await MainActor.run {
+                isTranslating = false
+                
+                switch result {
+                case .success(let translatedData):
+                    onTranslationComplete(translatedData)
+                case .failure(let error):
+                    errorMessage = error.localizedDescription
+                    showError = true
+                }
+            }
+        }
+    }
+}
+
+// Error View for Share Extension
+struct ErrorView: View {
+    let message: String
+    let onDismiss: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 20) {
+                Image(systemName: "exclamationmark.triangle")
+                    .font(.system(size: 48))
+                    .foregroundColor(.orange)
+                
+                Text("Unable to Process")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                
+                Text(message)
+                    .font(.body)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.secondary)
+                
+                Button("OK") {
+                    onDismiss()
+                }
+                .font(.headline)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+                .background(Color.blue)
+                .cornerRadius(12)
+                
+                Spacer()
+            }
+            .padding()
+            .navigationTitle("Error")
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 } 

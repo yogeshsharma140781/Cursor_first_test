@@ -14,7 +14,8 @@ struct MainAppView: View {
             
             PDFTranslationView()
                 .tabItem {
-                    Image(systemName: "doc.text")
+                    Image("PDF-Icon")
+                        .renderingMode(.template)
                     Text("PDF")
                 }
                 .tag(1)

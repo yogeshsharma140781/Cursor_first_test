@@ -125,22 +125,22 @@ class AdvancedPDFLayoutParser:
                 "https://api.openai.com/v1/chat/completions",
                 headers={
                     "Authorization": f"Bearer {self.api_key}",
-                    "Content-Type": "application/json"
+            "Content-Type": "application/json"
                 },
                 json={
                     "model": "gpt-4o-mini",
-                    "messages": [
-                        {"role": "user", "content": prompt}
-                    ],
+            "messages": [
+                {"role": "user", "content": prompt}
+            ],
                     "max_tokens": 1024,
                     "temperature": 0.3
-                }
+        }
             )
-            
+        
             if response.status_code != 200:
                 raise HTTPException(status_code=response.status_code, detail=f"OpenAI API error: {response.text}")
             
-            result = response.json()
+        result = response.json()
             result_text = result["choices"][0]["message"]["content"].strip()
             
             # Post-processing fixes for common translation issues
@@ -1608,7 +1608,7 @@ async def translate_pdf(
         def cleanup():
             try:
                 os.unlink(output_path)
-            except:
+    except:
                 pass
         
         background_tasks.add_task(cleanup)
@@ -2054,7 +2054,7 @@ def postprocess_english(text: str, original: str) -> str:
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    await client.aclose()
+    await client.aclose() 
 
 if __name__ == "__main__":
     import uvicorn

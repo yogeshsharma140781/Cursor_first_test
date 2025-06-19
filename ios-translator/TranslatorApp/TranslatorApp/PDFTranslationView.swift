@@ -164,8 +164,9 @@ struct PDFTranslationView: View {
                             // PDF Selected - Show file info
                             VStack(spacing: 16) {
                                 HStack {
-                                    Image(systemName: "doc.fill")
-                                        .font(.system(size: 24))
+                                    Image("PDF-Icon")
+                                        .resizable()
+                                        .frame(width: 24, height: 24)
                                         .foregroundColor(.red)
                                     
                                     VStack(alignment: .leading, spacing: 4) {
@@ -198,8 +199,9 @@ struct PDFTranslationView: View {
                             // PDF Upload Area - dashed border like text input
                             Button(action: { showingFilePicker = true }) {
                                 VStack(spacing: 16) {
-                                    Image(systemName: "doc.badge.arrow.up")
-                                        .font(.system(size: 40))
+                                    Image("PDF-Icon")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
                                         .foregroundColor(.gray)
                                     
                                     VStack(spacing: 4) {
@@ -231,8 +233,9 @@ struct PDFTranslationView: View {
                     if selectedPDFData == nil {
                         Button(action: { showingFilePicker = true }) {
                             HStack {
-                                Image(systemName: "doc.badge.arrow.up")
-                                    .font(.headline)
+                                Image("PDF-Icon")
+                                    .resizable()
+                                    .frame(width: 16, height: 16)
                                 Text("Upload PDF")
                                     .font(.headline)
                             }
@@ -344,6 +347,18 @@ struct PDFTranslationView: View {
         switch result {
         case .success(let urls):
             guard let url = urls.first else { return }
+            
+            // Start accessing security-scoped resource
+            guard url.startAccessingSecurityScopedResource() else {
+                errorMessage = "Failed to access PDF file. Please try again."
+                showError = true
+                return
+            }
+            
+            defer {
+                // Always stop accessing the security-scoped resource
+                url.stopAccessingSecurityScopedResource()
+            }
             
             do {
                 let data = try Data(contentsOf: url)

@@ -34,12 +34,20 @@ import httpx
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 import hashlib
+from contextlib import asynccontextmanager
 
 load_dotenv()
 
 API_KEY = os.getenv('OPENAI_API_KEY')
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    yield
+    # Shutdown
+    await client.aclose()
+
+app = FastAPI(lifespan=lifespan)
 
 # Create a persistent HTTP client for connection pooling
 client = httpx.AsyncClient(
@@ -105,6 +113,7 @@ class AdvancedPDFLayoutParser:
         """Advanced text translation using OpenAI API with post-processing improvements"""
         if not text.strip():
             return text
+        
         try:
             preprocessed_text = self._preprocess_for_translation(text)
             
@@ -125,22 +134,22 @@ class AdvancedPDFLayoutParser:
                 "https://api.openai.com/v1/chat/completions",
                 headers={
                     "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json"
+                    "Content-Type": "application/json"
                 },
                 json={
                     "model": "gpt-4o-mini",
-            "messages": [
-                {"role": "user", "content": prompt}
-            ],
+                    "messages": [
+                        {"role": "user", "content": prompt}
+                    ],
                     "max_tokens": 1024,
                     "temperature": 0.3
-        }
+                }
             )
-        
+            
             if response.status_code != 200:
                 raise HTTPException(status_code=response.status_code, detail=f"OpenAI API error: {response.text}")
             
-        result = response.json()
+            result = response.json()
             result_text = result["choices"][0]["message"]["content"].strip()
             
             # Post-processing fixes for common translation issues
@@ -1605,18 +1614,22 @@ async def translate_pdf(
             tmp_file.flush()
             output_path = tmp_file.name
         
+        # Cleanup function for background task
         def cleanup():
             try:
                 os.unlink(output_path)
-    except:
-                pass
+            except Exception as e:
+                print(f"Error cleaning up temp file: {e}")
         
+        # Add cleanup task
         background_tasks.add_task(cleanup)
         
+        # Return file response
         return FileResponse(
-            output_path,
+            path=output_path,
             media_type='application/pdf',
-            filename=f"translated_{file.filename}"
+            filename=f"translated_{file.filename}",
+            background=None  # Don't use deprecated background parameter
         )
         
     except Exception as e:
@@ -2051,10 +2064,6 @@ def postprocess_english(text: str, original: str) -> str:
         
     s = capitalize_sentences(s)
     return s
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    await client.aclose() 
 
 if __name__ == "__main__":
     import uvicorn

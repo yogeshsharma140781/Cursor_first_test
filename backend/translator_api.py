@@ -115,10 +115,53 @@ try:
 except Exception as e:
     print(f"[FONT] Could not register {NOTO_DEVANAGARI_FONT_NAME}: {e}")
 
+def setup_production_fonts():
+    """Setup all required fonts for production using existing Noto fonts"""
+    try:
+        # Get the path to the fonts directory
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        fonts_dir = os.path.join(current_dir, 'fonts')
+        
+        # Register Noto Sans fonts (these include Cyrillic and Extended Latin support)
+        noto_sans_regular_path = os.path.join(fonts_dir, 'NotoSans-Regular.ttf')
+        noto_sans_bold_path = os.path.join(fonts_dir, 'NotoSans-Bold.ttf')
+        
+        # Register Noto Sans Regular
+        if 'NotoSans-Regular' not in pdfmetrics.getRegisteredFontNames():
+            pdfmetrics.registerFont(TTFont('NotoSans-Regular', noto_sans_regular_path))
+            print(f"[FONT] Registered NotoSans-Regular from {noto_sans_regular_path}")
+        else:
+            print(f"[FONT] NotoSans-Regular already registered.")
+        
+        # Register Noto Sans Bold
+        if 'NotoSans-Bold' not in pdfmetrics.getRegisteredFontNames():
+            pdfmetrics.registerFont(TTFont('NotoSans-Bold', noto_sans_bold_path))
+            print(f"[FONT] Registered NotoSans-Bold from {noto_sans_bold_path}")
+        else:
+            print(f"[FONT] NotoSans-Bold already registered.")
+        
+        # Register Noto Sans Devanagari
+        noto_devanagari_path = os.path.join(fonts_dir, 'NotoSansDevanagari-Regular.ttf')
+        if 'NotoSansDevanagari-Regular' not in pdfmetrics.getRegisteredFontNames():
+            pdfmetrics.registerFont(TTFont('NotoSansDevanagari-Regular', noto_devanagari_path))
+            print(f"[FONT] Registered NotoSansDevanagari-Regular from {noto_devanagari_path}")
+        else:
+            print(f"[FONT] NotoSansDevanagari-Regular already registered.")
+        
+        print(f"[FONT] Production font setup completed successfully.")
+        
+    except Exception as e:
+        print(f"[FONT] Error in production font setup: {e}")
+
+# Setup fonts at module level
+setup_production_fonts()
+
 def contains_devanagari(text):
     return bool(re.search(r"[\u0900-\u097F]", text))
 
 def select_appropriate_font(default_font_name, is_bold, is_italic, original_font_name, target_language=None, text=None):
+    """Enhanced font selection with comprehensive Unicode support using existing Noto fonts"""
+    
     # Use Noto Sans Devanagari for Hindi/Devanagari
     if (target_language and target_language.lower() in ["hindi", "hi"]) or (text and contains_devanagari(text)):
         if NOTO_DEVANAGARI_FONT_NAME not in pdfmetrics.getRegisteredFontNames():
@@ -126,6 +169,36 @@ def select_appropriate_font(default_font_name, is_bold, is_italic, original_font
             return default_font_name
         print(f"[FONT] Using {NOTO_DEVANAGARI_FONT_NAME} for Hindi/Devanagari text.")
         return NOTO_DEVANAGARI_FONT_NAME
+    
+    # Use Noto Sans for Cyrillic languages (Russian, Ukrainian)
+    # NotoSans-Regular and NotoSans-Bold include Cyrillic glyphs
+    if target_language and target_language.lower() in ["russian", "ru", "ukrainian", "uk"]:
+        if is_bold:
+            font_name = "NotoSans-Bold"
+        else:
+            font_name = "NotoSans-Regular"
+        print(f"[FONT] Using {font_name} for {target_language} (Cyrillic) text.")
+        return font_name
+    
+    # Use Noto Sans for Polish (Extended Latin with diacritics)
+    # Polish has special characters: ą, ć, ę, ł, ń, ó, ś, ź, ż
+    if target_language and target_language.lower() in ["polish", "pl"]:
+        if is_bold:
+            font_name = "NotoSans-Bold"
+        else:
+            font_name = "NotoSans-Regular"
+        print(f"[FONT] Using {font_name} for Polish (Extended Latin) text.")
+        return font_name
+    
+    # Use Noto Sans for Vietnamese (Extended Latin with diacritics)
+    # Vietnamese has special characters: à, á, ả, ã, ạ, ă, ằ, ắ, ẳ, ẵ, ặ, â, ầ, ấ, ẩ, ẫ, ậ, etc.
+    if target_language and target_language.lower() in ["vietnamese", "vi"]:
+        if is_bold:
+            font_name = "NotoSans-Bold"
+        else:
+            font_name = "NotoSans-Regular"
+        print(f"[FONT] Using {font_name} for Vietnamese (Extended Latin) text.")
+        return font_name
     
     # Use Noto fonts for Turkish and other Latin-based languages with special characters
     # Turkish has special characters: ğ, ş, ı, ö, ç, ü, İ, Ğ, Ş, Ç, Ö, Ü
@@ -220,7 +293,7 @@ class AdvancedPDFLayoutParser:
         if require_api_key:
             assert self.api_key, "OPENAI_API_KEY not found in environment!"
     
-    async def translate_text_openai(self, text: str, target_lang: str = 'en') -> str:
+    async def translate_text_openai(self, text: str, target_lang: str = 'en', translation_id: str = None) -> str:
         """Advanced text translation using OpenAI API with post-processing improvements"""
         if not text.strip():
             return text
@@ -232,7 +305,15 @@ class AdvancedPDFLayoutParser:
                 return char  # Preserve mathematical symbols and currency signs
         
         try:
+            # Check for cancellation before starting translation
+            if translation_id and is_translation_cancelled(translation_id):
+                raise Exception("Translation was cancelled")
+            
             preprocessed_text = self._preprocess_for_translation(text)
+            
+            # Check for cancellation before API call
+            if translation_id and is_translation_cancelled(translation_id):
+                raise Exception("Translation was cancelled")
             
             prompt = (
                 f"You are a professional translator. Translate the following text to {target_lang}.\n\n"
@@ -1756,7 +1837,7 @@ def manage_cache_size():
         for key in keys_to_remove:
             del translation_cache[key]
 
-async def translate_text_simple(text: str, source_lang: str, target_lang: str) -> str:
+async def translate_text_simple(text: str, source_lang: str, target_lang: str, translation_id: str = None) -> str:
     """Simple text translation for basic text requests"""
     cache_key = get_cache_key(text, source_lang, target_lang)
     
@@ -1771,6 +1852,10 @@ async def translate_text_simple(text: str, source_lang: str, target_lang: str) -
         text = text[:3000] + "..."
     
     try:
+        # Check for cancellation before API call
+        if translation_id and is_translation_cancelled(translation_id):
+            raise Exception("Translation was cancelled")
+        
         response = await client.post(
             "https://api.openai.com/v1/chat/completions",
             headers={
@@ -1876,7 +1961,8 @@ async def translate(request: TranslationRequest, translation_id: str = None):
         translated_text = await translate_text_simple(
             request.text, 
             request.source_lang, 
-            request.target_lang
+            request.target_lang,
+            translation_id
         )
         
         # Update progress to 100%
@@ -2054,7 +2140,7 @@ async def translate_pdf(
                 progress = int((i / len(texts)) * 80)  # Translation is 80% of total work
                 active_translations[translation_id]["progress"] = progress
                 
-                translated = await parser.translate_text_openai(text, target_lang)
+                translated = await parser.translate_text_openai(text, target_lang, translation_id)
                 translations.append(translated)
             print(f"Translations received: {len(translations)}")
         else:

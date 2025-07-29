@@ -148,21 +148,7 @@ def setup_production_fonts():
         else:
             print(f"[FONT] NotoSansDevanagari-Regular already registered.")
         
-        # Register Noto Sans Arabic for Arabic
-        noto_arabic_regular_path = os.path.join(fonts_dir, 'NotoSansArabic-Regular.ttf')
-        if 'NotoSansArabic-Regular' not in pdfmetrics.getRegisteredFontNames():
-            pdfmetrics.registerFont(TTFont('NotoSansArabic-Regular', noto_arabic_regular_path))
-            print(f"[FONT] Registered NotoSansArabic-Regular from {noto_arabic_regular_path}")
-        else:
-            print(f"[FONT] NotoSansArabic-Regular already registered.")
-        
-        # Register Noto Sans Arabic Bold
-        noto_arabic_bold_path = os.path.join(fonts_dir, 'NotoSansArabic-Bold.ttf')
-        if 'NotoSansArabic-Bold' not in pdfmetrics.getRegisteredFontNames():
-            pdfmetrics.registerFont(TTFont('NotoSansArabic-Bold', noto_arabic_bold_path))
-            print(f"[FONT] Registered NotoSansArabic-Bold from {noto_arabic_bold_path}")
-        else:
-            print(f"[FONT] NotoSansArabic-Bold already registered.")
+
         
         print(f"[FONT] Production font setup completed successfully.")
         
@@ -181,15 +167,12 @@ def contains_arabic(text):
 def select_appropriate_font(default_font_name, is_bold, is_italic, original_font_name, target_language=None, text=None):
     """Enhanced font selection with comprehensive Unicode support using existing Noto fonts"""
     
-    # Use Noto Sans Arabic for Arabic
+    # Use Noto Sans for Arabic (NotoSans includes Arabic support)
     if (target_language and target_language.lower() in ["arabic", "ar"]) or (text and contains_arabic(text)):
         if is_bold:
-            font_name = "NotoSansArabic-Bold"
+            font_name = "NotoSans-Bold"
         else:
-            font_name = "NotoSansArabic-Regular"
-        if font_name not in pdfmetrics.getRegisteredFontNames():
-            print(f"[FONT WARNING] {font_name} not registered! Using fallback font.")
-            return default_font_name
+            font_name = "NotoSans-Regular"
         print(f"[FONT] Using {font_name} for Arabic text.")
         return font_name
     

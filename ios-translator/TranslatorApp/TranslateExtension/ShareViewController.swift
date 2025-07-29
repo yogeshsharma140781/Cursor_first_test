@@ -178,9 +178,11 @@ struct SimpleTranslationView: View {
     // Define supported languages locally for the extension
     private let supportedLanguages = [
         (code: "en", name: "English"),
+        (code: "ar", name: "Arabic"),
         (code: "nl", name: "Dutch"),
         (code: "fr", name: "French"),
         (code: "de", name: "German"),
+        (code: "hi", name: "Hindi"),
         (code: "it", name: "Italian"),
         (code: "pl", name: "Polish"),
         (code: "pt", name: "Portuguese"),
@@ -368,9 +370,11 @@ struct PDFTranslationExtensionView: View {
     // Define supported languages locally for the extension
     private let supportedLanguages = [
         (code: "en", name: "English"),
+        (code: "ar", name: "Arabic"),
         (code: "nl", name: "Dutch"),
         (code: "fr", name: "French"),
         (code: "de", name: "German"),
+        (code: "hi", name: "Hindi"),
         (code: "it", name: "Italian"),
         (code: "pl", name: "Polish"),
         (code: "pt", name: "Portuguese"),

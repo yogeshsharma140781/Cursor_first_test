@@ -140,13 +140,29 @@ def setup_production_fonts():
         else:
             print(f"[FONT] NotoSans-Bold already registered.")
         
-        # Register Noto Sans Devanagari
+        # Register Noto Sans Devanagari for Hindi
         noto_devanagari_path = os.path.join(fonts_dir, 'NotoSansDevanagari-Regular.ttf')
         if 'NotoSansDevanagari-Regular' not in pdfmetrics.getRegisteredFontNames():
             pdfmetrics.registerFont(TTFont('NotoSansDevanagari-Regular', noto_devanagari_path))
             print(f"[FONT] Registered NotoSansDevanagari-Regular from {noto_devanagari_path}")
         else:
             print(f"[FONT] NotoSansDevanagari-Regular already registered.")
+        
+        # Register Noto Sans Arabic for Arabic
+        noto_arabic_regular_path = os.path.join(fonts_dir, 'NotoSansArabic-Regular.ttf')
+        if 'NotoSansArabic-Regular' not in pdfmetrics.getRegisteredFontNames():
+            pdfmetrics.registerFont(TTFont('NotoSansArabic-Regular', noto_arabic_regular_path))
+            print(f"[FONT] Registered NotoSansArabic-Regular from {noto_arabic_regular_path}")
+        else:
+            print(f"[FONT] NotoSansArabic-Regular already registered.")
+        
+        # Register Noto Sans Arabic Bold
+        noto_arabic_bold_path = os.path.join(fonts_dir, 'NotoSansArabic-Bold.ttf')
+        if 'NotoSansArabic-Bold' not in pdfmetrics.getRegisteredFontNames():
+            pdfmetrics.registerFont(TTFont('NotoSansArabic-Bold', noto_arabic_bold_path))
+            print(f"[FONT] Registered NotoSansArabic-Bold from {noto_arabic_bold_path}")
+        else:
+            print(f"[FONT] NotoSansArabic-Bold already registered.")
         
         print(f"[FONT] Production font setup completed successfully.")
         
@@ -159,8 +175,23 @@ setup_production_fonts()
 def contains_devanagari(text):
     return bool(re.search(r"[\u0900-\u097F]", text))
 
+def contains_arabic(text):
+    return bool(re.search(r"[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]", text))
+
 def select_appropriate_font(default_font_name, is_bold, is_italic, original_font_name, target_language=None, text=None):
     """Enhanced font selection with comprehensive Unicode support using existing Noto fonts"""
+    
+    # Use Noto Sans Arabic for Arabic
+    if (target_language and target_language.lower() in ["arabic", "ar"]) or (text and contains_arabic(text)):
+        if is_bold:
+            font_name = "NotoSansArabic-Bold"
+        else:
+            font_name = "NotoSansArabic-Regular"
+        if font_name not in pdfmetrics.getRegisteredFontNames():
+            print(f"[FONT WARNING] {font_name} not registered! Using fallback font.")
+            return default_font_name
+        print(f"[FONT] Using {font_name} for Arabic text.")
+        return font_name
     
     # Use Noto Sans Devanagari for Hindi/Devanagari
     if (target_language and target_language.lower() in ["hindi", "hi"]) or (text and contains_devanagari(text)):

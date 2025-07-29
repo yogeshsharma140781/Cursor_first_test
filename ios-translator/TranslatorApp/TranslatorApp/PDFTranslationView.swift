@@ -26,9 +26,11 @@ struct PDFTranslationView: View {
     // Language definitions matching ContentView
     private let supportedLanguages = [
         (code: "en", name: "English"),
+        (code: "ar", name: "Arabic"),
         (code: "nl", name: "Dutch"),
         (code: "fr", name: "French"),
         (code: "de", name: "German"),
+        (code: "hi", name: "Hindi"),
         (code: "it", name: "Italian"),
         (code: "pl", name: "Polish"),
         (code: "pt", name: "Portuguese"),
@@ -173,6 +175,8 @@ struct PDFTranslationView: View {
                                             .font(.headline)
                                             .foregroundColor(.primary)
                                         
+
+                                        
                                                                                 // Show translation status
                                         if pdfService.isProcessing {
                                             HStack(spacing: 8) {
@@ -186,6 +190,10 @@ struct PDFTranslationView: View {
                                             Text("Translation complete")
                                                 .font(.caption)
                                                 .foregroundColor(.secondary)
+                                        } else if selectedPDFData != nil {
+                                            Text("Ready to translate")
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
                                         } else {
                                             Text("Starting translation...")
                                                 .font(.caption)
@@ -194,6 +202,25 @@ struct PDFTranslationView: View {
                                     }
                                     
                                     Spacer()
+                                    
+                                    // Small cancel button - only show when translating
+                                    if pdfService.isProcessing {
+                                        Button(action: {
+                                            print("Cancel button pressed - clearing error state")
+                                            // Clear any error state first
+                                            showError = false
+                                            errorMessage = ""
+                                            // Set cancellation flag immediately
+                                            pdfService.isCancelled = true
+                                            pdfService.cancelTranslation()
+                                            // Reset UI state immediately
+                                            resetView()
+                                        }) {
+                                            Image(systemName: "xmark.circle.fill")
+                                                .font(.title2)
+                                                .foregroundColor(.red)
+                                        }
+                                    }
                                 }
                                 .padding()
                                 .background(Color(.systemGray6))
@@ -243,21 +270,7 @@ struct PDFTranslationView: View {
                                     Spacer()
                                 }
                                 
-                                // Cancel button
-                                Button(action: {
-                                    pdfService.cancelTranslation()
-                                }) {
-                                    HStack {
-                                        Image(systemName: "xmark.circle.fill")
-                                        Text("Cancel Translation")
-                                    }
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                    .padding(.horizontal, 24)
-                                    .padding(.vertical, 12)
-                                    .background(Color.red)
-                                    .cornerRadius(10)
-                                }
+
                             }
                             .padding(.vertical, 20)
                         } else {
@@ -354,9 +367,20 @@ struct PDFTranslationView: View {
                 }
             }
             .alert("Translation Error", isPresented: $showError) {
-                Button("OK") { showError = false }
+                Button("OK") { 
+                    showError = false 
+                    // Also clear error message when dismissed
+                    errorMessage = ""
+                }
             } message: {
                 Text(errorMessage)
+            }
+            .onChange(of: showError) { newValue in
+                // If error is being shown and we're cancelled, hide it immediately
+                if newValue && pdfService.isCancelled {
+                    showError = false
+                    errorMessage = ""
+                }
             }
         }
     }
@@ -447,14 +471,27 @@ struct PDFTranslationView: View {
             )
             
             await MainActor.run {
-                switch result {
-                case .success(let data):
-                    translatedPDFData = data
-                    // Automatically show preview when translation is complete
-                    showFullScreenPreview = true
-                case .failure(let error):
-                    errorMessage = error.localizedDescription
-                    showError = true
+                // Check if translation was cancelled before processing result
+                if !pdfService.isCancelled {
+                    switch result {
+                    case .success(let data):
+                        translatedPDFData = data
+                        // Automatically show preview when translation is complete
+                        showFullScreenPreview = true
+                    case .failure(let error):
+                        // Never show errors during or after cancellation
+                        if !pdfService.isCancelled {
+                            // Only show error if it's not a cancellation-related error
+                            if !error.localizedDescription.contains("cancelled") && 
+                               !error.localizedDescription.contains("HTTP Error") {
+                                errorMessage = error.localizedDescription
+                                showError = true
+                            }
+                        }
+                    }
+                } else {
+                    // Translation was cancelled, don't process the result
+                    print("Translation was cancelled, ignoring result")
                 }
             }
         }
@@ -485,7 +522,14 @@ struct PDFTranslationView: View {
         selectedPDFData = nil
         selectedFileName = ""
         translatedPDFData = nil
+        showError = false
+        errorMessage = ""
+        showFullScreenPreview = false
+        showingShareSheet = false
+        // Reset service state
         pdfService.progress = 0.0
+        pdfService.errorMessage = nil
+        pdfService.isCancelled = false
     }
 }
 

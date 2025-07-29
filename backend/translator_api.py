@@ -103,17 +103,8 @@ load_dotenv()
 
 API_KEY = os.getenv('OPENAI_API_KEY')
 
-# Register Noto Sans Devanagari if not already registered
-NOTO_DEVANAGARI_PATH = os.path.abspath("fonts/NotoSansDevanagari-Regular.ttf")
+# Font registration will be handled by setup_production_fonts()
 NOTO_DEVANAGARI_FONT_NAME = "NotoSansDevanagari-Regular"
-try:
-    if NOTO_DEVANAGARI_FONT_NAME not in pdfmetrics.getRegisteredFontNames():
-        pdfmetrics.registerFont(TTFont(NOTO_DEVANAGARI_FONT_NAME, NOTO_DEVANAGARI_PATH))
-        print(f"[FONT] Registered {NOTO_DEVANAGARI_FONT_NAME} from {NOTO_DEVANAGARI_PATH}")
-    else:
-        print(f"[FONT] {NOTO_DEVANAGARI_FONT_NAME} already registered.")
-except Exception as e:
-    print(f"[FONT] Could not register {NOTO_DEVANAGARI_FONT_NAME}: {e}")
 
 def setup_production_fonts():
     """Setup all required fonts for production using existing Noto fonts"""
@@ -2495,6 +2486,16 @@ async def create_advanced_pdf_with_visuals(pdf_content: bytes, blocks_with_trans
                         # Map target_lang to full language name for font selection
                         target_language = target_language_map.get(target_lang, 'English')
                         actual_font_name = select_appropriate_font("Helvetica", font_style['bold'], font_style['italic'], block.font, target_language=target_language, text=processed_text)
+                        
+                        # Debug: Check if the selected font is actually registered
+                        registered_fonts = pdfmetrics.getRegisteredFontNames()
+                        if actual_font_name not in registered_fonts:
+                            print(f"[FONT ERROR] Selected font '{actual_font_name}' is not registered!")
+                            print(f"[FONT DEBUG] Available fonts: {registered_fonts}")
+                            actual_font_name = "Helvetica"
+                        else:
+                            print(f"[FONT DEBUG] Using font '{actual_font_name}' for text: {processed_text[:50]}...")
+                            
                     except Exception as e:
                         print(f"Error in font style processing: {e}")
                         actual_font_name = "Helvetica"
@@ -2620,14 +2621,15 @@ async def create_advanced_pdf_with_visuals(pdf_content: bytes, blocks_with_trans
                                 # Use original positioning - expansion is handled in the text wrapping logic above
                                 c.drawString(x0 + 3, current_y, line)
                             except Exception as e:
-                                print(f"Error setting font {actual_font_name}: {e}")
+                                print(f"[FONT ERROR] Error setting font {actual_font_name}: {e}")
+                                print(f"[FONT DEBUG] Available fonts: {pdfmetrics.getRegisteredFontNames()}")
                                 # Fallback to a default font
                                 try:
                                     c.setFont("Helvetica", font_size)
                                     c.setFillColorRGB(0, 0, 0)
                                     c.drawString(x0 + 3, current_y, line)
                                 except Exception as e2:
-                                    print(f"Error with fallback font: {e2}")
+                                    print(f"[FONT ERROR] Error with fallback font: {e2}")
                                     # Last resort - skip this line
                                     pass
                         current_y -= line_height  # Move down in ReportLab coordinates (subtract)

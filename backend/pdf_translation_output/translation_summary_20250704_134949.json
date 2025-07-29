@@ -1,0 +1,606 @@
+{
+  "processing_date": "2025-07-04T13:53:50.579961",
+  "original_pdf": "converted.pdf",
+  "scanned_image": "scanned.png",
+  "final_pdf": "pdf_translation_output/translated_document_20250704_134949.pdf",
+  "target_language": "English",
+  "total_blocks": 35,
+  "successful_blocks": 35,
+  "text_blocks": [
+    {
+      "page": 1,
+      "text": "An twoordnum  mer  2 14 40, 6400 SL HEE RL EN",
+      "bbox": [
+        69.41797637939453,
+        124.59807586669922,
+        217.58364868164062,
+        135.7380828857422
+      ],
+      "font_size": 6.970091819763184,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Reply number 21440, 6400 SL HEERLEN",
+      "translated_text": "Reply number 21440, 6400 SL HEERLEN",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Y  SHARMA IJBURGLAAN 816 1087  EM  AMSTERDAM",
+      "bbox": [
+        69.03707885742188,
+        155.99734497070312,
+        175.6558380126953,
+        189.0010528564453
+      ],
+      "font_size": 9.800065994262695,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Y SHARMA\nIJBURGLAAN 816\n1087 EM AMSTERDAM",
+      "translated_text": "Y SHARMA\nIJBURGLAAN 816\n1087 EM AMSTERDAM",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Paginanummer 1 van 5 11 ··11 ·11 1• 1·1·11· 1·1 1 ·11 1 ·1 1 1· 1 11",
+      "bbox": [
+        73.97441101074219,
+        185.48536682128906,
+        189.81289672851562,
+        208.79928588867188
+      ],
+      "font_size": 10.327059745788574,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Page number 1 of 5",
+      "translated_text": "Page number 1 of 5",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Dienst Toeslagen Ministerie van Financiën",
+      "bbox": [
+        321.6387939453125,
+        58.821563720703125,
+        435.85882568359375,
+        92.18942260742188
+      ],
+      "font_size": 13.200030326843262,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement to us. You can only do this by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than 1 childcare provider in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy on the right. Do you not have an annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information we need from you is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend it to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement to us. You can only do this by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than 1 childcare provider in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy on the right. Do you not have an annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information we need from you is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend it to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Onderwerp:  We  hebben informatie van u nodig over de opvang van uw  kind",
+      "bbox": [
+        69.12309265136719,
+        311.0358581542969,
+        413.6413879394531,
+        327.6852111816406
+      ],
+      "font_size": 9.800065994262695,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care",
+      "translated_text": "Subject: We need information from you about your child's care",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Beste meneer Sharma,",
+      "bbox": [
+        69.56806182861328,
+        347.0360412597656,
+        170.33236694335938,
+        360.5013122558594
+      ],
+      "font_size": 9.800065994262695,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to definitively calculate your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement by mail. This letter explains what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than one childcare provider in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information we need from you is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to definitively calculate your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement by mail. This letter explains what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than one childcare provider in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information we need from you is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Waarom  krijgt  u  deze  brief? We  gaan  uw  kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te",
+      "bbox": [
+        69.25231170654297,
+        371.07476806640625,
+        438.7622985839844,
+        400.6307067871094
+      ],
+      "font_size": 10.04028034210205,
+      "font_name": "Helvetica-Bold",
+      "is_bold": true,
+      "is_italic": false,
+      "cleaned_text": "Why are you receiving this letter? We are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care.",
+      "translated_text": "Why are you receiving this letter? We are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "kunnen doen, _hebben we.informatie_ va 91. _u _ nc,dig  c,ve _r pe op\\'_a_ng Y?l!1 . uw ~in_ d. <",
+      "bbox": [
+        20.89051055908203,
+        384.2664794921875,
+        424.0393981933594,
+        413.8297119140625
+      ],
+      "font_size": 9.800065994262695,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nTranslation: Subject: We need information from you about your child's care",
+      "translated_text": "Subject: We need information from you about your child's care\n\nTranslation: Subject: We need information from you about your child's care",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Daarom is  het  belangrijk  dat  u  het  formulier  invult  dat  bij deze  brief  zit .  En  samen met  een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met  de post.  In",
+      "bbox": [
+        69.24188232421875,
+        409.1324157714844,
+        449.9870910644531,
+        439.4331359863281
+      ],
+      "font_size": 9.800065994262695,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Therefore, it is important that you fill out the form attached to this letter. And send it to us along with a copy of the annual statement. This can only be done by mail.",
+      "translated_text": "Therefore, it is important that you fill out the form attached to this letter. And send it to us along with a copy of the annual statement. This can only be done by mail.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "deze  brief  leest u wat we van u verwachten.",
+      "bbox": [
+        69.41227722167969,
+        434.9630126953125,
+        262.7253112792969,
+        448.9576110839844
+      ],
+      "font_size": 9.800065994262695,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "This letter explains what we expect from you.",
+      "translated_text": "This letter explains what we expect from you.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "lt ;;;",
+      "bbox": [
+        14.032690048217773,
+        612.0037841796875,
+        20.062442779541016,
+        628.9041748046875
+      ],
+      "font_size": 8.199991226196289,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement to us. You can only do this by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than 1 childcare provider in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy at the top right. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information we need from you is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement to us. You can only do this by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than 1 childcare provider in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy at the top right. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information we need from you is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "ê ~",
+      "bbox": [
+        14.179909706115723,
+        631.2354736328125,
+        17.849517822265625,
+        647.0130615234375
+      ],
+      "font_size": 6.6000142097473145,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement by mail. This letter explains what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare mails the annual statement or sends it by post to you. Sometimes you can find the annual statement in the digital portal of the childcare.\n\nStep 2: Copy or print the annual statement of the childcare\nDo you have multiple annual statements? For example, because your child went to more than one childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement by mail. This letter explains what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare mails the annual statement or sends it by post to you. Sometimes you can find the annual statement in the digital portal of the childcare.\n\nStep 2: Copy or print the annual statement of the childcare\nDo you have multiple annual statements? For example, because your child went to more than one childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "~ \"' ~ \"' \"'",
+      "bbox": [
+        14.609789848327637,
+        649.4774169921875,
+        20.107688903808594,
+        688.3099365234375
+      ],
+      "font_size": 5.689210891723633,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement to us. You can only do that by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare mails the annual statement or sends it by post to you. Sometimes you can find the annual statement in the digital portal of the childcare.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than 1 childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy at the top right. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement to us. You can only do that by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare mails the annual statement or sends it by post to you. Sometimes you can find the annual statement in the digital portal of the childcare.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than 1 childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy at the top right. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "N 0 ~",
+      "bbox": [
+        15.09827995300293,
+        687.9781494140625,
+        18.927249908447266,
+        700.518310546875
+      ],
+      "font_size": 3.2001519203186035,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement to us. You can only do this by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than 1 childcare provider in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy at the top right. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement to us. You can only do this by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than 1 childcare provider in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy at the top right. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Volg  deze  stappen om  uw  informatie  naar  ons op  te  sturen",
+      "bbox": [
+        69.26751708984375,
+        459.781005859375,
+        364.79815673828125,
+        476.0785217285156
+      ],
+      "font_size": 9.899971008300781,
+      "font_name": "Helvetica-Bold",
+      "is_bold": true,
+      "is_italic": false,
+      "cleaned_text": "Follow these steps to send your information to us.",
+      "translated_text": "Follow these steps to send your information to us.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "~",
+      "bbox": [
+        80.86943817138672,
+        605.476806640625,
+        95.35372924804688,
+        639.5545654296875
+      ],
+      "font_size": 24.801870346069336,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement by mail. This letter explains what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare mails the annual statement or sends it by post to you. Sometimes you can find the annual statement in the digital portal of the childcare.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than one childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement by mail. This letter explains what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare mails the annual statement or sends it by post to you. Sometimes you can find the annual statement in the digital portal of the childcare.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than one childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "~",
+      "bbox": [
+        78.97274017333984,
+        656.3654174804688,
+        92.92941284179688,
+        689.2018432617188
+      ],
+      "font_size": 23.89841079711914,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send a copy of the annual statement to us. This can only be done by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than 1 childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send a copy of the annual statement to us. This can only be done by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than 1 childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": ". . .. ' ..",
+      "bbox": [
+        207.58709716796875,
+        465.6644592285156,
+        325.8103942871094,
+        482.7384338378906
+      ],
+      "font_size": 4.800127983093262,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement to us. You can only do this by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare mails the annual statement or sends it by post to you. Sometimes you can find the annual statement in the digital portal of the childcare.\n\nStep 2: Copy or print the annual statement of the childcare\nDo you have multiple annual statements? For example, because your child went to more than 1 childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy at the top right. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement to us. You can only do this by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare mails the annual statement or sends it by post to you. Sometimes you can find the annual statement in the digital portal of the childcare.\n\nStep 2: Copy or print the annual statement of the childcare\nDo you have multiple annual statements? For example, because your child went to more than 1 childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy at the top right. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "..,, , ...",
+      "bbox": [
+        337.08758544921875,
+        462.13671875,
+        367.7628479003906,
+        485.923095703125
+      ],
+      "font_size": 3.8317201137542725,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement to us. This can only be done by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child attended more than 1 childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy on the right. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information we need from you is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement to us. This can only be done by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child attended more than 1 childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy on the right. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information we need from you is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Stap  1:  Zoek  de  jaaropgave  van  de  kinderopvang  van  2024 De  kinderopvang  mailt  de jaaropgave  of  ' stuurt  deze  met  de post naar u op. Soms kunt u de jaaropgave vinden in_  het  digitale portaal van de kinderopvang.",
+      "bbox": [
+        112.24490356445312,
+        483.42962646484375,
+        435.4207458496094,
+        533.9570922851562
+      ],
+      "font_size": 9.958650588989258,
+      "font_name": "Helvetica-Bold",
+      "is_bold": true,
+      "is_italic": false,
+      "cleaned_text": "Step 1: Find the annual statement from the childcare for 2024. The childcare emails the annual statement or sends it by post to you. Sometimes you can find the annual statement in the digital portal of the childcare.",
+      "translated_text": "Step 1: Find the annual statement from the childcare for 2024. The childcare emails the annual statement or sends it by post to you. Sometimes you can find the annual statement in the digital portal of the childcare.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Stap  2:  Kopieer  of  print  de  jaaropgave  van  de  kinderopvang Hebt u  meer  jaaropgaven? Bijvoorbeeld omdat  uw kind in 2024 naar",
+      "bbox": [
+        111.8917007446289,
+        543.0321044921875,
+        418.6864013671875,
+        571.7801513671875
+      ],
+      "font_size": 9.958650588989258,
+      "font_name": "Helvetica-Bold",
+      "is_bold": true,
+      "is_italic": false,
+      "cleaned_text": "Step 2: Copy or print the annual statement from the childcare. Do you have more annual statements? For example, because your child went to more than one childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy on the right. Do you have no annual statement? Then send copies of all invoices from 2024.",
+      "translated_text": "Step 2: Copy or print the annual statement from the childcare. Do you have more annual statements? For example, because your child went to more than one childcare in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy on the right. Do you have no annual statement? Then send copies of all invoices from 2024.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "meer  dan 1 kinderopvang ging? Kopieer of •pri nt  ze  dan allemaal.  Schrijf",
+      "bbox": [
+        111.8490982055664,
+        568.66259765625,
+        438.4712219238281,
+        585.072021484375
+      ],
+      "font_size": 9.821144104003906,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "If your child went to more than one childcare? Copy or print them all. Write",
+      "translated_text": "If your child went to more than one childcare? Copy or print them all. Write",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "op iedere kopie rechtsboven uw burgerservicen ummer  {bsn). Hebt u",
+      "bbox": [
+        111.54000091552734,
+        580.8828735351562,
+        420.1925964355469,
+        596.8053588867188
+      ],
+      "font_size": 9.800065994262695,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Write your citizen service number (bsn) at the top right of each copy.",
+      "translated_text": "Write your citizen service number (bsn) at the top right of each copy.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.",
+      "bbox": [
+        111.41280364990234,
+        593.0723266601562,
+        392.518310546875,
+        606.5376586914062
+      ],
+      "font_size": 9.800065994262695,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "No annual statement? Then send copies of all invoices from 2024.",
+      "translated_text": "No annual statement? Then send copies of all invoices from 2024.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Stap  3:  Vul  het  formulier  in  dat  bij _ deze  brief  zit De gegevens die u daarvoor nodig hebt,.staan op de jaaropgave van de kinderopvang.",
+      "bbox": [
+        111.17729949951172,
+        616.186767578125,
+        423.1295471191406,
+        655.5995483398438
+      ],
+      "font_size": 9.958650588989258,
+      "font_name": "Helvetica-Bold",
+      "is_bold": true,
+      "is_italic": false,
+      "cleaned_text": "Step 3: Fill in the form included with this letter. The information you need for this is on the annual statement from the childcare.",
+      "translated_text": "Step 3: Fill in the form included with this letter. The information you need for this is on the annual statement from the childcare.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Stap  4:  Stuur  de  jaaropgave en  het  formulier  vóór  11  juli  2025",
+      "bbox": [
+        111.28379821777344,
+        665.0145263671875,
+        428.4823913574219,
+        681.8598022460938
+      ],
+      "font_size": 9.958650588989258,
+      "font_name": "Helvetica-Bold",
+      "is_bold": true,
+      "is_italic": false,
+      "cleaned_text": "Step 4: Send the annual statement and the form before July 11, 2025",
+      "translated_text": "Step 4: Send the annual statement and the form before July 11, 2025",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "op Stuur  dit  naar:",
+      "bbox": [
+        111.73480224609375,
+        677.4437255859375,
+        177.7062530517578,
+        703.9408569335938
+      ],
+      "font_size": 9.899971008300781,
+      "font_name": "Helvetica-Bold",
+      "is_bold": true,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter and send it along with a copy of the annual childcare statement. This can only be done by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual childcare statement for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual childcare statement\nDo you have more than one annual statement? For example, because your child attended more than one childcare provider in 2024? Copy or print them all. Write your citizen service number (BSN) on each copy at the top right. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information we need from you is on the annual childcare statement.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend it to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter and send it along with a copy of the annual childcare statement. This can only be done by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual childcare statement for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual childcare statement\nDo you have more than one annual statement? For example, because your child attended more than one childcare provider in 2024? Copy or print them all. Write your citizen service number (BSN) on each copy at the top right. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information we need from you is on the annual childcare statement.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend it to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Dienst Toeslagen Antwoordnummer 21440 6400  SL  Heerlen",
+      "bbox": [
+        135.48699951171875,
+        702.473388671875,
+        242.89427185058594,
+        740.7255249023438
+      ],
+      "font_size": 9.800065994262695,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Dienst Toeslagen  \nAntwoordnummer 21440  \n6400 SL Heerlen  \n\nSubject: We need information from you about your child's care  \n\nDear Mr. Sharma,  \n\nWhy are you receiving this letter?  \nWe are going to definitively calculate your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter and send it along with a copy of the annual statement. You can only do this by mail. In this letter, you will read what we expect from you.  \n\nFollow these steps to send us your information  \n\nStep 1: Find the annual statement of childcare for 2024  \nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.  \n\nStep 2: Copy or print the annual statement of childcare  \nDo you have multiple annual statements? For example, because your child went to more than one childcare provider in 2024? Copy or print them all. Write your citizen service number (BSN) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.  \n\nStep 3: Fill out the form included with this letter  \nThe information you need for this is on the annual statement of the childcare provider.  \n\nStep 4: Send the annual statement and the form before July 11, 2025  \n\nSend to:  \nDienst Toeslagen  \nAntwoordnummer 21440  \n6400 SL Heerlen  \nNo postage is needed.",
+      "translated_text": "Dienst Toeslagen  \nAntwoordnummer 21440  \n6400 SL Heerlen  \n\nSubject: We need information from you about your child's care  \n\nDear Mr. Sharma,  \n\nWhy are you receiving this letter?  \nWe are going to definitively calculate your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter and send it along with a copy of the annual statement. You can only do this by mail. In this letter, you will read what we expect from you.  \n\nFollow these steps to send us your information  \n\nStep 1: Find the annual statement of childcare for 2024  \nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.  \n\nStep 2: Copy or print the annual statement of childcare  \nDo you have multiple annual statements? For example, because your child went to more than one childcare provider in 2024? Copy or print them all. Write your citizen service number (BSN) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.  \n\nStep 3: Fill out the form included with this letter  \nThe information you need for this is on the annual statement of the childcare provider.  \n\nStep 4: Send the annual statement and the form before July 11, 2025  \n\nSend to:  \nDienst Toeslagen  \nAntwoordnummer 21440  \n6400 SL Heerlen  \nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Een postzegel  Is  niet nodig.",
+      "bbox": [
+        113.05570220947266,
+        738.5423583984375,
+        234.08441162109375,
+        752.7498779296875
+      ],
+      "font_size": 9.800065994262695,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "A stamp is not needed.",
+      "translated_text": "A stamp is not needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Belastlng1'elefoon 0800 • 0543",
+      "bbox": [
+        465.50421142578125,
+        157.83665466308594,
+        531.014892578125,
+        177.7436981201172
+      ],
+      "font_size": 7.400153160095215,
+      "font_name": "Helvetica-Bold",
+      "is_bold": true,
+      "is_italic": false,
+      "cleaned_text": "Tax Information Line 0800 - 0543",
+      "translated_text": "Tax Information Line 0800 - 0543",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Datum 19  juni  2025",
+      "bbox": [
+        465.44329833984375,
+        194.9977264404297,
+        506.79632568359375,
+        214.57408142089844
+      ],
+      "font_size": 7.400153160095215,
+      "font_name": "Helvetica-Bold",
+      "is_bold": true,
+      "is_italic": false,
+      "cleaned_text": "Date: June 19, 2025",
+      "translated_text": "Date: June 19, 2025",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Uwbsn 6996.45.074",
+      "bbox": [
+        465.4548034667969,
+        222.6550750732422,
+        504.9311218261719,
+        242.19639587402344
+      ],
+      "font_size": 7.5294718742370605,
+      "font_name": "Helvetica-Bold",
+      "is_bold": true,
+      "is_italic": false,
+      "cleaned_text": "Your BSN 6996.45.074\n\nSubject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter and send it along with a copy of the annual statement. This can only be done by mail. By reading this letter, you will know what to expect.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than one childcare provider in 2024? Copy or print them all. Write your citizen service number (BSN) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Your BSN 6996.45.074\n\nSubject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter and send it along with a copy of the annual statement. This can only be done by mail. By reading this letter, you will know what to expect.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than one childcare provider in 2024? Copy or print them all. Write your citizen service number (BSN) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Ons  kenmerk TGK24·1 CAP /UCF/25/  294",
+      "bbox": [
+        464.9197998046875,
+        250.4441680908203,
+        519.9790649414062,
+        280.0729064941406
+      ],
+      "font_size": 7.400153160095215,
+      "font_name": "Helvetica-Bold",
+      "is_bold": true,
+      "is_italic": false,
+      "cleaned_text": "Our reference TGK24-1 CAP/UCF/25/294",
+      "translated_text": "Our reference TGK24-1 CAP/UCF/25/294",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": "Paginanummer 1  van  5",
+      "bbox": [
+        464.1435852050781,
+        807.1644287109375,
+        539.2999877929688,
+        816.97705078125
+      ],
+      "font_size": 6.643820762634277,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Page number 1 of 5\n\nSubject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. Also, send a copy of the annual statement to us. You can only do this by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child attended more than one childcare in 2024? Copy or print them all. Write your citizen service number (BSN) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "translated_text": "Page number 1 of 5\n\nSubject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. Also, send a copy of the annual statement to us. You can only do this by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail to you. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child attended more than one childcare in 2024? Copy or print them all. Write your citizen service number (BSN) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is needed.",
+      "confidence": null
+    },
+    {
+      "page": 1,
+      "text": ".[",
+      "bbox": [
+        585.1461791992188,
+        814.7725830078125,
+        591.5957641601562,
+        830.7110595703125
+      ],
+      "font_size": 11.60004997253418,
+      "font_name": "Helvetica",
+      "is_bold": false,
+      "is_italic": false,
+      "cleaned_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement. You can only do this by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than one childcare provider in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is required.",
+      "translated_text": "Subject: We need information from you about your child's care\n\nDear Mr. Sharma,\n\nWhy are you receiving this letter?\nWe are going to finalize your childcare allowance for 2024. To do this properly, we need information from you about your child's care. Therefore, it is important that you fill out the form included with this letter. And send it along with a copy of the annual statement. You can only do this by mail. In this letter, you will read what we expect from you.\n\nFollow these steps to send us your information\n\nStep 1: Find the annual statement of childcare for 2024\nThe childcare provider emails the annual statement or sends it by mail. Sometimes you can find the annual statement in the digital portal of the childcare provider.\n\nStep 2: Copy or print the annual statement of childcare\nDo you have multiple annual statements? For example, because your child went to more than one childcare provider in 2024? Copy or print them all. Write your citizen service number (bsn) on each copy. Do you have no annual statement? Then send copies of all invoices from 2024.\n\nStep 3: Fill out the form included with this letter\nThe information you need for this is on the annual statement of the childcare provider.\n\nStep 4: Send the annual statement and the form before July 11, 2025\n\nSend to:\nDienst Toeslagen\nAntwoordnummer 21440\n6400 SL Heerlen\nNo postage is required.",
+      "confidence": null
+    }
+  ]
+}

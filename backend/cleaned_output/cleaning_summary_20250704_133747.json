@@ -1,0 +1,330 @@
+{
+  "processing_date": "2025-07-04T13:37:47.432992",
+  "total_paragraphs": 46,
+  "successful_cleanings": 46,
+  "average_confidence": 0.45891304347826095,
+  "paragraphs": [
+    {
+      "index": 0,
+      "original_text": "Dienst Toeslagen",
+      "cleaned_text": "Dienst Toeslagen",
+      "confidence": 1.0,
+      "processing_successful": true
+    },
+    {
+      "index": 1,
+      "original_text": "MinisterievanFinanciën",
+      "cleaned_text": "Ministerie van Financiën",
+      "confidence": 0.27,
+      "processing_successful": true
+    },
+    {
+      "index": 6,
+      "original_text": "Antwoordnum mer 21440, 6400 SL HEERLEN",
+      "cleaned_text": "Antwoordnummer 21440, 6400 SL Heerlen",
+      "confidence": 0.69,
+      "processing_successful": true
+    },
+    {
+      "index": 9,
+      "original_text": "Y SHARMA",
+      "cleaned_text": "Y SHARMA",
+      "confidence": 1.0,
+      "processing_successful": true
+    },
+    {
+      "index": 10,
+      "original_text": "IJBURGLAAN816",
+      "cleaned_text": "IJBURGLAAN 816",
+      "confidence": 0.28,
+      "processing_successful": true
+    },
+    {
+      "index": 11,
+      "original_text": "1087 EM AMSTERDAM",
+      "cleaned_text": "1087 EM AMSTERDAM",
+      "confidence": 1.0,
+      "processing_successful": true
+    },
+    {
+      "index": 12,
+      "original_text": "P1a·g1·i1n1·a1n11u1•m·1m·1e11r··111·1v11a·1n1151·11",
+      "cleaned_text": "Paginanummer 1 van 5",
+      "confidence": 0.12,
+      "processing_successful": true
+    },
+    {
+      "index": 13,
+      "original_text": "Belastlng1'elefoon",
+      "cleaned_text": "BelastingTelefoon",
+      "confidence": 0.28,
+      "processing_successful": true
+    },
+    {
+      "index": 14,
+      "original_text": "0800 • 0543",
+      "cleaned_text": "0800 - 0543",
+      "confidence": 0.65,
+      "processing_successful": true
+    },
+    {
+      "index": 17,
+      "original_text": "Datum",
+      "cleaned_text": "Datum: 19 juni 2025",
+      "confidence": 0.08,
+      "processing_successful": true
+    },
+    {
+      "index": 18,
+      "original_text": "19 juni 2025",
+      "cleaned_text": "19 juni 2025",
+      "confidence": 1.0,
+      "processing_successful": true
+    },
+    {
+      "index": 20,
+      "original_text": "Uwbsn",
+      "cleaned_text": "Uw bsn: 6996.45.074",
+      "confidence": 0.08,
+      "processing_successful": true
+    },
+    {
+      "index": 21,
+      "original_text": "6996.45.074",
+      "cleaned_text": "6996.45.074",
+      "confidence": 1.0,
+      "processing_successful": true
+    },
+    {
+      "index": 23,
+      "original_text": "Ons kenmerk TGK24·1 CAP/UCF/25/ 294",
+      "cleaned_text": "Ons kenmerk: TGK24-1 CAP/UCF/25/294",
+      "confidence": 0.39,
+      "processing_successful": true
+    },
+    {
+      "index": 26,
+      "original_text": "Onderwerp: We hebben informatie van u nodig over de opvang van\tuw kind Beste meneer Sharma,",
+      "cleaned_text": "Onderwerp: We hebben informatie van u nodig over de opvang van uw kind\n\nBeste meneer Sharma,",
+      "confidence": 1.0,
+      "processing_successful": true
+    },
+    {
+      "index": 28,
+      "original_text": "Waarom krijgt u deze brief?",
+      "cleaned_text": "Waarom krijgt u deze brief?\n\nWe gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.",
+      "confidence": 0.09,
+      "processing_successful": true
+    },
+    {
+      "index": 29,
+      "original_text": "We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed\tte",
+      "cleaned_text": "We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.",
+      "confidence": 0.24,
+      "processing_successful": true
+    },
+    {
+      "index": 30,
+      "original_text": "kunnen doen, _hebben we.informatie_ va91_. un_c,dig c,ve_r pe op\\'_a_nYg?l!1. uw ~ind_. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit . En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen\tmet de post. In deze brief leest u wat we van u verwachten.",
+      "cleaned_text": "Kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.",
+      "confidence": 0.75,
+      "processing_successful": true
+    },
+    {
+      "index": 32,
+      "original_text": "Volg deze stappen om uw informatie naar ons op .t.e sture.n..",
+      "cleaned_text": "Volg deze stappen om uw informatie naar ons op te sturen.",
+      "confidence": 0.76,
+      "processing_successful": true
+    },
+    {
+      "index": 34,
+      "original_text": ".\t. ..\t'",
+      "cleaned_text": "Certainly! Here is the cleaned text:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 35,
+      "original_text": "..,,\t,",
+      "cleaned_text": "Certainly! Here is the cleaned text based on the original document context:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 50,
+      "original_text": "lt",
+      "cleaned_text": "Certainly! Here is the cleaned text based on the original document context:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 51,
+      "original_text": ";;;",
+      "cleaned_text": "Certainly! Here is the cleaned text based on the original document context:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 52,
+      "original_text": "ê",
+      "cleaned_text": "Certainly! Here is the cleaned text content from the document:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 53,
+      "original_text": "~",
+      "cleaned_text": "Certainly! Here is the cleaned text:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 54,
+      "original_text": "~",
+      "cleaned_text": "Certainly! Here is the cleaned text based on the original document context:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 55,
+      "original_text": "\"'",
+      "cleaned_text": "Certainly! Here is the cleaned text based on the original document context:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 56,
+      "original_text": "~\"'",
+      "cleaned_text": "Certainly! Here is the cleaned text based on the original document context:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 57,
+      "original_text": "\"'",
+      "cleaned_text": "Certainly! Here is the cleaned text based on the original document context:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 58,
+      "original_text": "N",
+      "cleaned_text": "I'm sorry, but the provided garbled text \"N\" does not contain enough information to clean or correct based on the original document context. If you have more text that needs cleaning, please provide it.",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 59,
+      "original_text": "~",
+      "cleaned_text": "Certainly! Here is the cleaned text based on the original document context:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 60,
+      "original_text": "Stap 1: Zoek de jaaropgave van de kinderopvang van 2024",
+      "cleaned_text": "Stap 1: Zoek de jaaropgave van de kinderopvang van 2024",
+      "confidence": 1.0,
+      "processing_successful": true
+    },
+    {
+      "index": 61,
+      "original_text": "De kinderopvang mailt de jaaropgave of 'stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in_ het digitale portaal van de kinderopvang.",
+      "cleaned_text": "De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.",
+      "confidence": 0.87,
+      "processing_successful": true
+    },
+    {
+      "index": 62,
+      "original_text": "Stap 2: Kopieer of print de jaaropgave van de kinderopvang",
+      "cleaned_text": "Stap 2: Kopieer of print de jaaropgave van de kinderopvang",
+      "confidence": 1.0,
+      "processing_successful": true
+    },
+    {
+      "index": 63,
+      "original_text": "Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of•print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicen\tummer {bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.",
+      "cleaned_text": "Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.",
+      "confidence": 0.86,
+      "processing_successful": true
+    },
+    {
+      "index": 64,
+      "original_text": "Stap 3: Vul het formulier in dat bij _deze brief zit",
+      "cleaned_text": "Stap 3: Vul het formulier in dat bij deze brief zit",
+      "confidence": 0.88,
+      "processing_successful": true
+    },
+    {
+      "index": 65,
+      "original_text": "De gegevens die u daarvoor nodig hebt,.staan op de jaaropgave van de",
+      "cleaned_text": "De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.",
+      "confidence": 0.73,
+      "processing_successful": true
+    },
+    {
+      "index": 66,
+      "original_text": "kinderopvang.",
+      "cleaned_text": "kinderopvang.",
+      "confidence": 1.0,
+      "processing_successful": true
+    },
+    {
+      "index": 67,
+      "original_text": "Stap 4: Stuur de jaaropgave en het formulier vóór 11 juli 2025",
+      "cleaned_text": "Stap 4: Stuur de jaaropgave en het formulier vóór 11 juli 2025 op",
+      "confidence": 0.93,
+      "processing_successful": true
+    },
+    {
+      "index": 68,
+      "original_text": "op",
+      "cleaned_text": "I'm sorry, but it seems there is no garbled text provided for me to clean up. Could you please provide the garbled text that needs correction?",
+      "confidence": 0.0,
+      "processing_successful": true
+    },
+    {
+      "index": 69,
+      "original_text": "Stuur dit naar:",
+      "cleaned_text": "Stuur dit naar:\n- Dienst Toeslagen\n- Antwoordnummer 21440\n- 6400 SL Heerlen\n\nEen postzegel is niet nodig.",
+      "confidence": 0.17,
+      "processing_successful": true
+    },
+    {
+      "index": 70,
+      "original_text": "Dienst Toeslagen Antwoordnummer 21440",
+      "cleaned_text": "Dienst Toeslagen  \nAntwoordnummer 21440",
+      "confidence": 0.98,
+      "processing_successful": true
+    },
+    {
+      "index": 71,
+      "original_text": "6400 SL Heerlen",
+      "cleaned_text": "6400 SL Heerlen",
+      "confidence": 1.0,
+      "processing_successful": true
+    },
+    {
+      "index": 72,
+      "original_text": "Een postzegel Is niet nodig.",
+      "cleaned_text": "Een postzegel is niet nodig.",
+      "confidence": 1.0,
+      "processing_successful": true
+    },
+    {
+      "index": 81,
+      "original_text": "Paginanummer  1 van 5",
+      "cleaned_text": "Certainly! Here is the cleaned text:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.01,
+      "processing_successful": true
+    },
+    {
+      "index": 82,
+      "original_text": ".[",
+      "cleaned_text": "Certainly! Here is the cleaned text:\n\n---\n\n**Header:**\n\n- **Dienst Toeslagen**\n- **Ministerie van Financiën**\n\n**Address:**\n\n- **Antwoordnummer 21440, 6400 SL HEERLEN**\n\n**Recipient:**\n\n- **Y SHARMA**\n- **IJBURGLAAN 816**\n- **1087 EM AMSTERDAM**\n\n**Contact Information:**\n\n- **BelastingTelefoon:** 0800 - 0543\n- **Datum:** 19 juni 2025\n- **Uw bsn:** 6996.45.074\n- **Ons kenmerk:** TGK24-1 CAP/UCF/25/294\n\n---\n\n**Subject:**\n\n- **Onderwerp:** We hebben informatie van u nodig over de opvang van uw kind\n\n---\n\n**Salutation:**\n\n- **Beste meneer Sharma,**\n\n---\n\n**Paragraphs:**\n\n1. **Waarom krijgt u deze brief?**\n\n   We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, hebben we informatie van u nodig over de opvang van uw kind. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.\n\n---\n\n**Instructions:**\n\n- **Volg deze stappen om uw informatie naar ons op te sturen**\n\n  - **Stap 1:** Zoek de jaaropgave van de kinderopvang van 2024\n\n    De kinderopvang mailt de jaaropgave of stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in het digitale portaal van de kinderopvang.\n\n  - **Stap 2:** Kopieer of print de jaaropgave van de kinderopvang\n\n    Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer (bsn). Hebt u geen jaaropgave? Stuur dan kopieën van alle facturen van 2024.\n\n  - **Stap 3:** Vul het formulier in dat bij deze brief zit\n\n    De gegevens die u daarvoor nodig hebt, staan op de jaaropgave van de kinderopvang.\n\n  - **Stap 4:** Stuur de jaaropgave en het formulier vóór 11 juli 2025 op\n\n    Stuur dit naar:\n    - **Dienst Toeslagen**\n    - **Antwoordnummer 21440**\n    - **6400 SL Heerlen**\n\n    Een postzegel is niet nodig.\n\n---\n\n**Footer:**\n\n- **Paginanummer 1 van 5**\n\n---",
+      "confidence": 0.0,
+      "processing_successful": true
+    }
+  ]
+}

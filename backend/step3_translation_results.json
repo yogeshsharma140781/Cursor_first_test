@@ -1,0 +1,165 @@
+[
+  {
+    "group_id": 1,
+    "group_type": "header",
+    "description": "Header information",
+    "element_ids": [
+      6,
+      7
+    ],
+    "combined_text": "Dienst Toeslagen Ministerie van Financien",
+    "primary_position": {
+      "x": 322.2,
+      "y": 73.0
+    },
+    "primary_font": "Times-Roman",
+    "primary_size": 13.2,
+    "original_text": "Dienst Toeslagen Ministerie van Financien",
+    "translated_text": "Allowances Department Ministry of Finance",
+    "translation_status": "success"
+  },
+  {
+    "group_id": 2,
+    "group_type": "address",
+    "description": "Recipient's address",
+    "element_ids": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "combined_text": "Antwoordnurnrner 21440, 6400 SL HEERLEN Y SHARMA IJBURGLAAN 816 1087 EM AMSTERDAM",
+    "primary_position": {
+      "x": 69.4,
+      "y": 132.2
+    },
+    "primary_font": "Helvetica",
+    "primary_size": 7.0,
+    "original_text": "Antwoordnurnrner 21440, 6400 SL HEERLEN Y SHARMA IJBURGLAAN 816 1087 EM AMSTERDAM",
+    "translated_text": "Response number 21440, 6400 SL HEERLEN Y SHARMA IJBURGLAAN 816 1087 EM AMSTERDAM",
+    "translation_status": "success"
+  },
+  {
+    "group_id": 4,
+    "group_type": "contact",
+    "description": "Contact information",
+    "element_ids": [
+      57,
+      58
+    ],
+    "combined_text": "Belastlng1'elefoon 0800 • 0543",
+    "primary_position": {
+      "x": 465.5,
+      "y": 165.8
+    },
+    "primary_font": "Helvetica-Bold",
+    "primary_size": 7.4,
+    "original_text": "Belastlng1'elefoon 0800 • 0543",
+    "translated_text": "Tax Phone 0800 • 0543",
+    "translation_status": "success"
+  },
+  {
+    "group_id": 5,
+    "group_type": "date_and_reference",
+    "description": "Date and reference information",
+    "element_ids": [
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "combined_text": "Datum 19 junl 2025 Uwbsn 6996.45.074 Ons kenmerk TGK24·1 CAP/UCF/25/ 294",
+    "primary_position": {
+      "x": 465.4,
+      "y": 202.9
+    },
+    "primary_font": "Helvetica-Bold",
+    "primary_size": 7.4,
+    "original_text": "Datum 19 junl 2025 Uwbsn 6996.45.074 Ons kenmerk TGK24·1 CAP/UCF/25/ 294",
+    "translated_text": "Date 19 June 2025 Your SSN 6996.45.074 Our reference TGK24-1 CAP/UCF/25/294",
+    "translation_status": "success"
+  },
+  {
+    "group_id": 6,
+    "group_type": "paragraph",
+    "description": "Introduction and request for information",
+    "element_ids": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16
+    ],
+    "combined_text": "Onderwerp: We hebben informatie van u nodig over de opvang van uw kind Beste meneer Sharma, Waarom krijgt u deze brief? We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, _hebben we.infor:matie_ va91._u _nc,dig c,ve_r fie OJ)'_a_ng Y?l!1. uw ~in_d. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.",
+    "primary_position": {
+      "x": 69.1,
+      "y": 321.6
+    },
+    "primary_font": "Helvetica",
+    "primary_size": 9.8,
+    "original_text": "Onderwerp: We hebben informatie van u nodig over de opvang van uw kind Beste meneer Sharma, Waarom krijgt u deze brief? We gaan uw kinderopvangtoeslag over 2024 definitief berekenen. Om dit goed te kunnen doen, _hebben we.infor:matie_ va91._u _nc,dig c,ve_r fie OJ)'_a_ng Y?l!1. uw ~in_d. Daarom is het belangrijk dat u het formulier invult dat bij deze brief zit. En samen met een kopie van de jaaropgave naar ons opstuurt. Dat kan alleen met de post. In deze brief leest u wat we van u verwachten.",
+    "translated_text": "Subject: We need information from you about the childcare of your child Dear Mr. Sharma, Why are you receiving this letter? We are going to definitively calculate your childcare allowance for 2024. In order to do this properly, we need information about the childcare of your child. Therefore, it is important that you fill in the form that is enclosed with this letter. And send it to us along with a copy of the annual statement. This can only be done by mail. In this letter, you will find out what we expect from you.",
+    "translation_status": "success"
+  },
+  {
+    "group_id": 7,
+    "group_type": "instructions",
+    "description": "Instructions for sending information",
+    "element_ids": [
+      29,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56
+    ],
+    "combined_text": "Volg deze stappen om uw informatie naar ons op te sturen Stap 1: Zoek de jaaropgave van de kinderopvang van 2024 De kinderopvang mailt de jaaropgave of'stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in_het digitale portaal van de kinderopvang. Stap 2: Kopieer of print de jaaropgave van de kinderopvang Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of•print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer {bsn). Hebt u geen jaaropgave? Stuur dan kopieen van alle facturen van 2024. Stap 3: Vul het formulier in dat blj _deze brief zit De gegevens die u daarvoor nodig hebt,.staan op de jaaropgave van de kinderopvang. Stap 4: Stuur de jaaropgave en het formuller v66r 11 Juli 2025 op Stuur dit naar: Dienst Toeslagen Antwoordnummer 21440 6400 SL Heerlen Een postzegel Is niet nodig.",
+    "primary_position": {
+      "x": 69.3,
+      "y": 470.5
+    },
+    "primary_font": "Helvetica-Bold",
+    "primary_size": 9.9,
+    "original_text": "Volg deze stappen om uw informatie naar ons op te sturen Stap 1: Zoek de jaaropgave van de kinderopvang van 2024 De kinderopvang mailt de jaaropgave of'stuurt deze met de post naar u op. Soms kunt u de jaaropgave vinden in_het digitale portaal van de kinderopvang. Stap 2: Kopieer of print de jaaropgave van de kinderopvang Hebt u meer jaaropgaven? Bijvoorbeeld omdat uw kind in 2024 naar meer dan 1 kinderopvang ging? Kopieer of•print ze dan allemaal. Schrijf op iedere kopie rechtsboven uw burgerservicenummer {bsn). Hebt u geen jaaropgave? Stuur dan kopieen van alle facturen van 2024. Stap 3: Vul het formulier in dat blj _deze brief zit De gegevens die u daarvoor nodig hebt,.staan op de jaaropgave van de kinderopvang. Stap 4: Stuur de jaaropgave en het formuller v66r 11 Juli 2025 op Stuur dit naar: Dienst Toeslagen Antwoordnummer 21440 6400 SL Heerlen Een postzegel Is niet nodig.",
+    "translated_text": "Follow these steps to send us your information Step 1: Find the childcare annual statement for 2024 The childcare center will email the annual statement or send it to you by mail. Sometimes you can find the annual statement in the childcare center's digital portal. Step 2: Copy or print the childcare annual statement Do you have multiple annual statements? For example, because your child attended more than 1 childcare center in 2024? Then copy or print them all. Write your citizen service number (BSN) in the top right corner of each copy. Don't have an annual statement? Then send copies of all invoices from 2024. Step 3: Fill in the form that comes with this letter The information you need for this is on the childcare annual statement. Step 4: Send the annual statement and the form before July 11, 2025 Send this to: Tax Allowances Department PO Box 21440 6400 SL Heerlen No stamp is required.",
+    "translation_status": "success"
+  },
+  {
+    "group_id": 8,
+    "group_type": "footer",
+    "description": "Page number",
+    "element_ids": [
+      66
+    ],
+    "combined_text": "Paglnanummer 1 van 5",
+    "primary_position": {
+      "x": 464.1,
+      "y": 814.3
+    },
+    "primary_font": "Helvetica",
+    "primary_size": 6.6,
+    "original_text": "Paglnanummer 1 van 5",
+    "translated_text": "Page number 1 of 5",
+    "translation_status": "success"
+  }
+]

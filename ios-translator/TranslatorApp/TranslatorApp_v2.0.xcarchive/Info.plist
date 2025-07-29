@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ApplicationProperties</key>
+	<dict>
+		<key>ApplicationPath</key>
+		<string>Applications/TranslatorApp.app</string>
+		<key>Architectures</key>
+		<array>
+			<string>arm64</string>
+		</array>
+		<key>CFBundleIdentifier</key>
+		<string>com.yogeshsharma.translayai</string>
+		<key>CFBundleShortVersionString</key>
+		<string>2.0</string>
+		<key>CFBundleVersion</key>
+		<string>5</string>
+		<key>SigningIdentity</key>
+		<string>Apple Development: yogesh.sharma81@gmail.com (3G5BD78JV3)</string>
+		<key>Team</key>
+		<string>UHY6Q34C63</string>
+	</dict>
+	<key>ArchiveVersion</key>
+	<integer>2</integer>
+	<key>CreationDate</key>
+	<date>2025-06-18T22:18:12Z</date>
+	<key>Name</key>
+	<string>TranslatorApp</string>
+	<key>SchemeName</key>
+	<string>TranslatorApp</string>
+</dict>
+</plist>

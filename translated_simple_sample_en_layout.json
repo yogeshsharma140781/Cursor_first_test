@@ -1,0 +1,500 @@
+{
+  "pdf_path": "sample.pdf",
+  "blocks": [
+    {
+      "text": "Return address PO Box 3 9560 AA TER APEL",
+      "bbox": [
+        78.0,
+        137.16783142089844,
+        224.91700744628906,
+        145.04103088378906
+      ],
+      "type": "title",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 6.480000019073486,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "Regular Stay Management",
+      "bbox": [
+        450.0,
+        155.8882293701172,
+        553.5,
+        163.7614288330078
+      ],
+      "type": "title",
+      "confidence": 1.0,
+      "font": "Verdana,Bold",
+      "size": 6.480000019073486,
+      "bold": true,
+      "italic": false
+    },
+    {
+      "text": "Y. Sharma",
+      "bbox": [
+        78.0,
+        157.5546112060547,
+        125.50399017333984,
+        168.6354217529297
+      ],
+      "type": "title",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "Dutch citizenship",
+      "bbox": [
+        450.0,
+        163.80821228027344,
+        516.1951904296875,
+        171.68141174316406
+      ],
+      "type": "title",
+      "confidence": 1.0,
+      "font": "Verdana,Bold",
+      "size": 6.480000019073486,
+      "bold": true,
+      "italic": false
+    },
+    {
+      "text": "IJburglaan 816",
+      "bbox": [
+        78.0,
+        169.5546112060547,
+        146.2281494140625,
+        180.6354217529297
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "RVN NAT ZW Team 05",
+      "bbox": [
+        450.0,
+        171.7281951904297,
+        523.7291870117188,
+        179.6013946533203
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 6.480000019073486,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "1087 EM AMSTERDAM",
+      "bbox": [
+        78.0,
+        181.5546112060547,
+        181.9702606201172,
+        192.6354217529297
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "Mailing address PO\nBox 3 9560\nAA TER APEL",
+      "bbox": [
+        450.0,
+        187.56822204589844,
+        513.1408081054688,
+        211.28138732910156
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 6.480000019073486,
+      "bold": true,
+      "italic": false
+    },
+    {
+      "text": "General information",
+      "bbox": [
+        450.0,
+        219.2482147216797,
+        526.2810668945312,
+        227.1214141845703
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana,Bold",
+      "size": 6.480000019073486,
+      "bold": true,
+      "italic": false
+    },
+    {
+      "text": "Www.ind.nl",
+      "bbox": [
+        450.0,
+        227.16819763183594,
+        486.330078125,
+        235.04139709472656
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 6.480000019073486,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "T 088 043 04\n30 working days from\n9.00 to 17.00 E www.ind.nl/stukken-opsturen",
+      "bbox": [
+        450.0,
+        242.76817321777344,
+        554.42333984375,
+        266.4813537597656
+      ],
+      "type": "table",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 6.480000019073486,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "V-number",
+      "bbox": [
+        450.0,
+        274.4482421875,
+        488.73248291015625,
+        282.3214416503906
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana,Bold",
+      "size": 6.480000019073486,
+      "bold": true,
+      "italic": false
+    },
+    {
+      "text": "2850241598",
+      "bbox": [
+        450.0,
+        282.36822509765625,
+        491.1048278808594,
+        290.2414245605469
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 6.480000019073486,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "Date",
+      "bbox": [
+        78.0,
+        286.19464111328125,
+        108.48465728759766,
+        297.2754211425781
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "June 4, 2025",
+      "bbox": [
+        124.80000305175781,
+        286.19464111328125,
+        176.9342041015625,
+        297.2754211425781
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "Subject",
+      "bbox": [
+        78.0,
+        298.19464111328125,
+        109.2083969116211,
+        309.2754211425781
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "Yogesh Sharma",
+      "bbox": [
+        124.80000305175781,
+        298.19464111328125,
+        195.82992553710938,
+        309.2754211425781
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "Case number",
+      "bbox": [
+        450.0,
+        298.208251953125,
+        498.0869445800781,
+        306.0814514160156
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana,Bold",
+      "size": 6.480000019073486,
+      "bold": true,
+      "italic": false
+    },
+    {
+      "text": "Z1-186720992110",
+      "bbox": [
+        450.0,
+        306.12823486328125,
+        511.0193176269531,
+        314.0014343261719
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 6.480000019073486,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "Born on July\n14, 1981 nationality: Indian",
+      "bbox": [
+        124.80000305175781,
+        310.19464111328125,
+        233.84002685546875,
+        333.2754211425781
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "Dear Mr. Sharma,",
+      "bbox": [
+        78.0,
+        370.19464111328125,
+        168.43968200683594,
+        381.2754211425781
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "With this letter I inform you about the progress of your naturalization request.",
+      "bbox": [
+        77.99999237060547,
+        394.19464111328125,
+        429.58709716796875,
+        405.2754211425781
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "His Majesty the King has made a positive decision on your request",
+      "bbox": [
+        78.0,
+        418.19464111328125,
+        425.7178039550781,
+        429.2754211425781
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "About naturalization. Please note, you are only\nconsidered Dutch once you have attended the\nnaturalization ceremony and received the Declaration of Dutch Citizenship.",
+      "bbox": [
+        78.0,
+        430.19464111328125,
+        425.700927734375,
+        465.2754211425781
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "If your residence permit expires earlier, you must always apply for\nan extension of your residence permit. If you do not extend\nthe permit on time, this may have consequences for your stay\nin the Netherlands. For more information about extending your residence permit, please visit",
+      "bbox": [
+        78.0,
+        478.19464111328125,
+        440.87347412109375,
+        525.2754516601562
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "Www.ind.nl/extend.",
+      "bbox": [
+        78.0,
+        526.1946411132812,
+        180.93182373046875,
+        537.2754516601562
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "Before the decision is announced, you will receive an invitation\nfrom the municipality where you live within six weeks. This\ninvitation will state where and when the naturalization ceremony will take place.",
+      "bbox": [
+        78.0,
+        550.1946411132812,
+        416.5411071777344,
+        585.2754516601562
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "I request you to wait for the invitation\nto the naturalization ceremony from the municipality and\nnot to contact the municipality in the meantime.",
+      "bbox": [
+        78.00001525878906,
+        598.1946411132812,
+        442.8271179199219,
+        633.2754516601562
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "Kind regards,",
+      "bbox": [
+        78.00001525878906,
+        644.0346069335938,
+        180.4752960205078,
+        655.1154174804688
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "The State Secretary of Justice and Security.",
+      "bbox": [
+        78.00001525878906,
+        668.0346069335938,
+        285.3763427734375,
+        679.1154174804688
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "This letter has been sent automatically,\nso there is no signature included.",
+      "bbox": [
+        78.00000762939453,
+        692.0346069335938,
+        412.0264587402344,
+        715.1154174804688
+      ],
+      "type": "text",
+      "confidence": 1.0,
+      "font": "Verdana,Italic",
+      "size": 9.119999885559082,
+      "bold": false,
+      "italic": true
+    },
+    {
+      "text": "Page 1 of 1",
+      "bbox": [
+        465.6000061035156,
+        808.92822265625,
+        514.121337890625,
+        816.8013916015625
+      ],
+      "type": "footer",
+      "confidence": 1.0,
+      "font": "Verdana",
+      "size": 6.480000019073486,
+      "bold": false,
+      "italic": false
+    },
+    {
+      "text": "█▀▀▀▀▀█ ▀▀▀█▄█▀  █ ▄ █  ▀ █▀▀▀▀▀█\n█ ███ █  ▀▄█ █▄▀▄▄█▀▀█ ▀█ █ ███ █\n█ ▀▀▀ █  ▄▀█▀   █ █▀▄▀▀▄  █ ▀▀▀ █\n▀▀▀▀▀▀▀ █▄▀ █▄▀ █ ▀ ▀ █ █ ▀▀▀▀▀▀▀\n▀█▄█▀ ▀  ▀▄ ▀  ▄▀█▀█  ▀▄▀▄▀ ▄▄  █\n▀▄▀█ ▀▄█▀  ▀▀██▀██  ▀▀█   ▀▄▀▄██\n█▀█   ▀█▀▀█ ▄  █▄ ▄█▀█  ▀▄█▄▀▄▄██\n█▄ ▀▀ ▀▄█ █ ▄▀ ▀▄▀▄█ ▀█▄▀▄ ▄ █▄ ▄\n▀▀▄▄▀▀▀▀ ███▀ ▄ ▀▀▄▄ ▄▀█ ██▀█▄▀█▀\n▄▄▀▀▄█▀█▄▀█▄▀▄▄█▄ ▄██▀█▀ ▄▀▀▀██ ▀\n▄ ▀▀▀▄▀██▄▀▀▄█▄█▀ ▄▄█ ▄▄  ▄ ▄██ ▀\n█ ▀▄▀▄▀██▀▀█▄█ █▀▄ ▄ ▀ ▀▀▄▄█▄▀▄▀█\n▀▀ ▀  ▀▀▄▀▀▀▀█▄ █▄▄ █ ▄▀█▀▀▀█▄█▄▄\n█▀▀▀▀▀█   ▄█▀▀ █ ▀▀█▀ ▄██ ▀ ███ ▄\n█ ███ █ █ ▀▄▄▄█▀▀▄▄ █▄▀▀██▀▀▀ ▄ ▀\n█ ▀▀▀ █ ▄ ▄▀▄ ▄▀█▀▄█▄▀█▀ ▄█ █▄▄▄█\n▀▀▀▀▀▀▀ ▀▀▀ ▀▀▀▀▀▀  ▀▀ ▀▀▀ ▀",
+      "bbox": [
+        517.2000122070312,
+        31.4412899017334,
+        556.7499389648438,
+        67.21625518798828
+      ],
+      "type": "qr_code",
+      "confidence": 1.0,
+      "font": "CourierNew",
+      "size": 1.9199999570846558,
+      "bold": false,
+      "italic": false
+    }
+  ]
+}

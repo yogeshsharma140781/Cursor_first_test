@@ -230,16 +230,34 @@ struct PDFTranslationView: View {
                         
                         // Center animation area - show GIF when translating
                         if pdfService.isProcessing {
-                            // Center the GIF animation
-                            HStack {
-                                Spacer()
+                            VStack(spacing: 20) {
+                                // Center the GIF animation
+                                HStack {
+                                    Spacer()
+                                    
+                                    // GIF animation with fallback
+                                    ThemeAwareGIFView()
+                                        .frame(width: 80, height: 80)
+                                        .clipped()
+                                    
+                                    Spacer()
+                                }
                                 
-                                // GIF animation with fallback
-                                ThemeAwareGIFView()
-                                    .frame(width: 80, height: 80)
-                                    .clipped()
-                                
-                                Spacer()
+                                // Cancel button
+                                Button(action: {
+                                    pdfService.cancelTranslation()
+                                }) {
+                                    HStack {
+                                        Image(systemName: "xmark.circle.fill")
+                                        Text("Cancel Translation")
+                                    }
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 24)
+                                    .padding(.vertical, 12)
+                                    .background(Color.red)
+                                    .cornerRadius(10)
+                                }
                             }
                             .padding(.vertical, 20)
                         } else {

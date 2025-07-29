@@ -7,6 +7,7 @@ struct TranslationRequest: Codable {
     let text: String
     let source_lang: String
     let target_lang: String
+    let translation_id: String?
 }
 
 struct TranslationResponse: Codable {
@@ -94,7 +95,8 @@ class TranslationService: ObservableObject {
         let requestBody = TranslationRequest(
             text: text,
             source_lang: fromLanguage,
-            target_lang: toLanguage
+            target_lang: toLanguage,
+            translation_id: translationID
         )
         
         var request = URLRequest(url: url)
@@ -157,6 +159,38 @@ class TranslationService: ObservableObject {
         isLoading = false
         clearTranslationState()
         endBackgroundTask()
+    }
+    
+    func cancelTranslation() {
+        // Cancel the current request locally
+        cancelCurrentRequest()
+        
+        // Also cancel on the backend if we have a translation ID
+        if let translationID = currentTranslationID {
+            Task {
+                await cancelTranslationOnBackend(translationID: translationID)
+            }
+        }
+    }
+    
+    private func cancelTranslationOnBackend(translationID: String) async {
+        guard let url = URL(string: "\(baseURL)/cancel-translation") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        let body = "translation_id=\(translationID)"
+        request.httpBody = body.data(using: .utf8)
+        
+        do {
+            let (_, response) = try await URLSession.shared.data(for: request)
+            if let httpResponse = response as? HTTPURLResponse {
+                print("Backend cancellation response: \(httpResponse.statusCode)")
+            }
+        } catch {
+            print("Failed to cancel translation on backend: \(error)")
+        }
     }
     
     // MARK: - Background Task Management
@@ -510,12 +544,29 @@ struct ContentView: View {
                             ScrollView {
                                 VStack {
                                     if isTranslating {
-                                        VStack(spacing: 12) {
+                                        VStack(spacing: 16) {
                                             ProgressView()
                                                 .scaleEffect(1.2)
                                             Text("Translating...")
                                                 .font(.body)
                                                 .foregroundColor(.secondary)
+                                            
+                                            // Cancel button
+                                            Button(action: {
+                                                translationService.cancelTranslation()
+                                                isTranslating = false
+                                            }) {
+                                                HStack {
+                                                    Image(systemName: "xmark.circle.fill")
+                                                    Text("Cancel")
+                                                }
+                                                .font(.caption)
+                                                .foregroundColor(.white)
+                                                .padding(.horizontal, 16)
+                                                .padding(.vertical, 8)
+                                                .background(Color.red)
+                                                .cornerRadius(8)
+                                            }
                                         }
                                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                                         .padding()

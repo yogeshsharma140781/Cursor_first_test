@@ -70,8 +70,34 @@ from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 import hashlib
 from contextlib import asynccontextmanager
+import uuid
+from datetime import datetime, timedelta
 
 # All functionality is self-contained in this file
+
+# Translation cancellation system
+active_translations = {}  # Store active translation tasks
+translation_cancelled = {}  # Track cancelled translations
+
+def generate_translation_id():
+    """Generate a unique translation ID"""
+    return str(uuid.uuid4())
+
+def is_translation_cancelled(translation_id: str) -> bool:
+    """Check if a translation has been cancelled"""
+    return translation_cancelled.get(translation_id, False)
+
+def cancel_translation(translation_id: str) -> bool:
+    """Cancel a translation by ID"""
+    if translation_id in active_translations:
+        translation_cancelled[translation_id] = True
+        return True
+    return False
+
+def cleanup_translation(translation_id: str):
+    """Clean up translation tracking"""
+    active_translations.pop(translation_id, None)
+    translation_cancelled.pop(translation_id, None)
 
 load_dotenv()
 
@@ -1796,29 +1822,81 @@ async def root():
             "Sophisticated translation fixes",
             "Professional PDF generation with exact positioning",
             "Duplicate detection with fuzzy matching",
-            "Same advanced capabilities as test_layoutparser_simple.py"
+            "Same advanced capabilities as test_layoutparser_simple.py",
+            "Translation cancellation support"
         ],
         "status": "ready"
     }
 
+@app.post("/cancel-translation")
+async def cancel_translation_endpoint(translation_id: str = Form(...)):
+    """Cancel an active translation"""
+    if cancel_translation(translation_id):
+        return {"status": "success", "message": f"Translation {translation_id} cancelled"}
+    else:
+        raise HTTPException(status_code=404, detail="Translation not found or already completed")
+
+@app.get("/translation-status/{translation_id}")
+async def get_translation_status(translation_id: str):
+    """Get the status of a translation"""
+    if translation_id in active_translations:
+        is_cancelled = is_translation_cancelled(translation_id)
+        return {
+            "translation_id": translation_id,
+            "status": "cancelled" if is_cancelled else "active",
+            "started_at": active_translations[translation_id].get("started_at"),
+            "progress": active_translations[translation_id].get("progress", 0)
+        }
+    else:
+        raise HTTPException(status_code=404, detail="Translation not found")
+
 @app.post("/translate")
-async def translate(request: TranslationRequest):
+async def translate(request: TranslationRequest, translation_id: str = None):
     """Simple text translation endpoint"""
+    # Generate translation ID if not provided
+    if not translation_id:
+        translation_id = generate_translation_id()
+    
+    # Register this translation as active
+    active_translations[translation_id] = {
+        "started_at": datetime.now().isoformat(),
+        "progress": 0,
+        "filename": "text_translation"
+    }
+    
     try:
+        # Check for cancellation before starting
+        if is_translation_cancelled(translation_id):
+            cleanup_translation(translation_id)
+            raise HTTPException(status_code=400, detail="Translation was cancelled")
+        
+        # Update progress to 50%
+        active_translations[translation_id]["progress"] = 50
+        
         translated_text = await translate_text_simple(
             request.text, 
             request.source_lang, 
             request.target_lang
         )
         
+        # Update progress to 100%
+        active_translations[translation_id]["progress"] = 100
+        
+        # Clean up translation tracking
+        cleanup_translation(translation_id)
+        
         return {
             "original_text": request.text,
             "translated_text": translated_text,
             "source_lang": request.source_lang,
             "target_lang": request.target_lang,
-            "status": "success"
+            "status": "success",
+            "translation_id": translation_id
         }
     except Exception as e:
+        # Clean up translation tracking on error
+        if translation_id:
+            cleanup_translation(translation_id)
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/translate-pdf")
@@ -1826,13 +1904,30 @@ async def translate_pdf(
     background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     source_lang: str = Form("auto"),
-    target_lang: str = Form("en")
+    target_lang: str = Form("en"),
+    translation_id: str = Form(None)
 ):
     """Advanced PDF translation with full layout parser integration and Word-origin PDF detection"""
     if not file.filename.endswith('.pdf'):
         raise HTTPException(status_code=400, detail="File must be a PDF")
     
+    # Generate translation ID if not provided
+    if not translation_id:
+        translation_id = generate_translation_id()
+    
+    # Register this translation as active
+    active_translations[translation_id] = {
+        "started_at": datetime.now().isoformat(),
+        "progress": 0,
+        "filename": file.filename
+    }
+    
     try:
+        # Check for cancellation before starting
+        if is_translation_cancelled(translation_id):
+            cleanup_translation(translation_id)
+            raise HTTPException(status_code=400, detail="Translation was cancelled")
+        
         # Read PDF content
         pdf_content = await file.read()
         
@@ -1949,7 +2044,16 @@ async def translate_pdf(
         texts = [block.text for block, _ in text_blocks]
         if texts:
             translations = []
-            for text in texts:
+            for i, text in enumerate(texts):
+                # Check for cancellation before each translation
+                if is_translation_cancelled(translation_id):
+                    cleanup_translation(translation_id)
+                    raise HTTPException(status_code=400, detail="Translation was cancelled")
+                
+                # Update progress
+                progress = int((i / len(texts)) * 80)  # Translation is 80% of total work
+                active_translations[translation_id]["progress"] = progress
+                
                 translated = await parser.translate_text_openai(text, target_lang)
                 translations.append(translated)
             print(f"Translations received: {len(translations)}")
@@ -1971,6 +2075,14 @@ async def translate_pdf(
                 print(f"  Translated: {translated_text}")
                 text_idx += 1
         
+        # Check for cancellation before PDF generation
+        if is_translation_cancelled(translation_id):
+            cleanup_translation(translation_id)
+            raise HTTPException(status_code=400, detail="Translation was cancelled")
+        
+        # Update progress to 90% (PDF generation phase)
+        active_translations[translation_id]["progress"] = 90
+        
         # Create advanced PDF with visual elements
         output_pdf_bytes = await create_advanced_pdf_with_visuals(
             pdf_content, blocks_with_translations, visual_elements, target_lang
@@ -1990,8 +2102,14 @@ async def translate_pdf(
             except Exception as e:
                 print(f"Error cleaning up temp file: {e}")
         
+        # Update progress to 100% (completed)
+        active_translations[translation_id]["progress"] = 100
+        
         # Add cleanup task
         background_tasks.add_task(cleanup)
+        
+        # Clean up translation tracking
+        cleanup_translation(translation_id)
         
         # Return file response
         return FileResponse(
@@ -2003,6 +2121,9 @@ async def translate_pdf(
         
     except Exception as e:
         print(f"Error processing PDF: {str(e)}")
+        # Clean up translation tracking on error
+        if translation_id:
+            cleanup_translation(translation_id)
         raise HTTPException(status_code=500, detail=f"PDF processing failed: {str(e)}")
 
 async def create_advanced_pdf_with_visuals(pdf_content: bytes, blocks_with_translations: list, visual_elements: list, target_lang: str) -> bytes:

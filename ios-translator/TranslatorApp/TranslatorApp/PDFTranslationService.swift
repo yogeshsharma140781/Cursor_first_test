@@ -105,6 +105,11 @@ private let baseURL = "https://cursor-first-test.onrender.com" // Production dep
         body.append("Content-Disposition: form-data; name=\"target_lang\"\r\n\r\n".data(using: .utf8)!)
         body.append("\(toLanguage)\r\n".data(using: .utf8)!)
         
+        // Add translation ID parameter
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"translation_id\"\r\n\r\n".data(using: .utf8)!)
+        body.append("\(translationID)\r\n".data(using: .utf8)!)
+        
         // Add PDF file
         body.append("--\(boundary)\r\n".data(using: .utf8)!)
         body.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
@@ -178,6 +183,38 @@ private let baseURL = "https://cursor-first-test.onrender.com" // Production dep
         progress = 0.0
         clearTranslationState()
         endBackgroundTask()
+    }
+    
+    func cancelTranslation() {
+        // Cancel the current request locally
+        cancelCurrentRequest()
+        
+        // Also cancel on the backend if we have a translation ID
+        if let translationID = currentTranslationID {
+            Task {
+                await cancelTranslationOnBackend(translationID: translationID)
+            }
+        }
+    }
+    
+    private func cancelTranslationOnBackend(translationID: String) async {
+        guard let url = URL(string: "\(baseURL)/cancel-translation") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        let body = "translation_id=\(translationID)"
+        request.httpBody = body.data(using: .utf8)
+        
+        do {
+            let (_, response) = try await URLSession.shared.data(for: request)
+            if let httpResponse = response as? HTTPURLResponse {
+                print("Backend cancellation response: \(httpResponse.statusCode)")
+            }
+        } catch {
+            print("Failed to cancel translation on backend: \(error)")
+        }
     }
     
     // MARK: - Background Task Management

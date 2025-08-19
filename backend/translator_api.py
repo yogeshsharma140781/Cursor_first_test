@@ -2184,7 +2184,7 @@ async def translate_pdf(
             
             # Execute all translations concurrently
             print(f"Starting concurrent translation of {len(texts)} text blocks...")
-            start_time = time.time()
+            translation_start_time = time.time()
             
             # Use asyncio.gather for concurrent execution
             results = await asyncio.gather(*translation_tasks, return_exceptions=True)
@@ -2204,7 +2204,7 @@ async def translate_pdf(
                 cleanup_translation(translation_id)
                 raise HTTPException(status_code=400, detail="Translation was cancelled")
             
-            translation_time = time.time() - start_time
+            translation_time = time.time() - translation_start_time
             print(f"Translations completed in {translation_time:.2f}s: {len(translations)} blocks")
         else:
             translations = []

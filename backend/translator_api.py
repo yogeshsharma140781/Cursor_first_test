@@ -7,6 +7,7 @@ Complete implementation of test_layoutparser_simple.py functionality
 
 import os
 import time
+import asyncio
 import tempfile
 import shutil
 import fitz  # PyMuPDF

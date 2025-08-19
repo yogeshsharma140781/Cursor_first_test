@@ -1918,6 +1918,16 @@ async def root():
         "status": "ready"
     }
 
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for Render monitoring"""
+    return {
+        "status": "ok",
+        "activeTranslations": len(active_translations),
+        "cacheSize": len(translation_cache) if 'translation_cache' in globals() else 0,
+        "time": datetime.now().isoformat()
+    }
+
 @app.post("/cancel-translation")
 async def cancel_translation_endpoint(translation_id: str = Form(...)):
     """Cancel an active translation"""

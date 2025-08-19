@@ -2024,6 +2024,9 @@ async def translate_pdf(
     }
     
     try:
+        # Start timing
+        start_time = time.time()
+        
         # Check for cancellation before starting
         if is_translation_cancelled(translation_id):
             cleanup_translation(translation_id)
@@ -2144,20 +2147,54 @@ async def translate_pdf(
         # Only translate non-QR blocks
         texts = [block.text for block, _ in text_blocks]
         if texts:
-            translations = []
-            for i, text in enumerate(texts):
-                # Check for cancellation before each translation
+            # Check for cancellation before starting translations
+            if is_translation_cancelled(translation_id):
+                cleanup_translation(translation_id)
+                raise HTTPException(status_code=400, detail="Translation was cancelled")
+            
+            # Create concurrent translation tasks
+            async def translate_single_text(text: str, index: int):
+                # Check for cancellation before each individual translation
                 if is_translation_cancelled(translation_id):
-                    cleanup_translation(translation_id)
-                    raise HTTPException(status_code=400, detail="Translation was cancelled")
+                    return None
                 
-                # Update progress
-                progress = int((i / len(texts)) * 80)  # Translation is 80% of total work
-                active_translations[translation_id]["progress"] = progress
-                
-                translated = await parser.translate_text_openai(text, target_lang, translation_id)
-                translations.append(translated)
-            print(f"Translations received: {len(translations)}")
+                try:
+                    translated = await parser.translate_text_openai(text, target_lang, translation_id)
+                    return index, translated
+                except Exception as e:
+                    print(f"Translation error for text {index}: {e}")
+                    return index, text  # Fallback to original text
+            
+            # Create all translation tasks concurrently
+            translation_tasks = [
+                translate_single_text(text, i) 
+                for i, text in enumerate(texts)
+            ]
+            
+            # Execute all translations concurrently
+            print(f"Starting concurrent translation of {len(texts)} text blocks...")
+            start_time = time.time()
+            
+            # Use asyncio.gather for concurrent execution
+            results = await asyncio.gather(*translation_tasks, return_exceptions=True)
+            
+            # Process results and maintain order
+            translations = [""] * len(texts)
+            for result in results:
+                if isinstance(result, Exception):
+                    print(f"Translation task failed: {result}")
+                    continue
+                if result is not None:
+                    index, translated_text = result
+                    translations[index] = translated_text
+            
+            # Check for cancellation after translations complete
+            if is_translation_cancelled(translation_id):
+                cleanup_translation(translation_id)
+                raise HTTPException(status_code=400, detail="Translation was cancelled")
+            
+            translation_time = time.time() - start_time
+            print(f"Translations completed in {translation_time:.2f}s: {len(translations)} blocks")
         else:
             translations = []
         
@@ -2212,13 +2249,25 @@ async def translate_pdf(
         # Clean up translation tracking
         cleanup_translation(translation_id)
         
-        # Return file response
-        return FileResponse(
+        # Calculate total processing time
+        total_time = time.time() - start_time
+        print(f"Total PDF processing time: {total_time:.2f}s")
+        
+        # Return file response with timing headers
+        response = FileResponse(
             path=output_path,
             media_type='application/pdf',
             filename=f"translated_{file.filename}",
             background=None  # Don't use deprecated background parameter
         )
+        
+        # Add performance timing headers
+        response.headers["X-Total-Processing-Time"] = f"{total_time:.2f}s"
+        response.headers["X-Translation-Time"] = f"{translation_time:.2f}s" if 'translation_time' in locals() else "N/A"
+        response.headers["X-Text-Blocks"] = str(len(texts) if texts else 0)
+        response.headers["X-Concurrent-Translation"] = "enabled"
+        
+        return response
         
     except Exception as e:
         print(f"Error processing PDF: {str(e)}")

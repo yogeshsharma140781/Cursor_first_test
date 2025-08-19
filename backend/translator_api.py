@@ -6,6 +6,7 @@ Complete implementation of test_layoutparser_simple.py functionality
 """
 
 import os
+import time
 import tempfile
 import shutil
 import fitz  # PyMuPDF
@@ -20,7 +21,6 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.utils import simpleSplit, ImageReader
 from reportlab.lib.fonts import addMapping
-import os
 
 # Register Noto Sans fonts at module level
 try:

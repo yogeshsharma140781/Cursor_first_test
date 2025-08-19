@@ -76,6 +76,16 @@ from datetime import datetime, timedelta
 
 # All functionality is self-contained in this file
 
+def analyze_pdf_structure(pdf_path: str) -> bool:
+    """Analyze PDF structure to determine if it's likely from Word"""
+    try:
+        # Simple heuristic: check if PDF has Word-like characteristics
+        # For now, always return False to use standard pipeline
+        return False
+    except Exception as e:
+        print(f"PDF analysis error: {e}")
+        return False
+
 # Translation cancellation system
 active_translations = {}  # Store active translation tasks
 translation_cancelled = {}  # Track cancelled translations
